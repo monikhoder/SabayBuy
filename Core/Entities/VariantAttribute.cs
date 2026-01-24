@@ -9,6 +9,5 @@ public class VariantAttribute : BaseEntity
     public string AttributeName { get; set; } = string.Empty;
     public string AttributeValue { get; set; } = string.Empty;
     // Navigation Properties
-   // [ForeignKey("VariantId")]
     public virtual ProductVariant? Variant { get; set; }
 }

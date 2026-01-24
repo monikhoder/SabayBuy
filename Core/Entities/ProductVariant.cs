@@ -12,7 +12,6 @@ public class ProductVariant : BaseEntity
     public string? ImageUrl { get; set; }
     public bool IsActive { get; set; }
     // Navigation Properties
-    //[ForeignKey("ProductId")]
     public virtual Product? Product { get; set; }
 
     public virtual ICollection<VariantAttribute> Attributes { get; set; } = new List<VariantAttribute>();
