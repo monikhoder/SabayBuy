@@ -35,13 +35,13 @@ public class CategoriesSpecification : BaseSpecification<Category>
         AddInclude(c => c.SubCategories);
         AddInclude(c => c.ParentCategory!);
     }
-    public CategoriesSpecification(string? search)
-    {
-        AddInclude(c => c.SubCategories);
-        AddInclude(c => c.ParentCategory!);
-        if (!string.IsNullOrEmpty(search))
-        {
-            AddCriteria(c => c.CategoryName.ToLower().Contains(search.ToLower()));
-        }
-    }
+    // public CategoriesSpecification(string? search)
+    // {
+    //     AddInclude(c => c.SubCategories);
+    //     AddInclude(c => c.ParentCategory!);
+    //     if (!string.IsNullOrEmpty(search))
+    //     {
+    //         AddCriteria(c => c.CategoryName.ToLower().Contains(search.ToLower()));
+    //     }
+    // }
 }

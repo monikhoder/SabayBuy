@@ -47,7 +47,7 @@ namespace API.Controllers
             return BadRequest("Failed to create category");
         }
         [HttpPut("{id}")]
-        public async Task<ActionResult<CreateCategoryDto>> UpdateCategory(Guid id, UpdateCategoryDto category)
+        public async Task<ActionResult<CategoryDto>> UpdateCategory(Guid id, UpdateCategoryDto category)
         {
            var spec = new CategoriesSpecification(id);
            var existingCategory = await repository.GetEntityWithSpec(spec);
@@ -66,7 +66,7 @@ namespace API.Controllers
 
                 if (await repository.SaveAllAsync())
                 {
-                    return Ok(existingCategory);
+                    return mapper.Map<Category, CategoryDto>(existingCategory);
                 }
 
                 return BadRequest("Failed to update category");
@@ -74,27 +74,33 @@ namespace API.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteCategory(Guid id)
         {
+            // Check if category exists
             var spec = new CategoriesSpecification(id);
             var category = await repository.GetEntityWithSpec(spec);
-            if (category == null)
+            if (category == null) return NotFound();
+            if(category.SubCategories != null && category.SubCategories.Any())
             {
-                return NotFound();
+                return BadRequest("Cannot delete category with subcategories");
             }
-
+            if(category.Products != null && category.Products.Any())
+            {
+                return BadRequest("Cannot delete category with products");
+            }
             repository.Delete(category);
 
             if (await repository.SaveAllAsync())
             {
-                return NoContent();
+                return Ok("category deleted successfully");
             }
-
             return BadRequest("Failed to delete category");
         }
-        private async Task<bool> CategoryNameExists(string categoryName)
+        private async Task<bool> CategoryNameExists(string categoryName, Guid? Id = null)
         {
-            var spec = new CategoriesSpecification(null);
-            var categories = await repository.ListAsync(spec);
-            return categories.Any(c => c.CategoryName.ToLower() == categoryName.ToLower());
+            var spec = new CategoryByNameSpecification(categoryName);
+            var categories = await repository.GetEntityWithSpec(spec);
+            if(categories == null) return false;
+            if(Id != null && categories.Id == Id) return false;
+            return true;
         }
     }
 }
