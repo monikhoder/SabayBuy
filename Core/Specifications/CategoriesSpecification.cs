@@ -5,21 +5,14 @@ namespace Core.Specifications;
 
 public class CategoriesSpecification : BaseSpecification<Category>
 {
-    public CategoriesSpecification(string? sort, bool? isParent)
+    public CategoriesSpecification(string? sort, bool? isParent, string? search = null) : base(
+        c =>
+            (string.IsNullOrEmpty(search) || c.CategoryName.ToLower().Contains(search.ToLower())) &&
+            (!isParent.HasValue || (isParent.Value ? c.ParentCategoryId == null : c.ParentCategoryId != null))
+    )
     {
         AddInclude(c => c.SubCategories);
         AddInclude(c => c.ParentCategory!);
-        if (isParent.HasValue)
-        {
-            if (isParent.Value)
-            {
-                AddCriteria(c => c.ParentCategoryId == null);
-            }
-            else
-            {
-                AddCriteria(c => c.ParentCategoryId != null);
-            }
-        }
         switch (sort)
         {
             case "nameDesc":
@@ -35,13 +28,4 @@ public class CategoriesSpecification : BaseSpecification<Category>
         AddInclude(c => c.SubCategories);
         AddInclude(c => c.ParentCategory!);
     }
-    // public CategoriesSpecification(string? search)
-    // {
-    //     AddInclude(c => c.SubCategories);
-    //     AddInclude(c => c.ParentCategory!);
-    //     if (!string.IsNullOrEmpty(search))
-    //     {
-    //         AddCriteria(c => c.CategoryName.ToLower().Contains(search.ToLower()));
-    //     }
-    // }
 }

@@ -14,9 +14,9 @@ namespace API.Controllers
     {
 
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<CategoryDto>>> GetCategories(string? sort, bool? isParent)
+        public async Task<ActionResult<IReadOnlyList<CategoryDto>>> GetCategories(string? sort, bool? isParent, string? search = null)
         {
-          var spec = new CategoriesSpecification(sort, isParent);
+          var spec = new CategoriesSpecification(sort, isParent, search);
           var categories = await repository.ListAsync(spec);
           return Ok(mapper.Map<IReadOnlyList<Category>, IReadOnlyList<CategoryDto>>(categories));
         }
