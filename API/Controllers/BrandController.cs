@@ -15,9 +15,9 @@ namespace API.Controllers
     {
         // GET: api/brand
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<string>>> GetBrands()
+        public async Task<ActionResult<IReadOnlyList<string>>> GetBrands(string? sort, string? search)
         {
-            var spec = new BrandListSpecification();
+            var spec = new BrandListSpecification(sort, search);
             var brands = await repo.ListAsync(spec);
             return Ok(brands);
         }

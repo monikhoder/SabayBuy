@@ -68,6 +68,6 @@ public class GenericRepository<T>(StoreContext context) : IGenericRepository<T> 
     }
     private IQueryable<TResult> ApplySpecification<TResult>(ISpecification<T, TResult> spec)
     {
-        return SpecificationEvaluator<T>.Getquery<TResult>(context.Set<T>().AsQueryable(), spec);
+        return SpecificationEvaluator<T>.Getquery<T,TResult>(context.Set<T>().AsQueryable(), spec);
     }
 }

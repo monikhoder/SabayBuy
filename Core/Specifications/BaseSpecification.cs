@@ -7,6 +7,8 @@ namespace Core.Specifications;
 
 public class BaseSpecification<T>(Expression<Func<T, bool>>? criteria = null) : ISpecification<T>
 {
+    protected BaseSpecification() : this(null){}
+
     public Expression<Func<T, bool>>? Criteria { get; private set; } = criteria;
 
     public List<Expression<Func<T, object>>> Includes { get; } = [];
@@ -47,8 +49,7 @@ public class BaseSpecification<T>(Expression<Func<T, bool>>? criteria = null) : 
 public class BaseSpecification<T, TResult>(Expression<Func<T, bool>>? criteria = null)
 : BaseSpecification<T>(criteria), ISpecification<T, TResult>
 {
-    public Expression<Func<T, TResult>>? Selector { get; private set; }
-
+    public Expression<Func<T, TResult>> Selector { get; private set;}
     protected void AddSelector(Expression<Func<T, TResult>> selectorExpression)
     {
         Selector = selectorExpression;

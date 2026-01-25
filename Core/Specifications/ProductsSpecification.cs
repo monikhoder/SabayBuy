@@ -5,18 +5,18 @@ namespace Core.Specifications;
 public class ProductsSpecification : BaseSpecification<Product>
 {
     // សម្រាប់ Get All (មាន Search, Filter, Sort)
-    public ProductsSpecification(string? sort, Guid? categoryId, string? brand, string? search)
+    public ProductsSpecification(ProductSpecParams specParams)
         : base(x =>
-            (string.IsNullOrEmpty(search) || x.ProductName.ToLower().Contains(search.ToLower())) &&
-            (!categoryId.HasValue || x.CategoryId == categoryId) &&
-            (string.IsNullOrEmpty(brand) || x.Brand.ToLower() == brand.ToLower())
+            (string.IsNullOrEmpty(specParams.Search) || x.ProductName.ToLower().Contains(specParams.Search.ToLower())) &&
+            (specParams.Categories.Count == 0 || specParams.Categories.Contains(x.Category!.CategoryName)) &&
+            (specParams.Brands.Count == 0 || specParams.Brands.Contains(x.Brand))
         )
     {
         AddInclude(x => x.Category!);
         AddInclude(x => x.Variants);
         AddInclude("Variants.Attributes"); // Using string include for nested navigation property
 
-        switch (sort)
+        switch (specParams.Sort)
         {
             case "priceAsc":
                 AddOrderBy(p => p.Variants.Min(v => v.Price));

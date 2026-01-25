@@ -32,10 +32,27 @@ public class SpecificationEvaluator<TEntity> where TEntity : BaseEntity
 
         return query;
     }
-    public static IQueryable<TResult> Getquery<TResult>(IQueryable<TEntity> inputQuery, ISpecification<TEntity, TResult> spec)
-    {
-       var query = Getquery(inputQuery, (ISpecification<TEntity>)spec);
-        return query.Select(spec.Selector!);
-    }
 
+    public static IQueryable<TResult> Getquery<TSpec,TResult>(IQueryable<TEntity> inputQuery, ISpecification<TEntity, TResult> spec)
+    {
+         var query = inputQuery;
+        if (spec.Criteria != null)
+        {
+            query = query.Where(spec.Criteria); // Apply filtering criteria
+        }
+        if (spec.OrderBy != null)
+        {
+            query = query.OrderBy(spec.OrderBy); // Apply ordering
+        }
+        if (spec.OrderByDescending != null)
+        {
+            query = query.OrderByDescending(spec.OrderByDescending); // Apply descending ordering
+        }
+        var projectedQuery = query as IQueryable<TResult>;
+        if(spec.Selector != null)
+        {
+            projectedQuery = query.Select(spec.Selector); // Apply projection
+        }
+        return projectedQuery ?? query.Cast<TResult>();
+    }
 }
