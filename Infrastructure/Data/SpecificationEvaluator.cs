@@ -22,6 +22,8 @@ public class SpecificationEvaluator<TEntity> where TEntity : BaseEntity
         {
             query = query.OrderByDescending(spec.OrderByDescending); // Apply descending ordering
         }
+
+        query = spec.IncludeStrings.Aggregate(query, (current, include) => current.Include(include)); // Apply string includes
         query = spec.Includes.Aggregate(query, (current, include) => current.Include(include)); // Apply includes
 
         return query;

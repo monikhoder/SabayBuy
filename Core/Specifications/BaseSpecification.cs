@@ -1,4 +1,5 @@
 using System;
+using System.Dynamic;
 using System.Linq.Expressions;
 using Core.Interface;
 
@@ -12,6 +13,8 @@ public class BaseSpecification<T>(Expression<Func<T, bool>>? criteria = null) : 
 
     public Expression<Func<T, object>>? OrderBy {get; private set;}
     public Expression<Func<T, object>>? OrderByDescending {get; private set;}
+
+    public List<string> IncludeStrings {get;} = new List<string>();
 
     protected void AddInclude(Expression<Func<T, object>> includeExpression)
     {
@@ -28,6 +31,10 @@ public class BaseSpecification<T>(Expression<Func<T, bool>>? criteria = null) : 
     protected void AddCriteria(Expression<Func<T, bool>> criteriaExpression)
     {
         Criteria = criteriaExpression;
+    }
+    protected void AddInclude(string includeString)
+    {
+        IncludeStrings.Add(includeString);
     }
 
 }

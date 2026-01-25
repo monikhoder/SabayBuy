@@ -5,6 +5,8 @@ namespace Core.Interface;
 
 public interface IGenericRepository<T>where T : BaseEntity
 {
+    // get by id
+    Task<T?> GetByIdAsync(Guid id);
 
     //Get data with specification
     Task<T?> GetEntityWithSpec(ISpecification<T> spec);
