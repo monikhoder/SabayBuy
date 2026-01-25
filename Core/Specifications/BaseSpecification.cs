@@ -16,6 +16,8 @@ public class BaseSpecification<T>(Expression<Func<T, bool>>? criteria = null) : 
 
     public List<string> IncludeStrings {get;} = new List<string>();
 
+    public bool IsDistinct { get; private set; }
+
     protected void AddInclude(Expression<Func<T, object>> includeExpression)
     {
         Includes.Add(includeExpression);
@@ -36,5 +38,19 @@ public class BaseSpecification<T>(Expression<Func<T, bool>>? criteria = null) : 
     {
         IncludeStrings.Add(includeString);
     }
+    protected void ApplyDistinct()
+    {
+        IsDistinct = true;
+    }
 
+}
+public class BaseSpecification<T, TResult>(Expression<Func<T, bool>>? criteria = null)
+: BaseSpecification<T>(criteria), ISpecification<T, TResult>
+{
+    public Expression<Func<T, TResult>>? Selector { get; private set; }
+
+    protected void AddSelector(Expression<Func<T, TResult>> selectorExpression)
+    {
+        Selector = selectorExpression;
+    }
 }

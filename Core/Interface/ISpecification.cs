@@ -10,5 +10,11 @@ public interface ISpecification<T>
     Expression<Func<T, object>>? OrderByDescending { get;  }
     List<Expression<Func<T, object>>> Includes { get;  }
     List<string> IncludeStrings { get;  }
+    bool IsDistinct { get;  }
 
+}
+
+public interface ISpecification<T, TResult> : ISpecification<T>
+{
+    Expression<Func<T, TResult>> Selector { get; }
 }

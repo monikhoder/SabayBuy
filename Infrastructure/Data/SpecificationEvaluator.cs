@@ -22,11 +22,20 @@ public class SpecificationEvaluator<TEntity> where TEntity : BaseEntity
         {
             query = query.OrderByDescending(spec.OrderByDescending); // Apply descending ordering
         }
+        if (spec.IsDistinct)
+        {
+            query = query.Distinct(); // Apply distinct if specified
+        }
 
         query = spec.IncludeStrings.Aggregate(query, (current, include) => current.Include(include)); // Apply string includes
         query = spec.Includes.Aggregate(query, (current, include) => current.Include(include)); // Apply includes
 
         return query;
+    }
+    public static IQueryable<TResult> Getquery<TResult>(IQueryable<TEntity> inputQuery, ISpecification<TEntity, TResult> spec)
+    {
+       var query = Getquery(inputQuery, (ISpecification<TEntity>)spec);
+        return query.Select(spec.Selector!);
     }
 
 }
