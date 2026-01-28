@@ -7,11 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
     public class BrandController(
         IGenericRepository<Product> repo
-    ) : ControllerBase
+    ) : BaseApiController
     {
         // GET: api/brand
         [HttpGet]

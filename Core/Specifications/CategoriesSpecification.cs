@@ -5,15 +5,16 @@ namespace Core.Specifications;
 
 public class CategoriesSpecification : BaseSpecification<Category>
 {
-    public CategoriesSpecification(string? sort, bool? isParent, string? search = null) : base(
+    public CategoriesSpecification(CategorySpecParams specParams) : base(
         c =>
-            (string.IsNullOrEmpty(search) || c.CategoryName.ToLower().Contains(search.ToLower())) &&
-            (!isParent.HasValue || (isParent.Value ? c.ParentCategoryId == null : c.ParentCategoryId != null))
+            (string.IsNullOrEmpty(specParams.Search) || c.CategoryName.ToLower().Contains(specParams.Search.ToLower())) &&
+            (!specParams.isParent.HasValue || (specParams.isParent.Value ? c.ParentCategoryId == null : c.ParentCategoryId != null))
     )
     {
+        ApplyPaging(specParams.PageSize * (specParams.PageIndex - 1), specParams.PageSize);
         AddInclude(c => c.SubCategories);
         AddInclude(c => c.ParentCategory!);
-        switch (sort)
+        switch (specParams.Sort)
         {
             case "nameDesc":
                 AddOrderByDescending(c => c.CategoryName);

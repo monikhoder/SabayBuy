@@ -1,4 +1,5 @@
 
+
 using AutoMapper;
 using Core.Dtos;
 using Core.Entities;
@@ -8,43 +9,34 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class CategoriesController(IGenericRepository<Category> repository, IMapper mapper) : ControllerBase
+
+    public class CategoriesController(IGenericRepository<Category> repository, IMapper mapper) : BaseApiController
     {
 
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<CategoryDto>>> GetCategories(string? sort, bool? isParent, string? search = null)
+        public async Task<ActionResult<IReadOnlyList<CategoryDto>>> GetCategories([FromQuery] CategorySpecParams specParams)
         {
-          var spec = new CategoriesSpecification(sort, isParent, search);
-          var categories = await repository.ListAsync(spec);
-          return Ok(mapper.Map<IReadOnlyList<Category>, IReadOnlyList<CategoryDto>>(categories));
+            var spec = new CategoriesSpecification(specParams);
+            return await CreatePageResult<Category, CategoryDto>(repository, spec, specParams.PageIndex, specParams.PageSize, mapper);
         }
         [HttpGet("{id}")]
         public async Task<ActionResult<CategoryDto>> GetCategory(Guid id)
         {
             var spec = new CategoriesSpecification(id);
-            var category = await repository.GetEntityWithSpec(spec);
-            if(category == null) return NotFound();
-            return mapper.Map<Category, CategoryDto>(category);
+            return await GetByIdResult<Category, CategoryDto>(repository, spec, mapper);
         }
 
 
         [HttpPost]
         public async Task<ActionResult<CategoryDto>> CreateCategory(CreateCategoryDto category)
         {
-            //check if name exists
-            if (await CategoryNameExists(category.CategoryName))
-            {
-                return BadRequest("Category name already exists");
-            }
-            var newCategory = mapper.Map<CreateCategoryDto, Category>(category);
-            repository.Add(newCategory);
-            if (await repository.SaveAllAsync())
-            {
-                return CreatedAtAction(nameof(GetCategory), new { id = newCategory.Id }, newCategory);
-            }
-            return BadRequest("Failed to create category");
+
+            return await CreateResult<Category, CreateCategoryDto, CategoryDto>(
+                repository,
+                category,
+                mapper,
+                nameof(GetCategory),
+                entity => new { id = entity.Id });
         }
         [HttpPut("{id}")]
         public async Task<ActionResult<CategoryDto>> UpdateCategory(Guid id, UpdateCategoryDto category)
@@ -55,12 +47,6 @@ namespace API.Controllers
                 {
                     return NotFound();
                 }
-
-                if (await CategoryNameExists(category.CategoryName))
-                {
-                    return BadRequest("Category name already exists");
-                }
-
                 mapper.Map(category, existingCategory);
                 repository.Update(existingCategory);
 
@@ -93,14 +79,6 @@ namespace API.Controllers
                 return Ok("category deleted successfully");
             }
             return BadRequest("Failed to delete category");
-        }
-        private async Task<bool> CategoryNameExists(string categoryName, Guid? Id = null)
-        {
-            var spec = new CategoryByNameSpecification(categoryName);
-            var categories = await repository.GetEntityWithSpec(spec);
-            if(categories == null) return false;
-            if(Id != null && categories.Id == Id) return false;
-            return true;
         }
     }
 }

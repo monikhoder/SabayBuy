@@ -1,3 +1,4 @@
+using API.Helpers;
 using AutoMapper;
 using Core.Dtos;
 using Core.Entities;
@@ -8,9 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class ProductsController(IGenericRepository<Product> repo, IMapper mapper) : ControllerBase
+    public class ProductsController(IGenericRepository<Product> repo, IMapper mapper) : BaseApiController
     {
         // GET: api/products
         [HttpGet]
@@ -18,9 +17,7 @@ namespace API.Controllers
             [FromQuery] ProductSpecParams specParams)
         {
             var spec = new ProductsSpecification(specParams);
-            var products = await repo.ListAsync(spec);
-
-            return Ok(mapper.Map<IReadOnlyList<Product>, IReadOnlyList<ProductDto>>(products));
+            return await CreatePageResult<Product, ProductDto>(repo, spec, specParams.PageIndex, specParams.PageSize, mapper);
         }
 
         // GET: api/products/{id}
@@ -28,9 +25,7 @@ namespace API.Controllers
         public async Task<ActionResult<ProductDto>> GetProduct(Guid id)
         {
             var spec = new ProductsSpecification(id);
-            var product = await repo.GetEntityWithSpec(spec);
-            if (product == null) return NotFound();
-            return mapper.Map<Product, ProductDto>(product);
+            return await GetByIdResult<Product, ProductDto>(repo, spec, mapper);
         }
 
         // POST: api/products

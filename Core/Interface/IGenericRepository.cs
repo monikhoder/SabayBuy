@@ -26,4 +26,6 @@ public interface IGenericRepository<T>where T : BaseEntity
     bool Exists(Guid id);
     //Save changes
     Task<bool> SaveAllAsync();
+
+
 }

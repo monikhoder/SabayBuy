@@ -29,6 +29,10 @@ public class SpecificationEvaluator<TEntity> where TEntity : BaseEntity
 
         query = spec.IncludeStrings.Aggregate(query, (current, include) => current.Include(include)); // Apply string includes
         query = spec.Includes.Aggregate(query, (current, include) => current.Include(include)); // Apply includes
+        if (spec.IsPagingEnabled)
+        {
+            query = query.Skip(spec.Skip).Take(spec.Take); // Apply paging
+        }
 
         return query;
     }
@@ -53,6 +57,15 @@ public class SpecificationEvaluator<TEntity> where TEntity : BaseEntity
         {
             projectedQuery = query.Select(spec.Selector); // Apply projection
         }
+        if (spec.IsDistinct)
+        {
+            projectedQuery = projectedQuery?.Distinct(); // Apply distinct if specified
+        }
+        if (spec.IsPagingEnabled)
+        {
+            projectedQuery = projectedQuery?.Skip(spec.Skip).Take(spec.Take); // Apply paging
+        }
+
         return projectedQuery ?? query.Cast<TResult>();
     }
 }

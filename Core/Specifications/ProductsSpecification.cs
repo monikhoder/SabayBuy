@@ -12,6 +12,8 @@ public class ProductsSpecification : BaseSpecification<Product>
             (specParams.Brands.Count == 0 || specParams.Brands.Contains(x.Brand))
         )
     {
+        ApplyPaging(specParams.PageSize * (specParams.PageIndex - 1), specParams.PageSize
+        );
         AddInclude(x => x.Category!);
         AddInclude(x => x.Variants);
         AddInclude("Variants.Attributes"); // Using string include for nested navigation property
