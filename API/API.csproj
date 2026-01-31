@@ -18,7 +18,9 @@
 
   <ItemGroup>
     <Folder Include="Controllers\" />
+    <Folder Include="Errors\" />
     <Folder Include="Helpers\" />
+    <Folder Include="Middleware\" />
   </ItemGroup>
 
 </Project>

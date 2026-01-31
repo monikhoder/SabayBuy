@@ -1,4 +1,5 @@
 using API.Helpers;
+using API.Middleware;
 using Core.Interface;
 using Infrastructure.Data;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -17,8 +18,16 @@ builder.Services.AddDbContext<StoreContext>(opt =>
 });
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddAutoMapper(typeof(MappingProfiles));
-var app = builder.Build();
+builder.Services.AddCors(opt =>
+{
+    opt.AddPolicy("CorsPolicy", policy =>
+    {
+        policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:5110");
+    });
+});
 
+var app = builder.Build();
+app.UseMiddleware<ExceptionMiddleware>();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
