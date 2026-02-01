@@ -24,7 +24,7 @@ builder.Services.AddCors(opt =>
 {
     opt.AddPolicy("CorsPolicy", policy =>
     {
-        policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:5110");
+        policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:5110", "https://localhost:5110", "http://localhost:4200");
     });
 });
 
@@ -35,6 +35,8 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
+
+app.UseCors("CorsPolicy");
 
 app.UseHttpsRedirection();
 
