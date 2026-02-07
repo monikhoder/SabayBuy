@@ -26,6 +26,7 @@ export interface Product {
   baseImageUrl?: string;
   brand: string;
   categoryName: string;
+  price: number;
   createdAt: string;
   updatedAt: string;
   variants: ProductVariant[];

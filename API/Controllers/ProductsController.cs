@@ -4,7 +4,6 @@ using Core.Dtos;
 using Core.Entities;
 using Core.Interface;
 using Core.Specifications;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers

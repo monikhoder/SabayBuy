@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CartDropdownComponent } from './card/cart-dropdown.component';
 import { ProfileDropdownComponent } from './profile/profile-dropdown.component';
+import { initFlowbite } from 'flowbite';
 
 @Component({
   selector: 'app-header',
@@ -8,7 +9,7 @@ import { ProfileDropdownComponent } from './profile/profile-dropdown.component';
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
-export class Header {
+export class Header implements OnInit {
   locations = [
     {
       id: 11,
@@ -68,4 +69,8 @@ export class Header {
       name: 'ខ្មែរ (Cambodia)',
     },
   ];
+
+  ngOnInit(): void {
+    initFlowbite();
+  }
 }
