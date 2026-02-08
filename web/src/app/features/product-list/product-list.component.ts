@@ -93,6 +93,13 @@ export class ProductListComponent implements OnInit {
       this.productParams.pageSize += this.productParams.defaultPageSize;
       this.loadProducts(); // Reload products with new page number
     }
-
+    removeBrandFilter(brand: string) {
+      this.productParams.brand = this.productParams.brand.filter(b => b !== brand);
+      this.loadProducts();
+    }
+    removeCategoryFilter(category: string) {
+      this.productParams.category = this.productParams.category.filter(c => c !== category);
+      this.loadProducts();
+    }
 
 }

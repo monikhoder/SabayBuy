@@ -26,15 +26,12 @@ export class ShopServices {
     if (productParams.category && productParams.category.length > 0) {
       params = params.append('categories', productParams.category.join(','));
     }
-    if (productParams.sort) {
-      params = params.append('sort', productParams.sort);
+    if (productParams.search) {
+      params = params.append('search', productParams.search);
     }
-    if( productParams.pageIndex){
-      params = params.append('pageIndex', productParams.pageIndex);
-    }
-    if( productParams.pageSize){
-      params = params.append('pageSize', productParams.pageSize);
-    }
+    params = params.append('sort', productParams.sort);
+    params = params.append('pageIndex', productParams.pageIndex);
+    params = params.append('pageSize', productParams.pageSize);
     return this.http.get<Pagination<Product>>(this.baseUrl + 'Products', { params })
   }
   getBrands(){

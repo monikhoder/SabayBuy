@@ -47,6 +47,7 @@
                               id="{{brand}}"
                               type="checkbox"
                               value="{{brand}}"
+                              [checked]="productParams.brand.includes(brand)"
                               (change)="onBrandChange(brand, $any($event.target).checked)"
                               class="h-4 w-4 rounded border-gray-300 bg-gray-100 text-primary-600 focus:ring-2 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800"
                             >
@@ -78,6 +79,7 @@
                               id="{{subcategory.id}}"
                               type="checkbox"
                               value="{{subcategory.categoryName}}"
+                              [checked]="productParams.category.includes(subcategory.categoryName)"
                               (change)="onCategoryChange(subcategory.categoryName, $any($event.target).checked)"
                               class="h-4 w-4 rounded border-gray-300 bg-gray-100 text-primary-600 focus:ring-2 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800"
                             >

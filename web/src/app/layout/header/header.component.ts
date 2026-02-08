@@ -10,6 +10,7 @@ import { initFlowbite } from 'flowbite';
   styleUrl: './header.component.scss',
 })
 export class Header implements OnInit {
+
   locations = [
     {
       id: 11,
@@ -69,6 +70,21 @@ export class Header implements OnInit {
       name: 'ខ្មែរ (Cambodia)',
     },
   ];
+  searchType =[
+    {
+      name : 'Products Name',
+      value : 'product'
+    },
+    {
+      name : 'Category Name',
+      value : 'category'
+    },
+    {
+      name : 'Brand Name',
+      value : 'brand'
+    }
+  ]
+  selectedSearchType = this.searchType[0];
 
   ngOnInit(): void {
     initFlowbite();

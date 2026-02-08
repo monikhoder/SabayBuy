@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, input, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, input, Output } from '@angular/core';
 import { Category } from '../../../shared/models/category';
+import { productParams } from '../../../shared/models/productParams';
 
 @Component({
   selector: 'app-filter',
@@ -10,44 +11,45 @@ import { Category } from '../../../shared/models/category';
 export class FilterComponent {
   @Input() categories: Category[] = [];
   @Input() groupedBrands: BrandGroup[] = [];
+  @Input() productParams!: productParams;
 
-  selectedCategories: string[] = [];
-  selectedBrands: string[] = [];
 
-  @Output() categoryFilterChange = new EventEmitter<string[]>();
-  @Output() brandFilterChange = new EventEmitter<string[]>();
+   @Output() categoryFilterChange = new EventEmitter<string[]>();
+   @Output() brandFilterChange = new EventEmitter<string[]>();
 
 
   onCategoryChange(category: string, isChecked: boolean) {
     if (isChecked) {
-      this.selectedCategories.push(category);
+      this.productParams.category.push(category);
     } else {
-      const index = this.selectedCategories.indexOf(category);
+      const index = this.productParams.category.indexOf(category);
       if (index > -1) {
-        this.selectedCategories.splice(index, 1);
+        this.productParams.category.splice(index, 1);
       }
     }
     // 3. Emit the updated list to the parent
-    this.categoryFilterChange.emit(this.selectedCategories);
+    this.categoryFilterChange.emit(this.productParams.category);
   }
   onBrandChange(brand: string, isChecked: boolean) {
     if (isChecked) {
-      this.selectedBrands.push(brand);
+      this.productParams.brand.push(brand);
     } else {
-      const index = this.selectedBrands.indexOf(brand);
+      const index = this.productParams.brand.indexOf(brand);
       if (index > -1) {
-        this.selectedBrands.splice(index, 1);
+        this.productParams.brand.splice(index, 1);
       }
     }
     // 3. Emit the updated list to the parent
-    this.brandFilterChange.emit(this.selectedBrands);
+    this.brandFilterChange.emit(this.productParams.brand);
+
   }
   onResetFilters() {
-    this.selectedCategories = [];
-    this.selectedBrands = [];
+    this.productParams.category = [];
+    this.productParams.brand = [];
     // Emit empty lists to clear filters in parent
     this.categoryFilterChange.emit([]);
     this.brandFilterChange.emit([]);
   }
+
 
 }
