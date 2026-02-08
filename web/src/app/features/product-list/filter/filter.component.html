@@ -16,15 +16,19 @@
         <!-- Modal body -->
         <div class="px-4 md:px-5">
           <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
-            <ul class="-mb-px flex flex-wrap text-center text-sm font-medium" id="myTab" data-tabs-toggle="#myTabContent" role="tablist">
+            <ul class="-mb-px flex flex-wrap gap-2 text-center text-md font-medium" id="myTab" data-tabs-toggle="#myTabContent" role="tablist">
               <li class="mr-1" role="presentation">
-                <button class="inline-block pb-2 pr-1" id="brand-tab" data-tabs-target="#brand" type="button" role="tab" aria-controls="profile" aria-selected="false">Brand</button>
+                <button class="pb-2 pr-1" id="brand-tab" data-tabs-target="#brand" type="button" role="tab" aria-controls="profile" aria-selected="false">
+                  Brand
+                </button>
               </li>
               <li class="mr-1" role="presentation">
-                <button class="inline-block pb-2 pr-1" id="category-tab" data-tabs-target="#category" type="button" role="tab" aria-controls="profile" aria-selected="false">Category</button>
+                <button class=" pb-2 pr-1" id="category-tab" data-tabs-target="#category" type="button" role="tab" aria-controls="profile" aria-selected="false">
+                  Category
+                </button>
               </li>
               <li class="mr-1" role="presentation">
-                <button class="inline-block px-2 pb-2 hover:border-gray-300 hover:text-gray-600 dark:hover:text-gray-300" id="advanced-filers-tab" data-tabs-target="#advanced-filters" type="button" role="tab" aria-controls="advanced-filters" aria-selected="false">Advanced Filters</button>
+                <button class="inline-block pb-2 hover:border-gray-300 hover:text-gray-600 dark:hover:text-gray-300" id="advanced-filers-tab" data-tabs-target="#advanced-filters" type="button" role="tab" aria-controls="advanced-filters" aria-selected="false">Advanced Filters</button>
               </li>
             </ul>
           </div>
@@ -42,7 +46,8 @@
                             <input
                               id="{{brand}}"
                               type="checkbox"
-                              value=""
+                              value="{{brand}}"
+                              (change)="onBrandChange(brand, $any($event.target).checked)"
                               class="h-4 w-4 rounded border-gray-300 bg-gray-100 text-primary-600 focus:ring-2 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800"
                             >
                             <label
@@ -72,7 +77,8 @@
                             <input
                               id="{{subcategory.id}}"
                               type="checkbox"
-                              value=""
+                              value="{{subcategory.categoryName}}"
+                              (change)="onCategoryChange(subcategory.categoryName, $any($event.target).checked)"
                               class="h-4 w-4 rounded border-gray-300 bg-gray-100 text-primary-600 focus:ring-2 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800"
                             >
                             <label
@@ -416,9 +422,9 @@
         </div>
 
         <!-- Modal footer -->
-        <div class="flex items-center space-x-4 rounded-b p-4 dark:border-gray-600 md:p-5">
+        <div class="flex items-center justify-end space-x-4 rounded-b p-4 dark:border-gray-600 md:p-5">
           <button type="submit" class="rounded-lg bg-primary-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-700 dark:hover:bg-primary-800 dark:focus:ring-primary-800">Show 50 results</button>
-          <button type="reset" class="rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700">Reset</button>
+          <button type="reset" (click)="onResetFilters()" class="rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700">Reset</button>
         </div>
       </div>
     </div>

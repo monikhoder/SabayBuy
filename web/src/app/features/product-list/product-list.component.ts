@@ -4,10 +4,12 @@ import { Category } from '../../shared/models/category';
 import { Product } from '../../shared/models/product';
 import { ProductCardComponent } from "./product-card/product-card.component";
 import { FilterComponent } from "./filter/filter.component";
+import { SortComponent } from "./sort/sort.component";
+import { productParams } from '../../shared/models/productParams';
 
 @Component({
   selector: 'app-product-list',
-  imports: [ProductCardComponent, FilterComponent],
+  imports: [ProductCardComponent, FilterComponent, SortComponent],
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.scss',
 })
@@ -17,6 +19,9 @@ export class ProductListComponent implements OnInit {
   groupedBrands: BrandGroup[] = []
   categories: Category[] = [];
   products: Product[] = [];
+  productParams = new productParams();
+  count: number = 0;
+
 
   ngOnInit(): void {
     this.loadcategories();
@@ -32,10 +37,12 @@ export class ProductListComponent implements OnInit {
     })
   }
     loadProducts(){
-      this.shopService.getProducts().subscribe({
+      this.shopService.getProducts(this.productParams).subscribe({
         next: response => {
           this.products = response.data;
-        }
+          this.count = response.count;
+        },
+        error: error => console.log(error)
       })
     }
     loadBrands() {
@@ -66,5 +73,26 @@ export class ProductListComponent implements OnInit {
         brands: groups[letter]
       }));
   }
+    // 1. Receive the list of brands from FilterComponent
+    handleBrandFilter(brands: string[]) {
+      this.productParams.brand = brands;
+      this.loadProducts(); // Reload products with new filter
+    }
+
+    // 2. Receive the list of categories from FilterComponent
+    handleCategoryFilter(categories: string[]) {
+      this.productParams.category = categories;
+      this.loadProducts(); // Reload products with new filter
+    }
+
+    HandleSortChange(sortValue: string) {
+      this.productParams.sort = sortValue;
+      this.loadProducts(); // Reload products with new sort
+    }
+    HandlePaginationChange(pageNumber: number) {
+      this.productParams.pageSize += this.productParams.defaultPageSize;
+      this.loadProducts(); // Reload products with new page number
+    }
+
 
 }

@@ -1,0 +1,9 @@
+<div id="dropdownSort" class="z-50 hidden w-40 divide-y divide-gray-100 rounded-lg bg-white shadow dark:bg-gray-700" data-popper-placement="bottom" >
+          <ul class="p-2 text-left text-sm font-medium text-gray-500 dark:text-gray-400" aria-labelledby="sortDropdownButton">
+            @for (sort of sortOptions; track $index) {
+              <li>
+              <button (click)="onSortChange(sort.value)" class="group inline-flex w-full items-start text-start rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white">{{ sort.name }}</button>
+            </li>
+            }
+          </ul>
+</div>

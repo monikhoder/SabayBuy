@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Pagination } from '../../shared/models/pagination';
 import { Category } from '../../shared/models/category';
 import { Product } from '../../shared/models/product';
+import { productParams } from '../../shared/models/productParams';
 
 @Injectable({
   providedIn: 'root',
@@ -11,11 +12,30 @@ export class ShopServices {
   baseUrl = 'http://localhost:5110/api/';
   private http = inject(HttpClient);
 
+
+
   getCategories() {
     return this.http.get<Pagination<Category>>(this.baseUrl + 'Categories?isParent=true')
   }
-  getProducts() {
-    return this.http.get<Pagination<Product>>(this.baseUrl + 'Products')
+  getProducts(productParams: productParams) {
+    let params = new HttpParams();
+
+    if (productParams.brand && productParams.brand.length > 0) {
+      params = params.append('brands', productParams.brand.join(','));
+    }
+    if (productParams.category && productParams.category.length > 0) {
+      params = params.append('categories', productParams.category.join(','));
+    }
+    if (productParams.sort) {
+      params = params.append('sort', productParams.sort);
+    }
+    if( productParams.pageIndex){
+      params = params.append('pageIndex', productParams.pageIndex);
+    }
+    if( productParams.pageSize){
+      params = params.append('pageSize', productParams.pageSize);
+    }
+    return this.http.get<Pagination<Product>>(this.baseUrl + 'Products', { params })
   }
   getBrands(){
     return this.http.get<string[]>(this.baseUrl + 'brand')
