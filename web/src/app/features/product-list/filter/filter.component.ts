@@ -26,6 +26,8 @@ export class FilterComponent {
       if (index > -1) {
         this.productParams.category.splice(index, 1);
       }
+
+      this.productParams.pageSize = this.productParams.defaultPageSize;
     }
     // 3. Emit the updated list to the parent
     this.categoryFilterChange.emit(this.productParams.category);
@@ -38,16 +40,18 @@ export class FilterComponent {
       if (index > -1) {
         this.productParams.brand.splice(index, 1);
       }
+      this.productParams.pageSize = this.productParams.defaultPageSize;
     }
     // 3. Emit the updated list to the parent
-    this.brandFilterChange.emit(this.productParams.brand);
+   this.brandFilterChange.emit(this.productParams.brand);
 
   }
   onResetFilters() {
     this.productParams.category = [];
     this.productParams.brand = [];
+    this.productParams.pageSize = this.productParams.defaultPageSize;
     // Emit empty lists to clear filters in parent
-    this.categoryFilterChange.emit([]);
+   this.categoryFilterChange.emit([]);
     this.brandFilterChange.emit([]);
   }
 

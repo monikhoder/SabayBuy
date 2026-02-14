@@ -6,7 +6,7 @@ import { ProductListComponent } from "./features/product-list/product-list.compo
 
 @Component({
   selector: 'app-root',
-  imports: [Header, HomeComponent, ProductListComponent],
+  imports: [RouterOutlet,Header],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

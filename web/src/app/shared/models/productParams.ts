@@ -1,5 +1,5 @@
 export class productParams {
-  defaultPageSize: number = 5;
+  defaultPageSize: number = 10;
   brand: string[] = [];
   category: string[] = [];
   sort: string = 'dateDesc';

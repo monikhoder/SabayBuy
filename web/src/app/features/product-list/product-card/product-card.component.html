@@ -1,8 +1,9 @@
 <div
+  [routerLink]="['/product', product?.id]"
   class="h-full flex flex-col rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800 transition duration-300 ease-in-out hover:scale-105"
 >
   <div class="h-56 w-full">
-    <a href="#">
+    <a >
       <img
         class="mx-auto h-full w-full object-cover "
         src="{{ product?.baseImageUrl }}"
@@ -87,7 +88,7 @@
     </div>
 
     <a
-      href="#"
+
       class="text-lg font-semibold leading-tight text-gray-900 hover:underline dark:text-white"
       >{{ product?.productName }}</a
     >
