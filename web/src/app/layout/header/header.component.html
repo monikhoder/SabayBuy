@@ -510,3 +510,6 @@
   </form>
 </nav>
 
+@if(loadingService.loading === true){
+  <mat-progress-bar mode="indeterminate" color="primary"></mat-progress-bar>
+}

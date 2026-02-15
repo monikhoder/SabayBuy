@@ -6,6 +6,7 @@ import { ProductCardComponent } from "./product-card/product-card.component";
 import { FilterComponent } from "./filter/filter.component";
 import { SortComponent } from "./sort/sort.component";
 import { productParams } from '../../shared/models/productParams';
+import { LoadingService } from '../../core/services/loading.service';
 
 @Component({
   selector: 'app-product-list',
@@ -15,6 +16,7 @@ import { productParams } from '../../shared/models/productParams';
 })
 export class ProductListComponent implements OnInit {
   private shopService = inject(ShopServices);
+  loadingService = inject(LoadingService)
   brands: string[] = [];
   groupedBrands: BrandGroup[] = []
   categories: Category[] = [];

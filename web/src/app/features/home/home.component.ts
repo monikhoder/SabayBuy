@@ -11,10 +11,12 @@ import { Category } from '../../shared/models/category';
 })
 export class HomeComponent implements OnInit {
 
-   Categories = signal<Category[]>([]);
+  Categories = signal<Category[]>([]);
   private shopServices = inject(ShopServices);
+
   ngOnInit(): void {
     initFlowbite();
+
    this.shopServices.getCategories().subscribe({
       next: (response) => {
         this.Categories.set(response.data);

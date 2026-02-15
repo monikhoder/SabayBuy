@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { ShopServices } from '../../core/services/shop.services';
 import { Product } from '../../shared/models/product';
 import { ActivatedRoute } from '@angular/router';
+import { LoadingService } from '../../core/services/loading.service';
 
 @Component({
   selector: 'app-product-details',
@@ -12,6 +13,7 @@ import { ActivatedRoute } from '@angular/router';
 export class ProductDetailsComponent implements OnInit {
   private shopService = inject(ShopServices);
   private activatedRoute = inject(ActivatedRoute);
+  loadingServeice = inject(LoadingService)
   product? : Product;
   currentImageIndex = 1;
   price: number = 0;

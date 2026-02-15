@@ -40,5 +40,6 @@ export class ShopServices {
   getBrands(){
     return this.http.get<string[]>(this.baseUrl + 'brand')
   }
+  
 
 }

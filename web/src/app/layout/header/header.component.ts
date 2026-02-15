@@ -1,15 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CartDropdownComponent } from './card/cart-dropdown.component';
 import { ProfileDropdownComponent } from './profile/profile-dropdown.component';
 import { initFlowbite } from 'flowbite';
+import { LoadingService } from '../../core/services/loading.service';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 @Component({
   selector: 'app-header',
-  imports: [CartDropdownComponent, ProfileDropdownComponent],
+  imports: [CartDropdownComponent, ProfileDropdownComponent, MatProgressBarModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
 export class Header implements OnInit {
+  loadingService = inject(LoadingService)
 
   locations = [
     {
