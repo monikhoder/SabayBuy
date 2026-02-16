@@ -1,3 +1,4 @@
+using System.Data.Common;
 using API.Helpers;
 using API.Middleware;
 using Core.Interface;
@@ -5,6 +6,7 @@ using Infrastructure.Data;
 using Infrastructure.Services;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
+using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +29,16 @@ builder.Services.AddCors(opt =>
         policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:5110", "https://localhost:5110", "http://localhost:4200");
     });
 });
+builder.Services.AddSingleton<IConnectionMultiplexer> ( config =>
+{
+    var conString = builder.Configuration.GetConnectionString("Redis");
+    if(conString == null) throw new Exception("Cannot get redis connection string");
+    var configuration = ConfigurationOptions.Parse(conString, true);
+    return ConnectionMultiplexer.Connect(configuration);
+
+});
+
+builder.Services.AddSingleton<ICardService, CardService>();
 
 var app = builder.Build();
 app.UseMiddleware<ExceptionMiddleware>();
