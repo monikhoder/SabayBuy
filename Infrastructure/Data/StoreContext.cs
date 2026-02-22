@@ -29,6 +29,7 @@ public class StoreContext(DbContextOptions options) : DbContext(options)
             {
       
                 entry.Entity.CreatedAt = DateTime.UtcNow;
+                entry.Entity.UpdatedAt = DateTime.UtcNow;
             }
 
             if (entry.State == EntityState.Modified)

@@ -49,11 +49,14 @@ body {
     @apply mx-auto max-w-screen-xl;
   }
 
-  .primary-color {
-    @apply bg-violet-600 text-white;
-  }
-  .primary-color:hover {
+  .bg-primary-700 {
     @apply bg-violet-700;
+  }
+  .bg-primary-600 {
+    @apply bg-violet-600;
+  }
+  .bg-primary-700:hover {
+    @apply bg-violet-800;
   }
   .text-primary-600 {
     @apply text-violet-600;

@@ -10,6 +10,7 @@ namespace Core.Entities
     {
         public required string ProductName { get; set; }
         public required string ProductId { get; set; }
+        public required string ProductVariantName { get; set; }
         public required string ProductVariantId { get; set; }
         public decimal Price { get; set; }
         public int Quantity { get; set; }

@@ -1,4 +1,4 @@
-@if (loadingServeice.loading === false) {
+
 <section class="py-2 antialiased dark:bg-gray-900">
   <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
     <h1 class="text-2xl font-semibold text-gray-900 dark:text-white">{{ product?.productName }}</h1>
@@ -113,85 +113,52 @@
 
     <div class="mt-8 lg:flex lg:items-start lg:gap-8">
       <div class="lg:w-full lg:max-w-xl">
-        <div id="controls-carousel" class="relative w-full" data-carousel="static">
-          <!-- Carousel wrapper -->
-          <div class="relative mb-5 h-80 overflow-hidden rounded-lg lg:h-[340px] xl:h-[400px]">
-            <!-- image -->
-            @for (url of imageUrl; track $index) {
+        <!-- Carousel -->
+          <div id="controls-carousel" class="relative w-full" data-carousel="static">
+            <!-- Carousel wrapper -->
+            <div class="relative mb-5 h-80 overflow-hidden rounded-lg lg:h-[340px] xl:h-[400px]">
+              <!-- Item 1 -->
               <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                <img
-                  src="../slide/airpods.jpg"
-                  class="absolute object-cover left-1/2 top-1/2 block h-full -translate-x-1/2 -translate-y-1/2 dark:hidden"
-                />
+                <img src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front.svg" class="absolute left-1/2 top-1/2 block h-full -translate-x-1/2 -translate-y-1/2 dark:hidden" alt="..." />
+                <img src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front-dark.svg" class="absolute left-1/2 top-1/2 h-full -translate-x-1/2 -translate-y-1/2 hidden dark:block" alt="..." />
               </div>
-            }
-          </div>
-          <div class="flex items-center justify-center gap-4">
-            <button
-              (click)="deacreaseImageIndex()"
-              type="button"
-              class="group flex h-full cursor-pointer items-center justify-center rounded-lg p-1.5 hover:bg-gray-50 focus:outline-none dark:hover:bg-gray-800"
-              data-carousel-prev
-            >
-              <span
-                class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
-              >
-                <svg
-                  class="h-7 w-7"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M5 12h14M5 12l4-4m-4 4 4 4"
-                  />
-                </svg>
-                <span class="hidden">Previous</span>
-              </span>
-            </button>
-            <span class="text-base font-medium text-gray-500 dark:text-gray-400"
-              ><span id="carousel-current-item">{{ currentImageIndex }}</span> of
-              <span id="carousel-total-items">{{ imageUrl.length }}</span></span
-            >
-            <button
-              (click)="incrementImageIndex()"
-              type="button"
-              class="group flex h-full cursor-pointer items-center justify-center rounded-lg p-1.5 hover:bg-gray-50 focus:outline-none dark:hover:bg-gray-800"
-              data-carousel-next
-            >
-              <span
-                class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
-              >
-                <svg
-                  class="h-7 w-7"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M19 12H5m14 0-4 4m4-4-4-4"
-                  />
-                </svg>
-                <span class="hidden">Next</span>
-              </span>
-            </button>
+              <!-- Item 2 -->
+              <div class="hidden duration-700 ease-in-out" data-carousel-item="active">
+                <img src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-back.svg" class="absolute left-1/2 top-1/2 block h-full -translate-x-1/2 -translate-y-1/2 dark:hidden" alt="..." />
+                <img src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-back-dark.svg" class="absolute left-1/2 top-1/2 h-full -translate-x-1/2 -translate-y-1/2 hidden dark:block" alt="..." />
+              </div>
+              <!-- Item 3 -->
+              <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                <img src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-components.svg" class="absolute left-1/2 top-1/2 block h-full -translate-x-1/2 -translate-y-1/2 dark:hidden" alt="..." />
+                <img src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-components-dark.svg" class="absolute left-1/2 top-1/2 h-full -translate-x-1/2 -translate-y-1/2 hidden dark:block" alt="..." />
+              </div>
+              <!-- Item 4 -->
+              <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                <img src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-side.svg" class="absolute left-1/2 top-1/2 block h-full -translate-x-1/2 -translate-y-1/2 dark:hidden" alt="..." />
+                <img src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-side-dark.svg" class="absolute left-1/2 top-1/2 h-full -translate-x-1/2 -translate-y-1/2 hidden dark:block" alt="..." />
+              </div>
+            </div>
+            <div class="flex items-center justify-center gap-4">
+              <button type="button" class="group flex h-full cursor-pointer items-center justify-center rounded-lg p-1.5 hover:bg-gray-50 focus:outline-none dark:hover:bg-gray-800" data-carousel-prev>
+                <span class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                  <svg class="h-7 w-7" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12l4-4m-4 4 4 4" />
+                  </svg>
+                  <span class="hidden">Previous</span>
+                </span>
+              </button>
+              <span class="text-base font-medium text-gray-500 dark:text-gray-400"><span id="carousel-current-item">1</span> of <span id="carousel-total-items">5</span></span>
+              <button type="button" class="group flex h-full cursor-pointer items-center justify-center rounded-lg p-1.5 hover:bg-gray-50 focus:outline-none dark:hover:bg-gray-800" data-carousel-next>
+                <span class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                  <svg class="h-7 w-7" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5m14 0-4 4m4-4-4-4" />
+                  </svg>
+                  <span class="hidden">Next</span>
+                </span>
+              </button>
+            </div>
           </div>
         </div>
-      </div>
 
       <div
         class="mt-6 grid md:min-w-72 shrink-0 grid-cols-1 gap-6 dark:border-gray-700 sm:mt-8 sm:grid-cols-2 lg:mt-0 lg:w-48 lg:grid-cols-1 lg:border-r lg:border-gray-200 lg:pr-8"
@@ -308,17 +275,17 @@
       <div class="mt-6 md:min-w-96 space-y-6 sm:mt-8 lg:mt-0">
         <div class="flex items-start justify-between gap-4">
           <div>
-            <div class="flex items-center gap-2">
+            <!-- <div class="flex items-center gap-2">
               <p class="text-xl font-bold text-gray-900 line-through dark:text-white">
-                <span> $1,499.00 </span>
+                <span> ${{ price().toFixed(2) }} </span>
               </p>
               <span
                 class="me-2 rounded bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300"
               >
                 -15%
               </span>
-            </div>
-            <p class="text-3xl font-extrabold text-gray-900 dark:text-white">$ @if(price == 0){{{ product?.price }}}@else{ {{ price }}}</p>
+            </div> -->
+            <p class="text-3xl font-extrabold text-gray-900 dark:text-white">$ {{ price().toFixed(2) }}</p>
           </div>
 
           <ul class="shrink-0 space-y-1 text-sm font-medium">
@@ -371,17 +338,17 @@
             <label for="{{ varient.id }}" class="relative flex">
               <input
                 type="radio"
-                (change)="priceChange(varient.price)"
+                (change)="priceChange(varient.price); variantChange(varient.id)"
                 name="options"
                 id="{{ varient.id }}"
                 [checked]="$index === 0"
                 class="peer absolute left-4 top-4 z-10 h-4 w-4 border-gray-300 bg-gray-100 text-primary-600 focus:ring-2 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-primary-600"
               />
               <div
-                class="relative flex-1 cursor-pointer space-y-0.5 overflow-hidden rounded-lg border border-gray-200 py-4 pl-10 pr-4 peer-checked:border-primary-700 dark:border-gray-700 dark:peer-checked:border-primary-600"
+                class="relative flex-1 cursor-pointer overflow-hidden rounded-lg border border-gray-200 py-4 pl-10 pr-4 peer-checked:border-primary-700 dark:border-gray-700 dark:peer-checked:border-primary-600"
               >
-                <p class="text-sm font-medium leading-none text-gray-900 dark:text-white mb-2">
-                  $ {{ varient.price }}
+                <p class="text-sm font-medium leading-none text-gray-900 dark:text-white mb-3">
+                  $ {{ varient.price.toFixed(2) }}
                 </p>
                 <p class="text-xs font-normal text-gray-500 dark:text-gray-400">
                   @for (attribute of varient.attributes; track $index) {
@@ -395,11 +362,13 @@
           }
         </div>
 
-        <div class="flex items-center space-x-4">
-          <a
-            title=""
+        <div 
+        (click)="$event.stopPropagation()"
+        class="flex items-center space-x-4">
+          <button
+           (click)="cartService.addItemToCart(product!, variantId())"
+           type="button"
             class="flex w-full items-center justify-center rounded-lg bg-violet-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-            role="button"
           >
             <svg
               class="-ms-2 me-2 h-5 w-5"
@@ -420,7 +389,7 @@
             </svg>
 
             Add to cart
-          </a>
+          </button>
 
           <button
             type="button"
@@ -551,5 +520,3 @@
     </div>
   </div>
 </section>
-
-}

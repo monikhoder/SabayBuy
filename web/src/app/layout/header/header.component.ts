@@ -4,6 +4,7 @@ import { ProfileDropdownComponent } from './profile/profile-dropdown.component';
 import { initFlowbite } from 'flowbite';
 import { LoadingService } from '../../core/services/loading.service';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { CartService } from '../../core/services/cart.service';
 
 @Component({
   selector: 'app-header',
@@ -13,6 +14,7 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 })
 export class Header implements OnInit {
   loadingService = inject(LoadingService)
+  cartService = inject(CartService)
 
   locations = [
     {

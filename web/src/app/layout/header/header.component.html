@@ -38,6 +38,9 @@
           <button
             id="languageDropdownButton2"
             data-dropdown-toggle="languageDropdown2"
+            data-dropdown-trigger="hover"
+            data-dropdown-delay="100"
+            data-dropdown-duration="100"
             type="button"
             class="inline-flex items-center text-sm font-medium hover:underline text-gray-900 dark:text-white"
           >
@@ -127,6 +130,9 @@
           <button
             id="locationDropdownButton2"
             data-dropdown-toggle="locationDropdown2"
+            data-dropdown-trigger="hover"
+            data-dropdown-delay="100"
+            data-dropdown-duration="100"
             type="button"
             class="inline-flex items-center text-sm font-medium hover:underline text-gray-900 dark:text-white"
           >
@@ -384,8 +390,11 @@
           </div>
 
           <button
-            id="cartDropdownButton4"
-            data-dropdown-toggle="cartDropdown4"
+            id="cartDropdownButton"
+            data-dropdown-toggle="cartDropdown"
+            data-dropdown-trigger="hover"
+            data-dropdown-delay="100"
+            data-dropdown-duration="100"
             type="button"
             class="inline-flex items-center rounded-lg justify-center p-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm font-medium leading-none text-gray-900 dark:text-white"
           >
@@ -408,11 +417,11 @@
                   d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312"
                 ></path>
               </svg>
-              <div
-                class="absolute inline-flex items-center justify-center w-4 h-4 text-xs font-medium text-white bg-red-700 rounded-full -top-1.5 -end-1.5 dark:bg-red-600"
-              >
-                2
-              </div>
+              @if(cartService.cartCount() > 0){
+                 <div class="absolute inline-flex items-center justify-center w-4 h-4 text-xs font-medium text-white bg-red-700 rounded-full -top-1.5 -end-1.5 dark:bg-red-600">
+                    {{ cartService.cartCount() }}
+                  </div>
+              }
             </div>
             <span class="hidden sm:flex"> My Cart </span>
             <svg
@@ -437,8 +446,11 @@
 
           <!-- Profile dropdown -->
           <button
-            id="accountDropdownButton4"
-            data-dropdown-toggle="accountDropdown4"
+            id="accountDropdownButton"
+            data-dropdown-toggle="accountDropdown"
+            data-dropdown-trigger="hover"
+            data-dropdown-delay="100"
+            data-dropdown-duration="100"
             type="button"
             class="inline-flex items-center rounded-lg justify-center p-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm font-medium leading-none text-gray-900 dark:text-white"
           >
@@ -511,5 +523,5 @@
 </nav>
 
 @if(loadingService.loading === true){
-  <mat-progress-bar mode="indeterminate" color="primary"></mat-progress-bar>
+  <!-- <mat-progress-bar mode="indeterminate" color="primary"></mat-progress-bar> -->
 }

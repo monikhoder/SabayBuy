@@ -8,7 +8,7 @@ export const loadingInterceptor: HttpInterceptorFn = (req, next) => {
 
   loadingService.start();
   return next(req).pipe(
-    delay(3000),
+    delay(100),
     finalize(() => loadingService.stop())
   )
 };

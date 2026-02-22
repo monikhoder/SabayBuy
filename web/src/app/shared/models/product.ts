@@ -1,5 +1,5 @@
 
-export interface VariantAttribute {
+export type VariantAttribute ={
   attributeName: string;
   attributeValue: string;
   createdAt: string;
@@ -7,7 +7,7 @@ export interface VariantAttribute {
 }
 
 
-export interface ProductVariant {
+export type ProductVariant  ={
   id: string;
   sku: string;
   price: number;
@@ -19,7 +19,7 @@ export interface ProductVariant {
 }
 
 
-export interface Product {
+export type Product = {
   id: string;
   productName: string;
   description?: string;

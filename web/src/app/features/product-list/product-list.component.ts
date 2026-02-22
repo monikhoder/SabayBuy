@@ -1,5 +1,5 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { ShopServices } from '../../core/services/shop.services';
+import { ShopServices } from '../../core/services/shop.service';
 import { Category } from '../../shared/models/category';
 import { Product } from '../../shared/models/product';
 import { ProductCardComponent } from "./product-card/product-card.component";
@@ -31,33 +31,33 @@ export class ProductListComponent implements OnInit {
     this.loadBrands();
   }
 
-  loadcategories(){
+  loadcategories() {
     this.shopService.getCategories().subscribe({
       next: response => {
         this.categories = response.data;
       }
     })
   }
-    loadProducts(){
-      this.shopService.getProducts(this.productParams).subscribe({
-        next: response => {
-          this.products = response.data;
-          this.count = response.count;
-        },
-        error: error => console.log(error)
-      })
-    }
-    loadBrands() {
-  this.shopService.getBrands().subscribe({
-    next: (response) => {
-      this.brands = response;
-      this.groupBrands();
-    },
-    error: (error) => console.log(error)
-  });
-}
+  loadProducts() {
+    this.shopService.getProducts(this.productParams).subscribe({
+      next: response => {
+        this.products = response.data;
+        this.count = response.count;
+      },
+      error: error => console.log(error)
+    })
+  }
+  loadBrands() {
+    this.shopService.getBrands().subscribe({
+      next: (response) => {
+        this.brands = response;
+        this.groupBrands();
+      },
+      error: (error) => console.log(error)
+    });
+  }
 
-    groupBrands() {
+  groupBrands() {
     const groups: { [key: string]: string[] } = {};
 
     this.brands.forEach(brand => {
@@ -75,33 +75,33 @@ export class ProductListComponent implements OnInit {
         brands: groups[letter]
       }));
   }
-    // 1. Receive the list of brands from FilterComponent
-    handleBrandFilter(brands: string[]) {
-      this.productParams.brand = brands;
-      this.loadProducts(); // Reload products with new filter
-    }
+  // 1. Receive the list of brands from FilterComponent
+  handleBrandFilter(brands: string[]) {
+    this.productParams.brand = brands;
+    this.loadProducts(); // Reload products with new filter
+  }
 
-    // 2. Receive the list of categories from FilterComponent
-    handleCategoryFilter(categories: string[]) {
-      this.productParams.category = categories;
-      this.loadProducts(); // Reload products with new filter
-    }
+  // 2. Receive the list of categories from FilterComponent
+  handleCategoryFilter(categories: string[]) {
+    this.productParams.category = categories;
+    this.loadProducts(); // Reload products with new filter
+  }
 
-    HandleSortChange(sortValue: string) {
-      this.productParams.sort = sortValue;
-      this.loadProducts(); // Reload products with new sort
-    }
-    HandlePaginationChange(pageNumber: number) {
-      this.productParams.pageSize += this.productParams.defaultPageSize;
-      this.loadProducts(); // Reload products with new page number
-    }
-    removeBrandFilter(brand: string) {
-      this.productParams.brand = this.productParams.brand.filter(b => b !== brand);
-      this.loadProducts();
-    }
-    removeCategoryFilter(category: string) {
-      this.productParams.category = this.productParams.category.filter(c => c !== category);
-      this.loadProducts();
-    }
+  HandleSortChange(sortValue: string) {
+    this.productParams.sort = sortValue;
+    this.loadProducts(); // Reload products with new sort
+  }
+  HandlePaginationChange(pageNumber: number) {
+    this.productParams.pageSize += this.productParams.defaultPageSize;
+    this.loadProducts(); // Reload products with new page number
+  }
+  removeBrandFilter(brand: string) {
+    this.productParams.brand = this.productParams.brand.filter(b => b !== brand);
+    this.loadProducts();
+  }
+  removeCategoryFilter(category: string) {
+    this.productParams.category = this.productParams.category.filter(c => c !== category);
+    this.loadProducts();
+  }
 
 }

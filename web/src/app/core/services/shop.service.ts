@@ -9,7 +9,7 @@ import { productParams } from '../../shared/models/productParams';
   providedIn: 'root',
 })
 export class ShopServices {
-  baseUrl = 'http://localhost:5110/api/';
+  baseUrl = 'https://localhost:7244/api/';
   private http = inject(HttpClient);
 
 

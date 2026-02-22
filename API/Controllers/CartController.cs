@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    public class CardController(ICardService cardService) : BaseApiController
+    public class CartController(ICardService cardService) : BaseApiController
     {
         [HttpGet]
         public async Task<ActionResult<ShoppingCard>> GetCardById(string id)

@@ -1,6 +1,6 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { initFlowbite } from 'flowbite';
-import { ShopServices } from '../../core/services/shop.services';
+import { ShopServices } from '../../core/services/shop.service';
 import { Category } from '../../shared/models/category';
 
 @Component({
@@ -17,7 +17,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     initFlowbite();
 
-   this.shopServices.getCategories().subscribe({
+    this.shopServices.getCategories().subscribe({
       next: (response) => {
         this.Categories.set(response.data);
       }

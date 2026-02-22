@@ -1,8 +1,10 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { ShopServices } from '../../core/services/shop.services';
+import { Component, inject, OnInit, signal} from '@angular/core';
+import { ShopServices } from '../../core/services/shop.service';
 import { Product } from '../../shared/models/product';
 import { ActivatedRoute } from '@angular/router';
 import { LoadingService } from '../../core/services/loading.service';
+import { initFlowbite } from 'flowbite';
+import { CartService } from '../../core/services/cart.service';
 
 @Component({
   selector: 'app-product-details',
@@ -12,22 +14,23 @@ import { LoadingService } from '../../core/services/loading.service';
 })
 export class ProductDetailsComponent implements OnInit {
   private shopService = inject(ShopServices);
+  cartService = inject(CartService);
   private activatedRoute = inject(ActivatedRoute);
   loadingServeice = inject(LoadingService)
-  product? : Product;
-  currentImageIndex = 1;
-  price: number = 0;
+  product?: Product;
+  variantId = signal<string>('');
+  currentImageIndex = signal(1);
+  price = signal(0);
   imageUrl: string[] = [
-    '../slide/airpods.jpg',
-    '../slide/airpods2.jpg',
-    '../slide/airpods3.jpg'
+    'https://www.apple.com/v/macbook-pro/av/images/overview/welcome/hero_endframe__e4ls9pihykya_xlarge.jpg',
+    'https://images-cdn.ubuy.co.in/651d959734ba4a33462ae371-apple-macbook-air-laptop-13-3-intel-core.jpg',
+    'https://i.ebayimg.com/images/g/EGUAAOSwSWhjxdjA/s-l1200.jpg'
   ];
 
 
   ngOnInit(): void {
+    initFlowbite();
     this.loadProduct();
-    this.loadImage();
-
   }
   loadProduct() {
     const id = this.activatedRoute.snapshot.paramMap.get('id');
@@ -36,29 +39,32 @@ export class ProductDetailsComponent implements OnInit {
     }
     this.shopService.getProduct(id).subscribe({
       next: product => this.product = product,
+      complete: () => this.variantChange(this.product?.variants[0].id ?? ''),
       error: error => console.log(error)
     });
   }
 
-  priceChange(price : number){
-    this.price = price;
+   variantChange(variantId: string) {
+    this.variantId.set(variantId);
+    this.priceChange(this.product?.variants.find(v => v.id === variantId)?.price ?? 0);
   }
-  loadImage(){
-   console.log(this.imageUrl);
+   priceChange(price: number) {
+    this.price.set(price);
   }
 
-  incrementImageIndex() {
-    if (this.currentImageIndex < this.imageUrl.length) {
-      this.currentImageIndex++;
+   incrementImageIndex() {
+    if (this.currentImageIndex() < this.imageUrl.length) {
+      this.currentImageIndex.set(this.currentImageIndex() + 1);
     } else {
-      this.currentImageIndex = 1;
+      this.currentImageIndex.set(1);
     }
   }
   deacreaseImageIndex() {
-    if (this.currentImageIndex > 1) {
-      this.currentImageIndex--;
+    if (this.currentImageIndex() > 1) {
+      this.currentImageIndex.set(this.currentImageIndex() - 1);
     } else {
-      this.currentImageIndex = this.imageUrl.length;
-    }}
+      this.currentImageIndex.set(this.imageUrl.length);
+    }
+  }
 }
 
