@@ -1,7 +1,7 @@
 
 
 using AutoMapper;
-using Core.Dtos;
+using API.Dtos;
 using Core.Entities;
 using Core.Interface;
 using Core.Specifications;

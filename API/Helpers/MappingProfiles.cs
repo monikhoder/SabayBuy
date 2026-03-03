@@ -1,6 +1,5 @@
-using System;
 using AutoMapper;
-using Core.Dtos;
+using API.Dtos;
 using Core.Entities;
 
 namespace API.Helpers;
@@ -22,6 +21,11 @@ public class MappingProfiles : Profile
         CreateMap<CreateVariantAttributeDto, VariantAttribute>();
         CreateMap<UpdateProductDto, Product>();
         CreateMap<UpdateProductVariantDto, ProductVariant>();
+        CreateMap<RegisterDto, AppUser>()
+            .ForMember(u => u.UserName, r => r.MapFrom(s => s.Email));
+        CreateMap<AppUser, UserDto>();
+        CreateMap<AddressDto, Address>();
+        CreateMap<Address, AddressDto>();
     }
 
 }

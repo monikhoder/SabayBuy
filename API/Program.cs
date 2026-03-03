@@ -1,11 +1,13 @@
 using System.Data.Common;
 using API.Helpers;
 using API.Middleware;
+using Core.Entities;
 using Core.Interface;
 using Infrastructure.Data;
 using Infrastructure.Services;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,13 +22,13 @@ builder.Services.AddDbContext<StoreContext>(opt =>
     opt.UseSqlServer(builder.Configuration.GetConnectionString("SabaybuyDb"));
 });
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-builder.Services.AddAutoMapper(typeof(MappingProfiles));
+builder.Services.AddAutoMapper(typeof(MappingProfiles).Assembly);
 builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddCors(opt =>
 {
     opt.AddPolicy("CorsPolicy", policy =>
     {
-        policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:5110", "https://localhost:5110", "http://localhost:4200");
+        policy.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:4200", "http://localhost:4200");
     });
 });
 builder.Services.AddSingleton<IConnectionMultiplexer> ( config =>
@@ -39,6 +41,15 @@ builder.Services.AddSingleton<IConnectionMultiplexer> ( config =>
 });
 
 builder.Services.AddSingleton<ICardService, CardService>();
+
+builder.Services.AddAuthorization();
+builder.Services.AddIdentityApiEndpoints<AppUser>( options =>
+        {
+            options.User.RequireUniqueEmail = true;
+            options.Password.RequireDigit = false;
+            options.Password.RequireNonAlphanumeric = false;
+        })
+    .AddEntityFrameworkStores<StoreContext>();
 
 var app = builder.Build();
 app.UseMiddleware<ExceptionMiddleware>();
@@ -55,5 +66,6 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapGroup("api").MapIdentityApi<AppUser>();
 
 app.Run();

@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Core.Dtos;
+namespace API.Dtos;
 
 public class UpdateProductDto
 {

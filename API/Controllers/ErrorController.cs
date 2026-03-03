@@ -27,7 +27,7 @@ public class ErrorController : BaseApiController
         throw new Exception("This is an internal server error");
     }
     [HttpPost("validationerror")]
-    public IActionResult GetValidationError(Core.Dtos.CreateProductDto product)
+    public IActionResult GetValidationError(API.Dtos.CreateProductDto product)
     {
        return Ok();
     }
