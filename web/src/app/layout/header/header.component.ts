@@ -1,10 +1,10 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { CartDropdownComponent } from './card/cart-dropdown.component';
 import { ProfileDropdownComponent } from './profile/profile-dropdown.component';
-import { initFlowbite } from 'flowbite';
 import { LoadingService } from '../../core/services/loading.service';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { CartService } from '../../core/services/cart.service';
+import { AccountService } from '../../core/services/account.service';
 
 @Component({
   selector: 'app-header',
@@ -15,6 +15,8 @@ import { CartService } from '../../core/services/cart.service';
 export class Header implements OnInit {
   loadingService = inject(LoadingService)
   cartService = inject(CartService)
+  accountService = inject(AccountService)
+  isLogin = signal(false);
 
   locations = [
     {
@@ -91,7 +93,14 @@ export class Header implements OnInit {
   ]
   selectedSearchType = this.searchType[0];
 
+
+  Islog(){
+   if(this.accountService.currentUser()){
+     this.isLogin.set(true);
+   }
+  }
+
   ngOnInit(): void {
-    initFlowbite();
+    this.Islog();
   }
 }

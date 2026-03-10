@@ -303,32 +303,31 @@
               >
                 @for (type of searchType; track $index) {
                   <li>
-                  <a
-                    href="#"
-                    class="group flex items-center gap-2 rounded-md px-3 py-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-600"
-                  >
-                    <svg
-                      class="h-4 w-4 text-gray-500 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      fill="none"
-                      viewBox="0 0 24 24"
+                    <a
+                      href="#"
+                      class="group flex items-center gap-2 rounded-md px-3 py-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-600"
                     >
-                      <path
-                        stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M9 16H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v1M9 12H4m8 8V9h8v11h-8Zm0 0H9m8-4a1 1 0 1 0-2 0 1 1 0 0 0 2 0Z"
-                      />
-                    </svg>
-                    {{ type.name }}
-                  </a>
-                </li>
+                      <svg
+                        class="h-4 w-4 text-gray-500 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke="currentColor"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M9 16H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v1M9 12H4m8 8V9h8v11h-8Zm0 0H9m8-4a1 1 0 1 0-2 0 1 1 0 0 0 2 0Z"
+                        />
+                      </svg>
+                      {{ type.name }}
+                    </a>
+                  </li>
                 }
-
               </ul>
             </div>
             <div class="relative w-full">
@@ -417,10 +416,12 @@
                   d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312"
                 ></path>
               </svg>
-              @if(cartService.cartCount() > 0){
-                 <div class="absolute inline-flex items-center justify-center w-4 h-4 text-xs font-medium text-white bg-red-700 rounded-full -top-1.5 -end-1.5 dark:bg-red-600">
-                    {{ cartService.cartCount() }}
-                  </div>
+              @if (cartService.cartCount() > 0) {
+                <div
+                  class="absolute inline-flex items-center justify-center w-4 h-4 text-xs font-medium text-white bg-red-700 rounded-full -top-1.5 -end-1.5 dark:bg-red-600"
+                >
+                  {{ cartService.cartCount() }}
+                </div>
               }
             </div>
             <span class="hidden sm:flex"> My Cart </span>
@@ -452,7 +453,10 @@
             data-dropdown-delay="100"
             data-dropdown-duration="100"
             type="button"
-            class="inline-flex items-center rounded-lg justify-center p-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm font-medium leading-none text-gray-900 dark:text-white"
+            [class]="
+              'inline-flex items-center rounded-lg justify-center p-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm font-medium leading-none text-gray-900 dark:text-white' +
+              (!isLogin ? ' hidden' : '')
+            "
           >
             <svg
               class="w-5 h-5 me-1"
@@ -488,6 +492,7 @@
               ></path>
             </svg>
           </button>
+
           <app-profile-dropdown></app-profile-dropdown>
         </div>
       </div>
@@ -522,6 +527,6 @@
   </form>
 </nav>
 
-@if(loadingService.loading === true){
+@if (loadingService.loading === true) {
   <!-- <mat-progress-bar mode="indeterminate" color="primary"></mat-progress-bar> -->
 }
