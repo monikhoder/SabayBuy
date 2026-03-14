@@ -4,28 +4,22 @@ import { Router } from '@angular/router';
 import { catchError, throwError } from 'rxjs';
 
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {
-
   const router = inject(Router);
-
-
 
   return next(req).pipe(
     catchError((err: HttpErrorResponse) => {
-      if(err.status === 0) {
+      if (err.status === 0) {
         //router.navigateByUrl('/server-error');
         alert('Unable to connect to the server. Please try again later.');
       }
-      if(err.status === 401) {
-        alert(err.error.title || err.error);
-      }
-      if(err.status === 404) {
+      if (err.status === 404) {
         router.navigateByUrl('/not-found');
       }
-      if(err.status === 500) {
+      if (err.status === 500) {
         router.navigateByUrl('/server-error', { state: { error: err.error } });
       }
       //api server down
       return throwError(() => err);
-    })
-  )
+    }),
+  );
 };

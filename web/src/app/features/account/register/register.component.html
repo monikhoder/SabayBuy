@@ -10,64 +10,40 @@
           Create an account
         </h1>
         <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-4 md:space-y-6">
-          <div>
-            <label for="firstName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >First Name</label
-            >
-            <input
-              type="text"
-              name="firstName"
-              id="firstName"
-              formControlName="firstName"
-              class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="John"
-              required=""
-            />
-          </div>
-          <div>
-            <label for="lastName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >Last Name</label
-            >
-            <input
-              type="text"
-              name="lastName"
-              id="lastName"
-              formControlName="lastName"
-              class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="Doe"
-              required=""
-            />
-          </div>
-          <div>
-            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >Your email</label
-            >
-            <input
-              type="email"
-              name="email"
-              id="email"
-              formControlName="email"
-              class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="name@example.com"
-              required=""
-            />
-          </div>
-          <div>
-            <label
-              for="password"
-              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >Password</label
-            >
-            <input
-              type="password"
-              name="password"
-              id="password"
-              formControlName="password"
-              placeholder="••••••••"
-              class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              required=""
-            />
-          </div>
+          <app-text-input
+            formControlName="firstName"
+            label="First Name"
+            placeholder="Sok"
+            [type]="'text'"
+            [IsRequired]="true"
+            [validatorErrors]="validationErrors['firstName']"
+          ></app-text-input>
+
+          <app-text-input
+            formControlName="lastName"
+            label="Last Name"
+            placeholder="Pov"
+            [type]="'text'"
+            [IsRequired]="true"
+            [validatorErrors]="validationErrors['lastName']"
+          ></app-text-input>
+
+          <app-text-input
+            formControlName="email"
+            label="Email"
+            placeholder="yourname@company.com"
+            [type]="'email'"
+            [IsRequired]="true"
+            [validatorErrors]="validationErrors['email']"
+          ></app-text-input>
+
+          <app-text-input
+            formControlName="password"
+            label="Password"
+            placeholder="••••••••"
+            [IsRequired]="true"
+            [validatorErrors]="validationErrors['password']"
+          ></app-text-input>
 
           <div class="flex items-center justify-between">
             <div class="flex items-start">
@@ -85,23 +61,20 @@
                 <a>Terms and Conditions</a>
               </div>
             </div>
-
           </div>
           <div>
-            @if(validationErrors && validationErrors.length > 0) {
-              <div class="text-red-500 text-sm mt-1">
-                <ul class="list-disc px-3">
-                  @for (error of validationErrors; track $index) {
-                    <li>{{error}}</li>
-                  }
-                </ul>
-              </div>
+            @if (validationErrors.general) {
+              @for (error of validationErrors.general; track $index) {
+                <div class="text-red-500 text-sm mt-1">
+                  {{ error }}
+                </div>
+              }
             }
-
           </div>
           <button
+          [disabled]="registerForm.invalid"
             type="submit"
-            class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+            class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 disabled:opacity-50 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
           >
             Create an account
           </button>
