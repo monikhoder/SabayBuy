@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Services
 {
-    public class CardService(IConnectionMultiplexer redis) : ICardService
+    public class CartService(IConnectionMultiplexer redis) : ICartService
     {
         private readonly IDatabase database = redis.GetDatabase();
-        
+
         public async Task<bool> DeleteCardAsync(string key)
         {
             return await database.KeyDeleteAsync(key);

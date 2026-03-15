@@ -20,6 +20,7 @@ builder.Services.AddDbContext<StoreContext>(opt =>
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddAutoMapper(typeof(MappingProfiles).Assembly);
 builder.Services.AddScoped<IFileService, FileService>();
+builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddCors(opt =>
 {
     opt.AddPolicy("CorsPolicy", policy =>
@@ -36,7 +37,7 @@ builder.Services.AddSingleton<IConnectionMultiplexer> ( config =>
 
 });
 
-builder.Services.AddSingleton<ICardService, CardService>();
+builder.Services.AddSingleton<ICartService, CartService>();
 
 
 
