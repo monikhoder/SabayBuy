@@ -1,0 +1,51 @@
+[
+  {
+    "ShortName": "Standart-PP",
+    "DeliveryTime": "1-2 Days",
+    "Description": "Delivery the next day after order",
+    "Icon": "https://cdn-icons-png.flaticon.com/512/6947/6947616.png",
+    "Price": 1.50,
+    "AvailableZipcodes": [ "12" ]
+  },
+  {
+    "ShortName": "Grap-Tuktuk",
+    "DeliveryTime": "Instant Delivery",
+    "Description": "Delivery after order, shipping fee will pay with driver",
+    "Icon": "https://1000logos.net/wp-content/uploads/2022/08/Grab-Logo.png",
+    "Price": 0,
+    "AvailableZipcodes": [ "12" ]
+  },
+  {
+    "ShortName": "VET-Express",
+    "DeliveryTime": "2 to 5 days ",
+    "Description": "Available in all province",
+    "Icon": "https://vireakbuntham.com/img/vireak-buntham.3087fdaf.png",
+    "Price": 2,
+    "AvailableZipcodes": [
+      "01",
+      "02",
+      "03",
+      "04",
+      "05",
+      "06",
+      "07",
+      "08",
+      "09",
+      "10",
+      "11",
+      "13",
+      "14",
+      "15",
+      "16",
+      "17",
+      "18",
+      "19",
+      "20",
+      "21",
+      "22",
+      "23",
+      "24",
+      "25"
+    ]
+  }
+]

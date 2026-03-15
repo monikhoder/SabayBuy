@@ -5,9 +5,7 @@ using Core.Entities;
 using Core.Interface;
 using Infrastructure.Data;
 using Infrastructure.Services;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -40,6 +38,8 @@ builder.Services.AddSingleton<IConnectionMultiplexer> ( config =>
 
 builder.Services.AddSingleton<ICardService, CardService>();
 
+
+
 builder.Services.AddAuthorization();
 builder.Services.AddIdentityApiEndpoints<AppUser>( options =>
         {
@@ -50,6 +50,28 @@ builder.Services.AddIdentityApiEndpoints<AppUser>( options =>
     .AddEntityFrameworkStores<StoreContext>();
 
 var app = builder.Build();
+//seeding data to database
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var loggerFactory = services.GetRequiredService<ILoggerFactory>();
+
+    try
+    {
+        var context = services.GetRequiredService<StoreContext>();
+
+        // Update Migration to Database
+        await context.Database.MigrateAsync();
+
+        // seed data to database
+        await StoreContextSeed.SeedAsync(context, loggerFactory);
+    }
+    catch (Exception ex)
+    {
+        var logger = loggerFactory.CreateLogger<Program>();
+        logger.LogError(ex, "Somthing wrong when seeding data");
+    }
+}
 app.UseMiddleware<ExceptionMiddleware>();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

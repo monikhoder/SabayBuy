@@ -13,6 +13,7 @@ public class StoreContext(DbContextOptions options) : IdentityDbContext<AppUser>
     public DbSet<VariantAttribute> VariantAttributes { get; set;}
     public DbSet<Category> Categories { get; set;}
     public DbSet<Address> Addresses { get; set; }
+    public DbSet<DeliveryMethod> DeliveryMethods { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -21,6 +22,7 @@ public class StoreContext(DbContextOptions options) : IdentityDbContext<AppUser>
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(VariantAttributeConfiguration).Assembly);
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(CategoryConfiguration).Assembly);
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppUserConfiguration).Assembly);
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(DeliveryMethod).Assembly);
     }
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
