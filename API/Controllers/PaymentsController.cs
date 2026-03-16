@@ -1,23 +1,44 @@
-using System;
+using API.Dtos;
 using Core.Entities;
+using Core.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace API.Controllers;
 
-public class PaymentsController : BaseApiController
+public class PaymentsController(
+        IPaymentService paymentService,
+        IGenericRepository<DeliveryMethod> deliveryMethodRepo
+) : BaseApiController
 {
     [Authorize]
-    [HttpPost]
-    public async Task<ActionResult<ShoppingCard>> CreateOrUpdatePaymentIntent(string basketId)
+    [HttpPost("checkout")]
+    public async Task<ActionResult<object?>> Checkout([FromBody] CheckoutDto checkoutDto)
     {
-        //below code is just for testing purpose, we will implement the actual logic in the future
-        var cart = new ShoppingCard
-        {
-            Id = basketId,
-            PaymentIntentId = Guid.NewGuid().ToString()
-        };
-        return Ok(cart);
+        
+        var cart = await paymentService.GetTotalPrice(checkoutDto.CartId);
+        if (cart == null) return BadRequest("Problem with your cart");
+
+        var response = await paymentService.ProcessPaymentAsync(cart, checkoutDto.PaymentMethod);
+
+        if (response == null) return BadRequest("Problem creating payment request");
+        return Ok(response);
     }
 
+    // Get all delivery methods
+    [HttpGet("delivery-methods")]
+    public async Task<ActionResult<IReadOnlyList<DeliveryMethod>>> GetDeliveryMethods()
+    {
+        var deliveryMethods = await deliveryMethodRepo.ListAllAsync();
+        return Ok(deliveryMethods);
+    }
+
+    //Get delivery method by available zip code
+    [HttpGet("delivery-methods/{zipCode}")]
+    public async Task<ActionResult<IReadOnlyList<DeliveryMethod>>> GetDeliveryMethodsByZipCode(string zipCode)
+    {
+        var deliveryMethods = await deliveryMethodRepo.ListAllAsync();
+        return Ok(deliveryMethods.Where(dm => dm.AvailableZipcodes.Contains(zipCode)).ToList());
+    }
 }

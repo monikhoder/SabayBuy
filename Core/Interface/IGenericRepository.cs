@@ -7,6 +7,11 @@ public interface IGenericRepository<T>where T : BaseEntity
 {
     // get by id
     Task<T?> GetByIdAsync(Guid id);
+    // get all
+    Task<IReadOnlyList<T>> ListAllAsync();
+
+    //Get data with predicate
+    
 
     //Get data with specification
     Task<T?> GetEntityWithSpec(ISpecification<T> spec);
