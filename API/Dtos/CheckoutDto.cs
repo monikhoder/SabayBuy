@@ -1,8 +1,16 @@
-﻿namespace API.Dtos
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace API.Dtos
 {
     public class CheckoutDto
     {
-        public string CartId { get; set; }
+        [Required]
+        public string CartId { get; set; } = string.Empty;
+        [Required]
         public string PaymentMethod { get; set; }
+        [Required]
+        public string DeliveryMethodId { get; set; }
+        [Required]
+        public string ShippingAddressId { get; set; }
     }
 }

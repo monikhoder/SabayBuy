@@ -184,7 +184,7 @@
             id="locationDropdown2"
             class="z-50 hidden w-72 divide-y divide-gray-100 overflow-hidden overflow-y-auto rounded-lg bg-white shadow dark:divide-gray-600 dark:bg-gray-700"
           >
-            <ul class="p-2 text-start text-sm font-medium text-gray-900 dark:text-white">
+            <!-- <ul class="p-2 text-start text-sm font-medium text-gray-900 dark:text-white">
               <li class="py-2">
                 <form class="mx-auto max-w-md">
                   <label
@@ -215,27 +215,71 @@
                       type="search"
                       id="location-search"
                       class="block w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-2 ps-9 text-sm text-gray-900 dark:border-gray-500 dark:bg-gray-600 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
-                      placeholder="Search for Province"
+                      placeholder="Search for address"
                       required
                     />
                   </div>
                 </form>
               </li>
-              @for (location of locations; track location.id) {
+              @for (location of accountService.currentUser()?.addresses; track $index) {
                 <li
                   class="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"
                 >
                   <input
-                    id="country-checkbox-{{ location.id }}"
+                    id="address-checkbox-{{ location.id }}"
                     type="checkbox"
                     value=""
                     class="h-4 w-4 rounded border-gray-300 bg-gray-100 text-primary-600 focus:ring-2 focus:ring-primary-500 dark:border-gray-500 dark:bg-gray-600 dark:ring-offset-gray-800 dark:focus:ring-primary-600"
                   />
                   <label
-                    for="country-checkbox-{{ location.id }}"
+                    for="address-checkbox-{{ location.id }}"
                     class="inline-flex w-full items-center gap-2 text-gray-900 dark:text-gray-300"
-                    >{{ location.name }} ({{ location.Postalcode }})</label
+                    >{{ location.line1 }} {{ location.city }}  ({{ location.zipCode }})</label
                   >
+                </li>
+              }
+            </ul> -->
+            <ul class="p-2 text-start text-sm font-medium text-gray-900 dark:text-white">
+              @for (address of accountService.currentUser()?.addresses; track $index) {
+                <li>
+                  <a
+                    (click)="selectAdress(address)"
+                    title=""
+                    class="inline-flex w-full items-center cursor-pointer gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"
+                  >
+                    @if(selectedAddress()?.id === address.id) {
+                      <svg
+                        class="h-4 w-4 text-violet-600"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke="currentColor"
+                          stroke-linecap="round"
+                          stroke-width="2"
+                          d="M9 12l2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                        />
+                      </svg>
+                    }@else {
+                      <svg
+                        class="h-4 w-4 text-gray-500 dark:text-gray-400"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke="currentColor"
+                          stroke-linecap="round"
+                          stroke-width="2"
+                          d="M9 12l2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                        />
+                      </svg>
+                    }
+                    {{ address.line1 }} {{ address.city }}  ({{ address.zipCode }})
+                  </a>
                 </li>
               }
             </ul>
@@ -528,5 +572,5 @@
 </nav>
 
 @if (loadingService.loading === true) {
-  <!-- <mat-progress-bar mode="indeterminate" color="primary"></mat-progress-bar> -->
+  <mat-progress-bar mode="indeterminate" color="primary"></mat-progress-bar>
 }

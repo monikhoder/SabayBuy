@@ -21,9 +21,9 @@ namespace Infrastructure.Services
 
         public async Task<ShoppingCard?> GetCardAsync(string key)
         {
-            var data = await database.StringGetAsync(key);
-
-            return data.IsNullOrEmpty ? null : JsonSerializer.Deserialize<ShoppingCard?>(data!);
+                var data = await database.StringGetAsync(key);
+                return data.IsNullOrEmpty ? null : JsonSerializer.Deserialize<ShoppingCard?>(data!);
+            
         }
 
         public async Task<ShoppingCard?> SetCardAsync(ShoppingCard shoppingCard)

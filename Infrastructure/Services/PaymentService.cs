@@ -17,23 +17,18 @@ public class PaymentService(
     ) : IPaymentService
     {
 
-    public async Task<ShoppingCard?> GetTotalPrice(string basketId)
+    public async Task<ShoppingCard?> GetTotalPrice(string cartId, string shippingId )
             {
                 // Get the shopping cart
-               var cart = await cartService.GetCardAsync(basketId);
+               var cart = await cartService.GetCardAsync(cartId);
                if (cart == null) return null;
 
                //Get shipping price
-               var shippingPrice = 0m;
-                if (!string.IsNullOrEmpty(cart.DeliveryMethodId))
-                {
-                     var id = Guid.Parse(cart.DeliveryMethodId);
-                     var deliveryMethod = await deliveryMethodRepo.GetByIdAsync(id);
-                     if(deliveryMethod == null) return null;
-                     if(deliveryMethod.Price > 0) shippingPrice = deliveryMethod.Price;
-                }
-                //check the price of cart and update if needed
-                foreach (var item in cart.Items)
+               var shippingMethod = await deliveryMethodRepo.GetByIdAsync(Guid.Parse(shippingId));
+               decimal shippingPrice = shippingMethod != null ? shippingMethod.Price : 0;
+
+        //check the price of cart and update if needed
+        foreach (var item in cart.Items)
                 {
                     var id = Guid.Parse(item.ProductVariantId);
                     var productVariant = await productVariantRepo.GetByIdAsync(id);
@@ -43,6 +38,7 @@ public class PaymentService(
                         item.Price = productVariant.Price;
                     }
                 }
+
                 //Calculate total price ans add shipping price
                 cart.TotalPrice = (cart.Items.Sum(x => x.Quantity * x.Price) + shippingPrice);
                 return cart;

@@ -1,1 +1,29 @@
-<p>checkout works!</p>
+<div class="my-container">
+  <section class="py-4 antialiased dark:bg-gray-900 md:py-8">
+    <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
+      <div class="mt-6 md:gap-6 lg:flex lg:items-start xl:gap-8">
+        <div class="mx-auto w-full flex-none lg:max-w-2xl xl:max-w-4xl">
+          <mat-stepper #stepper class="bg-white border border-gray-200 shadow-sm rounded-lg">
+            <mat-step label="Shipping">
+              @if (accountService.currentUser()?.addresses == null) {
+                <app-address></app-address>
+              } @else {
+                <app-address-list></app-address-list>
+                <app-shipping></app-shipping>
+              }
+            </mat-step>
+            <mat-step label="Payment ">
+              <app-payment-method></app-payment-method>
+            </mat-step>
+            <mat-step label="Review">
+              <p>Review order details here.</p>
+            </mat-step>
+          </mat-stepper>
+        </div>
+        <div class="mx-auto mt-6 max-w-4xl flex-1 space-y-6 lg:mt-0 lg:w-full">
+          <app-app-order-summary></app-app-order-summary>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

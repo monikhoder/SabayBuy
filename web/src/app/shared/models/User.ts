@@ -2,10 +2,11 @@ export type User = {
   firstName: string;
   lastName: string;
   email: string;
-  address: Address;
-}
+  addresses: Address[];
+};
 
 export type Address = {
+  id: string;
   fullName: string;
   line1: string;
   line2: string;
@@ -17,4 +18,4 @@ export type Address = {
   latitued: number;
   longitude: number;
   isDefault: boolean;
-}
+};

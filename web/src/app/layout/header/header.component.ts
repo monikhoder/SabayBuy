@@ -5,6 +5,7 @@ import { LoadingService } from '../../core/services/loading.service';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { CartService } from '../../core/services/cart.service';
 import { AccountService } from '../../core/services/account.service';
+import { Address } from '../../shared/models/User';
 
 @Component({
   selector: 'app-header',
@@ -17,54 +18,10 @@ export class Header implements OnInit {
   cartService = inject(CartService)
   accountService = inject(AccountService)
   isLogin = signal(false);
+  selectedAddress = signal<Address | null>(null);
 
-  locations = [
-    {
-      id: 11,
-      Postalcode: '12000',
-      name: 'Phnom Penh',
-    },
-    {
-      id: 12,
-      Postalcode: '12001',
-      name: 'kandal',
-    },
-    {
-      id: 13,
-      Postalcode: '12002',
-      name: 'Prey Veng',
-    },
-    {
-      id: 14,
-      Postalcode: '12003',
-      name: 'Prey Veng',
-    },
-    {
-      id: 15,
-      Postalcode: '12004',
-      name: 'Kampung Thom',
-    },
-    {
-      id: 16,
-      Postalcode: '12005',
-      name: 'Siem Reap',
-    },
-    {
-      id: 17,
-      Postalcode: '12006',
-      name: 'Battambang',
-    },
-    {
-      id: 18,
-      Postalcode: '12007',
-      name: 'Kep',
-    },
-    {
-      id: 19,
-      Postalcode: '12009',
-      name: 'Svay Rieng',
-    },
-  ];
+
+
   Langueges = [
     {
       id: 1,
@@ -99,8 +56,19 @@ export class Header implements OnInit {
      this.isLogin.set(true);
    }
   }
+  selectAdress(address: Address) {
+
+    this.selectedAddress.set(address);
+  }
+  loadAddress(){
+    if(this.selectedAddress() == null){
+      const defaultAddress = this.accountService.currentUser()?.addresses.find(a => a.isDefault);
+      this.selectedAddress.set(defaultAddress || null);
+    }
+  }
 
   ngOnInit(): void {
     this.Islog();
+    this.loadAddress();
   }
 }

@@ -2,17 +2,17 @@ import { inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Address, User } from '../../shared/models/User';
-import {of} from 'rxjs';
+import { of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AccountService{
+export class AccountService {
   baseUrl = environment.apiUrl;
   private http = inject(HttpClient);
   currentUser = signal<User | null>(null);
-
+  selectedAddress = signal<Address | null>(null);
 
   login(values: any) {
     let params = new HttpParams();
@@ -21,30 +21,29 @@ export class AccountService{
   }
   register(values: any) {
     return this.http.post(this.baseUrl + 'account/register', values);
-
   }
   getUser() {
-
     return this.http.get<User>(this.baseUrl + 'account/user-info').pipe(
-      map(user => {
+      map((user) => {
         this.currentUser.set(user);
+        this.selectedAddress.set(user.addresses?.find((addr) => addr.isDefault) ?? null);
         return user;
       }),
-      catchError(error => {
-      this.currentUser.set(null);
-      return of(null);
-    })
-    )
+      catchError((error) => {
+        this.currentUser.set(null);
+        this.selectedAddress.set(null);
+        return of(null);
+      }),
+    );
+  }
 
-  };
   logout() {
-    return this.http.post(this.baseUrl + 'account/logout', {})
+    return this.http.post(this.baseUrl + 'account/logout', {});
   }
   updateAddress(address: Address, id: string) {
     return this.http.put(this.baseUrl + 'account/address/' + id, address);
   }
-  getAutState(){
-    return this.http.get<{isAuthenticated: boolean}>(this.baseUrl + 'account/is-authenticated');
+  getAutState() {
+    return this.http.get<{ isAuthenticated: boolean }>(this.baseUrl + 'account/is-authenticated');
   }
-
 }
