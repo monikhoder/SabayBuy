@@ -7,10 +7,25 @@ import { FilterComponent } from "./filter/filter.component";
 import { SortComponent } from "./sort/sort.component";
 import { productParams } from '../../shared/models/productParams';
 import { LoadingService } from '../../core/services/loading.service';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { RouterLink } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-product-list',
-  imports: [ProductCardComponent, FilterComponent, SortComponent],
+  standalone: true,
+  imports: [
+    CommonModule,
+    ProductCardComponent,
+    FilterComponent,
+    SortComponent,
+    MatButtonModule,
+    MatIconModule,
+    MatMenuModule,
+    RouterLink
+  ],
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.scss',
 })
@@ -101,6 +116,13 @@ export class ProductListComponent implements OnInit {
   }
   removeCategoryFilter(category: string) {
     this.productParams.category = this.productParams.category.filter(c => c !== category);
+    this.loadProducts();
+  }
+
+  resetAllFilters() {
+    this.productParams.brand = [];
+    this.productParams.category = [];
+    this.productParams.pageIndex = 1;
     this.loadProducts();
   }
 

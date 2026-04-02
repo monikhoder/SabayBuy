@@ -1,10 +1,30 @@
-import { Component, EventEmitter, Inject, Input, input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Category } from '../../../shared/models/category';
 import { productParams } from '../../../shared/models/productParams';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatDividerModule } from '@angular/material/divider';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-filter',
-  imports: [],
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatTabsModule,
+    MatCheckboxModule,
+    MatSliderModule,
+    MatButtonModule,
+    MatIconModule,
+    MatExpansionModule,
+    MatDividerModule,
+    FormsModule
+  ],
   templateUrl: './filter.component.html',
   styleUrl: './filter.component.scss',
 })
@@ -13,10 +33,15 @@ export class FilterComponent {
   @Input() groupedBrands: BrandGroup[] = [];
   @Input() productParams!: productParams;
 
+  @Output() categoryFilterChange = new EventEmitter<string[]>();
+  @Output() brandFilterChange = new EventEmitter<string[]>();
+  @Output() applyFilters = new EventEmitter<void>();
 
-   @Output() categoryFilterChange = new EventEmitter<string[]>();
-   @Output() brandFilterChange = new EventEmitter<string[]>();
+  isOpen = false;
 
+  toggleModal() {
+    this.isOpen = !this.isOpen;
+  }
 
   onCategoryChange(category: string, isChecked: boolean) {
     if (isChecked) {
@@ -26,12 +51,10 @@ export class FilterComponent {
       if (index > -1) {
         this.productParams.category.splice(index, 1);
       }
-
-      this.productParams.pageSize = this.productParams.defaultPageSize;
     }
-    // 3. Emit the updated list to the parent
     this.categoryFilterChange.emit(this.productParams.category);
   }
+
   onBrandChange(brand: string, isChecked: boolean) {
     if (isChecked) {
       this.productParams.brand.push(brand);
@@ -40,20 +63,19 @@ export class FilterComponent {
       if (index > -1) {
         this.productParams.brand.splice(index, 1);
       }
-      this.productParams.pageSize = this.productParams.defaultPageSize;
     }
-    // 3. Emit the updated list to the parent
-   this.brandFilterChange.emit(this.productParams.brand);
-
+    this.brandFilterChange.emit(this.productParams.brand);
   }
+
   onResetFilters() {
     this.productParams.category = [];
     this.productParams.brand = [];
-    this.productParams.pageSize = this.productParams.defaultPageSize;
-    // Emit empty lists to clear filters in parent
-   this.categoryFilterChange.emit([]);
+    this.categoryFilterChange.emit([]);
     this.brandFilterChange.emit([]);
   }
 
-
+  onApply() {
+    this.applyFilters.emit();
+    this.toggleModal();
+  }
 }

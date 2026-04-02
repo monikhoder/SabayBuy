@@ -49,14 +49,7 @@ export class CheckoutService {
       deliveryMethodId: this.selectedShippingMethod()?.id || '',
       shippingAddressId: this.selectedShippingMethod()?.id || '',
     };
-    return this.http.post(this.baseUrl + 'Payments/checkout', checkoutDto).subscribe(
-      (next: any) => {
-        console.log('Payment intent created successfully:', next);
-      },
-      (error: any) => {
-        console.error('Error creating payment intent:', error);
-      }
-    )
+    return this.http.post(this.baseUrl + 'Payments/checkout', checkoutDto)
   }
 
   getAvailableShippingMethods(zip: string) {

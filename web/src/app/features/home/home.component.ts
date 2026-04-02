@@ -2,16 +2,31 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { initFlowbite } from 'flowbite';
 import { ShopServices } from '../../core/services/shop.service';
 import { Category } from '../../shared/models/category';
+import { Product } from '../../shared/models/product';
+import { productParams } from '../../shared/models/productParams';
+import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-home',
-  imports: [],
+  standalone: true,
+  imports: [
+    CommonModule,
+    RouterLink,
+    MatButtonModule,
+    MatIconModule,
+    MatCardModule
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
 export class HomeComponent implements OnInit {
 
   Categories = signal<Category[]>([]);
+  featuredProducts = signal<Product[]>([]);
   private shopServices = inject(ShopServices);
 
   ngOnInit(): void {
@@ -20,6 +35,22 @@ export class HomeComponent implements OnInit {
     this.shopServices.getCategories().subscribe({
       next: (response) => {
         this.Categories.set(response.data);
+      }
+    });
+
+    const params: productParams = {
+      brand: [],
+      category: [],
+      search: '',
+      sort: 'name',
+      pageIndex: 1,
+      pageSize: 4,
+      defaultPageSize: 4
+    };
+
+    this.shopServices.getProducts(params).subscribe({
+      next: (response) => {
+        this.featuredProducts.set(response.data);
       }
     });
   }

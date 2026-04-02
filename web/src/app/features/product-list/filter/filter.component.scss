@@ -1,0 +1,66 @@
+/* Enhance the accordion styling to look seamless */
+::ng-deep .filter-accordion {
+  .mat-expansion-panel {
+    border-radius: 0 !important;
+    background: transparent;
+    
+    &:not([class*=mat-elevation-z]) {
+      box-shadow: none;
+    }
+
+    .mat-expansion-panel-header {
+      padding: 0 24px;
+      height: 64px !important;
+      
+      &:hover {
+        background: rgba(0,0,0,0.02);
+      }
+      
+      .mat-expansion-indicator::after {
+        color: #6b7280; /* Tailwind gray-500 */
+      }
+    }
+
+    .mat-expansion-panel-body {
+      padding: 0 24px 24px;
+    }
+  }
+}
+
+/* Custom Checkbox Styling for better density and look */
+::ng-deep .custom-checkbox {
+  width: 100%;
+  
+  .mdc-form-field {
+    width: 100%;
+  }
+  
+  label {
+    width: 100%;
+    cursor: pointer;
+  }
+  
+  &:hover {
+    .mdc-checkbox__background {
+      border-color: #7c3aed !important;
+    }
+  }
+}
+
+/* Scrollbar styling for the filter content */
+.filter-content {
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #d1d5db; /* Tailwind gray-300 */
+    border-radius: 20px;
+  }
+  
+  .dark &::-webkit-scrollbar-thumb {
+    background-color: #4b5563; /* Tailwind gray-600 */
+  }
+}

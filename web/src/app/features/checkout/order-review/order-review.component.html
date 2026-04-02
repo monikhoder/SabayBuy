@@ -1,0 +1,130 @@
+<div class="space-y-6 pt-4">
+  <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+    <!-- Delivery Address -->
+    <div
+      class="rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800"
+    >
+      <div class="mb-4 flex items-center justify-between">
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Delivery Address</h3>
+      </div>
+      @if (accountService.selectedAddress(); as address) {
+        <div class="space-y-1">
+          <p class="text-base font-bold text-gray-900 dark:text-white">{{ address.fullName }}</p>
+          <p class="text-sm text-gray-500 dark:text-gray-400">{{ address.line1 }}</p>
+          @if (address.line2) {
+            <p class="text-sm text-gray-500 dark:text-gray-400">{{ address.line2 }}</p>
+          }
+          <p class="text-sm text-gray-500 dark:text-gray-400">
+            {{ address.city }}, {{ address.state }} {{ address.zipCode }}
+          </p>
+          <p class="text-sm text-gray-500 dark:text-gray-400">{{ address.country }}</p>
+          <p class="text-sm text-gray-500 dark:text-gray-400">Phone: {{ address.phoneNumber }}</p>
+        </div>
+      } @else {
+        <p class="text-sm text-red-600 font-medium">
+          No address selected. Please go back to Shipping step.
+        </p>
+      }
+    </div>
+
+    <!-- Shipping & Payment -->
+    <div class="space-y-6">
+      <div
+        class="rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800"
+      >
+        <h3 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">Shipping Method</h3>
+        @if (checkoutService.selectedShippingMethod(); as shipping) {
+          <div class="flex items-center gap-4">
+            <div
+              class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white dark:bg-gray-700"
+            >
+              <svg
+                class="h-6 w-6 text-gray-900 dark:text-white"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M13 7h6l2 4m-8-4v8m0-8V6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v9h2m8 0H9m4 0h2m4 0h2v-4m0 0h-5m3.5 5.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Zm-10 0a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z"
+                />
+              </svg>
+            </div>
+            <div>
+              <p class="text-base font-bold text-gray-900 dark:text-white">
+                {{ shipping.shortName }}
+              </p>
+              <p class="text-sm text-gray-500 dark:text-gray-400">{{ shipping.deliveryTime }}</p>
+            </div>
+          </div>
+        } @else {
+          <p class="text-sm text-red-600 font-medium">No shipping method selected.</p>
+        }
+      </div>
+
+      <div
+        class="rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800"
+      >
+        <h3 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">Payment Method</h3>
+        @if (paymentMethod(); as payment) {
+          <div class="flex items-center gap-4">
+            <img
+              class="h-8 w-8 rounded-full object-cover"
+              [src]="payment.icon"
+              [alt]="payment.name"
+            />
+            <div>
+              <p class="text-base font-bold text-gray-900 dark:text-white">{{ payment.name }}</p>
+              <p class="text-sm text-gray-500 dark:text-gray-400">{{ payment.description }}</p>
+            </div>
+          </div>
+        } @else {
+          <p class="text-sm text-red-600 font-medium">No payment method selected.</p>
+        }
+      </div>
+    </div>
+  </div>
+
+  <!-- Order Items -->
+  <div
+    class="rounded-lg border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800"
+  >
+    <div class="border-b border-gray-200 p-4 dark:border-gray-700 sm:px-6">
+      <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Order Items</h3>
+    </div>
+    <div class="divide-y divide-gray-200 dark:divide-gray-700">
+      @for (item of cartService.cart()?.items; track item.productVariantId) {
+        <div
+          class="flex flex-col p-4 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:px-6"
+        >
+          <div class="flex items-center gap-4">
+            <img
+              class="h-16 w-16 shrink-0 rounded-md object-cover"
+              [src]="item.imageUrl"
+              [alt]="item.productName"
+            />
+            <div class="min-w-0 flex-1">
+              <a
+                href="#"
+                class="text-base font-medium text-gray-900 hover:underline dark:text-white"
+                >{{ item.productName }}</a
+              >
+              <p class="text-sm text-gray-500 dark:text-gray-400">{{ item.productVariantName }}</p>
+              <p class="text-sm text-gray-500 dark:text-gray-400">Qty: {{ item.quantity }}</p>
+            </div>
+          </div>
+          <div class="mt-4 flex items-center justify-between sm:mt-0 sm:block sm:text-right">
+            <p class="text-base font-bold text-gray-900 dark:text-white">
+              {{ item.price * item.quantity | currency }}
+            </p>
+            <p class="text-sm text-gray-500 dark:text-gray-400">{{ item.price | currency }} each</p>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</div>

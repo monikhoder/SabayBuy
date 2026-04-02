@@ -40,6 +40,9 @@ export class AccountService {
   logout() {
     return this.http.post(this.baseUrl + 'account/logout', {});
   }
+  addAddress(address: Address) {
+    return this.http.post<User>(this.baseUrl + 'account/address', address);
+  }
   updateAddress(address: Address, id: string) {
     return this.http.put(this.baseUrl + 'account/address/' + id, address);
   }

@@ -15,7 +15,7 @@ export type Address = {
   state: string;
   zipCode: string;
   country: string;
-  latitued: number;
+  latitude: number;
   longitude: number;
   isDefault: boolean;
 };
