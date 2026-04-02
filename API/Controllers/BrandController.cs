@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.Controllers
 {
     public class BrandController(
-        IGenericRepository<Product> repo
+        IUnitOfWork unit
     ) : BaseApiController
     {
         // GET: api/brand
@@ -16,7 +16,7 @@ namespace API.Controllers
         public async Task<ActionResult<IReadOnlyList<string>>> GetBrands(string? sort, string? search)
         {
             var spec = new BrandListSpecification(sort, search);
-            var brands = await repo.ListAsync(spec);
+            var brands = await unit.Repository<Product>().ListAsync(spec);
             return Ok(brands);
         }
     }

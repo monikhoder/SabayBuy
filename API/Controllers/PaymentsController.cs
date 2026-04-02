@@ -9,7 +9,7 @@ namespace API.Controllers;
 
 public class PaymentsController(
         IPaymentService paymentService,
-        IGenericRepository<DeliveryMethod> deliveryMethodRepo
+        IUnitOfWork unit
 ) : BaseApiController
 {
     [Authorize]
@@ -30,7 +30,7 @@ public class PaymentsController(
     [HttpGet("delivery-methods")]
     public async Task<ActionResult<IReadOnlyList<DeliveryMethod>>> GetDeliveryMethods()
     {
-        var deliveryMethods = await deliveryMethodRepo.ListAllAsync();
+        var deliveryMethods = await unit.Repository<DeliveryMethod>().ListAllAsync();
         return Ok(deliveryMethods);
     }
 
@@ -38,7 +38,7 @@ public class PaymentsController(
     [HttpGet("delivery-methods/{zipCode}")]
     public async Task<ActionResult<IReadOnlyList<DeliveryMethod>>> GetDeliveryMethodsByZipCode(string zipCode)
     {
-        var deliveryMethods = await deliveryMethodRepo.ListAllAsync();
+        var deliveryMethods = await unit.Repository<DeliveryMethod>().ListAllAsync();
         string firstTwoDigits = zipCode.Substring(0, 2);
         return Ok(deliveryMethods.Where(dm => dm.AvailableZipcodes.Contains(firstTwoDigits)).ToList());
     }

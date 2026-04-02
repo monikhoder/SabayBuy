@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    public class ProductsController(IGenericRepository<Product> repo, IMapper mapper) : BaseApiController
+    public class ProductsController(IUnitOfWork unit, IMapper mapper) : BaseApiController
     {
         // GET: api/products
         [HttpGet]
@@ -16,7 +16,7 @@ namespace API.Controllers
             [FromQuery] ProductSpecParams specParams)
         {
             var spec = new ProductsSpecification(specParams);
-            return await CreatePageResult<Product, ProductDto>(repo, spec, specParams.PageIndex, specParams.PageSize, mapper);
+            return await CreatePageResult<Product, ProductDto>(unit.Repository<Product>(), spec, specParams.PageIndex, specParams.PageSize, mapper);
         }
 
         // GET: api/products/{id}
@@ -24,7 +24,7 @@ namespace API.Controllers
         public async Task<ActionResult<ProductDto>> GetProduct(Guid id)
         {
             var spec = new ProductsSpecification(id);
-            return await GetByIdResult<Product, ProductDto>(repo, spec, mapper);
+            return await GetByIdResult<Product, ProductDto>(unit.Repository<Product>(), spec, mapper);
         }
 
         // POST: api/products
@@ -32,8 +32,8 @@ namespace API.Controllers
         public async Task<ActionResult<ProductDto>> CreateProduct(CreateProductDto productDto)
         {
             var product = mapper.Map<CreateProductDto, Product>(productDto);
-            repo.Add(product);
-            if (await repo.SaveAllAsync())
+            unit.Repository<Product>().Add(product);
+            if (await unit.Complete())
             {
                 var returnDto = mapper.Map<Product, ProductDto>(product);
                 return CreatedAtAction(nameof(GetProduct), new { id = product.Id }, returnDto);
@@ -46,11 +46,11 @@ namespace API.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateProduct(Guid id, UpdateProductDto productDto)
         {
-            var product = await repo.GetByIdAsync(id);
+            var product = await unit.Repository<Product>().GetByIdAsync(id);
             if (product == null) return NotFound();
             mapper.Map(productDto, product);
-            repo.Update(product);
-            if (await repo.SaveAllAsync()) return Ok(mapper.Map<Product, ProductDto>(product));
+            unit.Repository<Product>().Update(product);
+            if (await unit.Complete()) return Ok(mapper.Map<Product, ProductDto>(product));
             return BadRequest("Failed to update product");
         }
 
@@ -58,10 +58,10 @@ namespace API.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteProduct(Guid id)
         {
-            var product = await repo.GetByIdAsync(id);
+            var product = await unit.Repository<Product>().GetByIdAsync(id);
             if (product == null) return NotFound();
-            repo.Delete(product);
-            if (await repo.SaveAllAsync()) return Ok("Product deleted successfully");
+            unit.Repository<Product>().Delete(product);
+            if (await unit.Complete()) return Ok("Product deleted successfully");
             return BadRequest("Failed to delete product");
         }
     }

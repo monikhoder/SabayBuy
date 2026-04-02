@@ -10,8 +10,7 @@ namespace API.Controllers;
 [Route("api")]
 [ApiController]
 public class ProductVariantsController(
-    IGenericRepository<ProductVariant> variantRepo,
-    IGenericRepository<Product> productRepo,
+    IUnitOfWork unit,
     IMapper mapper) : ControllerBase
 {
     // GET: api/products/{productId}/variants
@@ -19,7 +18,7 @@ public class ProductVariantsController(
     public async Task<ActionResult<IReadOnlyList<ProductVariantDto>>> GetVariants(Guid productId)
     {
         var spec = new ProductVariantSpecification(productId);
-        var variants = await variantRepo.ListAsync(spec);
+        var variants = await unit.Repository<ProductVariant>().ListAsync(spec);
         return Ok(mapper.Map<IReadOnlyList<ProductVariant>, IReadOnlyList<ProductVariantDto>>(variants));
     }
 
@@ -29,15 +28,15 @@ public class ProductVariantsController(
     public async Task<ActionResult<ProductVariantDto>> CreateVariant(Guid productId, CreateProductVariantDto variantDto)
     {
 
-        var product = await productRepo.GetByIdAsync(productId);
+        var product = await unit.Repository<Product>().GetByIdAsync(productId);
         if (product == null) return NotFound("Product not found");
 
         var variant = mapper.Map<CreateProductVariantDto, ProductVariant>(variantDto);
         variant.ProductId = productId;
 
-        variantRepo.Add(variant);
+        unit.Repository<ProductVariant>().Add(variant);
 
-        if (await variantRepo.SaveAllAsync())
+        if (await unit.Complete())
         {
             var returnDto = mapper.Map<ProductVariant, ProductVariantDto>(variant);
             return CreatedAtAction(nameof(GetVariant), new { id = variant.Id }, returnDto);
@@ -51,7 +50,7 @@ public class ProductVariantsController(
     public async Task<ActionResult<ProductVariantDto>> GetVariant(Guid id)
     {
         var spec = new ProductVariantSpecification(id, true);
-        var variant = await variantRepo.GetEntityWithSpec(spec);
+        var variant = await unit.Repository<ProductVariant>().GetEntityWithSpec(spec);
 
         if (variant == null) return NotFound();
 
@@ -64,13 +63,13 @@ public class ProductVariantsController(
     public async Task<ActionResult> UpdateVariant(Guid id, UpdateProductVariantDto variantDto)
     {
         var spec = new ProductVariantSpecification(id, true);
-        var variant = await variantRepo.GetEntityWithSpec(spec);
+        var variant = await unit.Repository<ProductVariant>().GetEntityWithSpec(spec);
 
         if (variant == null) return NotFound();
         mapper.Map(variantDto, variant);
-        variantRepo.Update(variant);
+        unit.Repository<ProductVariant>().Update(variant);
 
-        if (await variantRepo.SaveAllAsync())
+        if (await unit.Complete())
         {
              return Ok(mapper.Map<ProductVariant, ProductVariantDto>(variant));
         }
@@ -83,12 +82,12 @@ public class ProductVariantsController(
     [HttpDelete("variants/{id}")]
     public async Task<ActionResult> DeleteVariant(Guid id)
     {
-        var variant = await variantRepo.GetByIdAsync(id);
+        var variant = await unit.Repository<ProductVariant>().GetByIdAsync(id);
         if (variant == null) return NotFound();
 
-        variantRepo.Delete(variant);
+        unit.Repository<ProductVariant>().Delete(variant);
 
-        if (await variantRepo.SaveAllAsync()) return Ok("Variant deleted successfully");
+        if (await unit.Complete()) return Ok("Variant deleted successfully");
 
         return BadRequest("Failed to delete variant");
     }
