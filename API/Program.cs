@@ -18,7 +18,11 @@ builder.Services.AddDbContext<StoreContext>(opt =>
     opt.UseSqlServer(builder.Configuration.GetConnectionString("SabaybuyDb"));
 });
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-builder.Services.AddAutoMapper(typeof(MappingProfiles).Assembly);
+var mapperLicenseKey = builder.Configuration["AutoMapper:LicenseKey"];
+builder.Services.AddAutoMapper(cfg =>
+    {
+        cfg.LicenseKey = mapperLicenseKey;
+    }, typeof(MappingProfiles).Assembly);
 builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();

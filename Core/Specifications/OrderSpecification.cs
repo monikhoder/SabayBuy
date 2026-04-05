@@ -1,0 +1,63 @@
+﻿using Core.Entities.OrderAggregate;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Core.Specifications
+{
+    public class OrderSpecification : BaseSpecification<Order>
+    {
+        public OrderSpecification() : base(x => true)
+        {
+                AddInclude(x => x.DeliveryMethod);
+                AddInclude(x => x.OrderItems);
+                AddOrderByDescending(x => x.OrderDate);
+        }
+        public OrderSpecification(string email, OrderSpecParams specParams)
+            : base(x => x.BuyerEmail == email && (string.IsNullOrEmpty(specParams.Status) || x.Status.ToString() == specParams.Status))
+        {
+            AddInclude(x => x.DeliveryMethod);
+            AddInclude(x => x.OrderItems);
+            ApplyPaging(specParams.PageSize * (specParams.PageIndex - 1), specParams.PageSize);
+
+            if (!string.IsNullOrEmpty(specParams.Sort))
+            {
+                switch (specParams.Sort)
+                {
+                    case "dateAsc":
+                        AddOrderBy(x => x.OrderDate);
+                        break;
+                    case "dateDesc":
+                        AddOrderByDescending(x => x.OrderDate);
+                        break;
+                    case "totalAsc":
+                        AddOrderBy(x => x.Subtotal);
+                        break;
+                    case "totalDesc":
+                        AddOrderByDescending(x => x.Subtotal);
+                        break;
+                    default:
+                        AddOrderByDescending(x => x.OrderDate);
+                        break;
+                }
+            }
+            else
+            {
+                AddOrderByDescending(x => x.OrderDate);
+            }
+        }
+        public OrderSpecification(string email) : base(x => x.BuyerEmail == email)
+        {
+            AddInclude(x => x.DeliveryMethod);
+            AddInclude(x => x.OrderItems);
+            AddOrderByDescending(x => x.OrderDate);
+        }
+        public OrderSpecification(Guid id, string email) : base(x => x.Id == id && x.BuyerEmail == email)
+        {
+            AddInclude("OrderItems");
+            AddInclude("DeliveryMethod");
+        }
+    }
+}

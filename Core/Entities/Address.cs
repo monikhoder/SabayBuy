@@ -14,7 +14,7 @@ namespace Core.Entities
         public string PhoneNumber { get; set; } = string.Empty;
         public string City { get; set; } = string.Empty;
         public string State { get; set; } = string.Empty;
-        public required int ZipCode { get; set; }
+        public required string ZipCode { get; set; }
         public string Country { get; set; } = string.Empty;
         public double? Latitude { get; set; }
         public double? Longitude { get; set; }

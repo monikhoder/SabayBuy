@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Core.Entities.OrderAggregate
 {
-    public class PaymentSummary
+    public enum PaymentMethod
     {
-        public string PaymentMethod { get; set; }
+        aba, // 0 Aba Payway
+        cod // 1 Cash on Delivery
     }
 }

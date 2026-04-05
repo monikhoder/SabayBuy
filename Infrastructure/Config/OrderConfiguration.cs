@@ -14,7 +14,10 @@ namespace Infrastructure.Config
         public void Configure(EntityTypeBuilder<Order> builder)
         {
             builder.OwnsOne(x => x.ShippingAddress, o => o.WithOwner());
-            builder.OwnsOne(x => x.PaymentSummary, o => o.WithOwner());
+            builder.Property(x => x.PaymentMethod).HasConversion(
+                    o => o.ToString(),
+                    s => (PaymentMethod)Enum.Parse(typeof(PaymentMethod), s)
+                );
             builder.Property(x => x.Status).HasConversion(
                 o => o.ToString(),
                 s => (OrderStatus)Enum.Parse(typeof(OrderStatus), s)

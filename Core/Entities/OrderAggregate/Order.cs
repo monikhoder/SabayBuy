@@ -12,10 +12,11 @@ namespace Core.Entities.OrderAggregate
         public required string BuyerEmail { get; set; }
         public ShippingAddress ShippingAddress { get; set; } = null!;
         public DeliveryMethod DeliveryMethod { get; set; } = null!;
-        public PaymentSummary PaymentSummary { get; set; } = null!;
-        public IReadOnlyList<OrderItem> OrderItems { get; set; } = [];
+        //public PaymentSummary PaymentSummary { get; set; } = null!;
+        public List<OrderItem> OrderItems { get; set; } = [];
         public decimal Subtotal { get; set; }
         public OrderStatus Status { get; set; } = OrderStatus.Pending;
+        public PaymentMethod PaymentMethod { get; set; } = PaymentMethod.cod;
         public string? PaymentIntentId { get; set; }
     }
 }

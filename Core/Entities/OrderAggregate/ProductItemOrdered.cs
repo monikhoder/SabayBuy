@@ -8,8 +8,10 @@ namespace Core.Entities.OrderAggregate
 {
     public class ProductItemOrdered
     {
-        public Guid ProductId { get; set; }
+        public Guid ProductId { get; set; } 
         public required string ProductName { get; set; }
+        public Guid ProductVariantId { get; set; }
+        public required string VariantName { get; set; } = string.Empty;
         public string ImageUrl { get; set; }
 
     }

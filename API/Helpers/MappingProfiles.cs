@@ -1,6 +1,7 @@
 using AutoMapper;
 using API.Dtos;
 using Core.Entities;
+using Core.Entities.OrderAggregate;
 
 namespace API.Helpers;
 
@@ -26,6 +27,15 @@ public class MappingProfiles : Profile
         CreateMap<AppUser, UserDto>();
         CreateMap<AddressDto, Address>();
         CreateMap<Address, AddressDto>();
+        CreateMap<Order, OrderDto>()
+            .ForMember(d => d.Status, o => o.MapFrom(s => s.Status.ToString()))
+            .ForMember(d => d.PaymentMethod, o => o.MapFrom(s => s.PaymentMethod.ToString()));
+        CreateMap<OrderItem, OrderItemDto>()
+            .ForMember(d => d.ProductId, o => o.MapFrom(s => s.ItemOrdered.ProductId))
+            .ForMember(d => d.ProductName, o => o.MapFrom(s => s.ItemOrdered.ProductName))
+            .ForMember(d => d.ProductVariantId, o => o.MapFrom(s => s.ItemOrdered.ProductVariantId))
+            .ForMember(d => d.VariantName, o => o.MapFrom(s => s.ItemOrdered.VariantName));
+
     }
 
 }
