@@ -1,7 +1,9 @@
 using API.Dtos;
+using API.Helpers;
 using Core.Entities;
 using Core.Interface;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
@@ -9,7 +11,8 @@ namespace API.Controllers;
 
 public class PaymentsController(
         IPaymentService paymentService,
-        IUnitOfWork unit
+        IUnitOfWork unit,
+        UserManager<AppUser> userManager
 ) : BaseApiController
 {
     [Authorize]
@@ -17,12 +20,12 @@ public class PaymentsController(
     public async Task<ActionResult<object?>> Checkout([FromBody] CheckoutDto checkoutDto)
     {
 
+        var user = await userManager.GetUserByEmail(User);
 
-        
         var cart = await paymentService.GetTotalPrice(checkoutDto.CartId, checkoutDto.DeliveryMethodId);
         if (cart == null) return BadRequest("Problem with your cart");
 
-        var response = await paymentService.ProcessPaymentAsync(cart, checkoutDto.PaymentMethod);
+        var response = await paymentService.ProcessPaymentAsync(cart, checkoutDto.PaymentMethod, user);
         return response;
     }
 

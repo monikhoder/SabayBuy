@@ -9,8 +9,8 @@ namespace Core.Interface
 {
     public interface ICartService
     {
-        Task<ShoppingCard?> GetCardAsync(string key);
-        Task<ShoppingCard?> SetCardAsync(ShoppingCard shoppingCard);
+        Task<ShoppingCart?> GetCardAsync(string key);
+        Task<ShoppingCart?> SetCardAsync(ShoppingCart shoppingCart);
         Task<bool> DeleteCardAsync(string key);
     }
 }

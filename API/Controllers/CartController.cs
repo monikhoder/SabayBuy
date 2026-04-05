@@ -7,15 +7,15 @@ namespace API.Controllers
     public class CartController(ICartService cartService) : BaseApiController
     {
         [HttpGet]
-        public async Task<ActionResult<ShoppingCard>> GetCardById(string id)
+        public async Task<ActionResult<ShoppingCart>> GetCardById(string id)
         {
             var card = await cartService.GetCardAsync(id);
-            return Ok(card ?? new ShoppingCard { Id = id });
+            return Ok(card ?? new ShoppingCart { Id = id });
         }
         [HttpPost]
-        public async Task<ActionResult<ShoppingCard>> UpdateCard(ShoppingCard shoppingCard)
+        public async Task<ActionResult<ShoppingCart>> UpdateCard(ShoppingCart shoppingCart)
         {
-            var card = await cartService.SetCardAsync(shoppingCard);
+            var card = await cartService.SetCardAsync(shoppingCart);
             if (card == null) return BadRequest("Failed to update card");
             return card;
         }

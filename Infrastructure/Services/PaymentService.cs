@@ -11,27 +11,25 @@ namespace Infrastructure.Services;
 public class PaymentService(
         IConfiguration config,
         ICartService cartService,
-        IGenericRepository<Product> productRepo,
-        IGenericRepository<ProductVariant> productVariantRepo,
-        IGenericRepository<DeliveryMethod> deliveryMethodRepo
+        IUnitOfWork unit
     ) : IPaymentService
     {
 
-    public async Task<ShoppingCard?> GetTotalPrice(string cartId, string shippingId )
+    public async Task<ShoppingCart?> GetTotalPrice(string cartId, string shippingId )
             {
                 // Get the shopping cart
                var cart = await cartService.GetCardAsync(cartId);
                if (cart == null) return null;
 
                //Get shipping price
-               var shippingMethod = await deliveryMethodRepo.GetByIdAsync(Guid.Parse(shippingId));
+               var shippingMethod = await unit.Repository<DeliveryMethod>().GetByIdAsync(Guid.Parse(shippingId));
                decimal shippingPrice = shippingMethod != null ? shippingMethod.Price : 0;
 
         //check the price of cart and update if needed
         foreach (var item in cart.Items)
                 {
                     var id = Guid.Parse(item.ProductVariantId);
-                    var productVariant = await productVariantRepo.GetByIdAsync(id);
+                    var productVariant = await unit.Repository<ProductVariant>().GetByIdAsync(id);
                     if (productVariant == null) return null;
                     if(item.Price != productVariant.Price)
                     {
@@ -41,16 +39,18 @@ public class PaymentService(
 
                 //Calculate total price ans add shipping price
                 cart.TotalPrice = (cart.Items.Sum(x => x.Quantity * x.Price) + shippingPrice);
+                //Update the cart with the new total price
+                cart = await cartService.SetCardAsync(cart);
                 return cart;
             }
 
-    public async Task<object?> ProcessPaymentAsync(ShoppingCard cart, string paymentMethod)
+    public async Task<object?> ProcessPaymentAsync(ShoppingCart cart, string paymentMethod, AppUser user)
     {
         decimal totalPrice = cart.TotalPrice ?? 0;
         switch (paymentMethod.ToLower())
         {
             case "aba":
-                return await ProcessAbaPayment(totalPrice, cart.Id);
+                return await ProcessAbaPayment(totalPrice, cart.Id, user);
 
             case "stripe":
                // return await ProcessStripePayment(totalPrice, cart.Id);
@@ -63,7 +63,7 @@ public class PaymentService(
         }
     }
 
-    private async Task<object?> ProcessAbaPayment(decimal price, string cartId)
+    private async Task<object?> ProcessAbaPayment(decimal price, string cartId, AppUser user)
     {
         var merchantId = config["AbaPayWay:MerchantId"];
         var apiKey = config["AbaPayWay:ApiKey"];
@@ -72,10 +72,10 @@ public class PaymentService(
         var tranId = Guid.NewGuid().ToString("N").Substring(0, 20);
         var amountStr = price.ToString("0.00");
 
-        var firstName = "Sabay";
-        var lastName = "Customer";
-        var phone = "012345678";
-        var email = "customer@sabaybuy.com";
+        var firstName = user.FirstName ?? "Customer";
+        var lastName = user.LastName ?? "Customer";
+        var phone = user.PhoneNumber ?? "012345678";
+        var email = user.Email ?? "";
         var returnUrl = config["AbaPayWay:ReturnUrl"];
         var type = "purchase";
         var currency = "USD";
@@ -104,10 +104,9 @@ public class PaymentService(
 
         var jsonDocument = JsonDocument.Parse(responseString);
         return jsonDocument.RootElement;
-
     }
 
-   
+
     private object ProcessCashOnDelivery(decimal price, string cartId)
     {
         return new { status = "success", message = "Order placed successfully with Cash on Delivery" };

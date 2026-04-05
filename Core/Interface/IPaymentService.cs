@@ -5,6 +5,6 @@ namespace Core.Interface;
 
 public interface IPaymentService
 {
-    Task<ShoppingCard?> GetTotalPrice(string cartId, string shippingId);
-    Task<object?> ProcessPaymentAsync(ShoppingCard cart, string paymentMethod);
+    Task<ShoppingCart?> GetTotalPrice(string cartId, string shippingId);
+    Task<object?> ProcessPaymentAsync(ShoppingCart cart, string paymentMethod, AppUser user);
 }

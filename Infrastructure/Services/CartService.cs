@@ -19,21 +19,21 @@ namespace Infrastructure.Services
             return await database.KeyDeleteAsync(key);
         }
 
-        public async Task<ShoppingCard?> GetCardAsync(string key)
+        public async Task<ShoppingCart?> GetCardAsync(string key)
         {
                 var data = await database.StringGetAsync(key);
-                return data.IsNullOrEmpty ? null : JsonSerializer.Deserialize<ShoppingCard?>(data!);
-            
+                return data.IsNullOrEmpty ? null : JsonSerializer.Deserialize<ShoppingCart?>(data!);
+
         }
 
-        public async Task<ShoppingCard?> SetCardAsync(ShoppingCard shoppingCard)
+        public async Task<ShoppingCart?> SetCardAsync(ShoppingCart shoppingCart)
         {
-            var created = await database.StringSetAsync(shoppingCard.Id, JsonSerializer.Serialize(shoppingCard), TimeSpan.FromDays(30));
+            var created = await database.StringSetAsync(shoppingCart.Id, JsonSerializer.Serialize(shoppingCart), TimeSpan.FromDays(30));
             if (!created)
             {
                 return null;
             }
-            return shoppingCard;
+            return shoppingCart;
         }
     }
 }
