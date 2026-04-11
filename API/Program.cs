@@ -1,6 +1,7 @@
 using System.Data.Common;
 using API.Helpers;
 using API.Middleware;
+using API.SignalR;
 using Core.Entities;
 using Core.Interface;
 using Infrastructure.Data;
@@ -26,6 +27,7 @@ builder.Services.AddAutoMapper(cfg =>
 builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddSignalR();
 builder.Services.AddCors(opt =>
 {
     opt.AddPolicy("CorsPolicy", policy =>
@@ -43,7 +45,6 @@ builder.Services.AddSingleton<IConnectionMultiplexer> ( config =>
 });
 
 builder.Services.AddSingleton<ICartService, CartService>();
-
 
 
 builder.Services.AddAuthorization();
@@ -86,12 +87,13 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors("CorsPolicy");
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
-
 app.MapControllers();
 app.MapGroup("api").MapIdentityApi<AppUser>();
+app.MapHub<NotificationHub>("/hubs/notification");
 
 app.Run();

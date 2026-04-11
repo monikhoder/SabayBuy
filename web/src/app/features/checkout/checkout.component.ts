@@ -14,7 +14,7 @@ import { OrderReviewComponent } from "./order-review/order-review.component";
 
 @Component({
   selector: 'app-checkout',
-  imports: [RouterLink, AppOrderSummaryComponent, MatStepperModule, AddressComponent, ShippingComponent, AddressListComponent, PaymentMethodComponent, OrderReviewComponent],
+  imports: [ AppOrderSummaryComponent, MatStepperModule, AddressComponent, ShippingComponent, AddressListComponent, PaymentMethodComponent, OrderReviewComponent],
   templateUrl: './checkout.component.html',
   styleUrl: './checkout.component.scss',
 })

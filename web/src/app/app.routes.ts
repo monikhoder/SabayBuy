@@ -11,6 +11,8 @@ import { CheckoutComponent } from './features/checkout/checkout.component';
 import { SuccessPageComponent } from './features/checkout/success-page/success-page.component';
 import { authGuard } from './core/guards/auth-guard';
 import { emptyCartGuard } from './core/guards/empty-cart-guard';
+import { OrderComponent } from './features/orders/order.component';
+import { OrderDetailedComponent } from './features/orders/order-detailed/order-detailed.component';
 
 export const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -19,10 +21,11 @@ export const routes: Routes = [
   {path: 'cart', component: CartComponent},
   {path: 'checkout', component: CheckoutComponent, canActivate: [authGuard, emptyCartGuard]},
   {path: 'checkout/success', component: SuccessPageComponent, canActivate: [authGuard]},
+  {path: 'orders', component: OrderComponent, canActivate: [authGuard]},
+  {path: 'orders/:id', component: OrderDetailedComponent, canActivate: [authGuard]},
   {path: 'account/login', component: LoginComponent},
   {path: 'account/register', component: RegisterComponent},
   {path: 'not-found', component: NotFoundComponent},
   {path: 'server-error', component: ServerErrorComponent},
   {path: '**', redirectTo: '/not-found', pathMatch: 'full'}
-
 ];

@@ -7,4 +7,5 @@ public interface IPaymentService
 {
     Task<ShoppingCart?> GetTotalPrice(string cartId, string shippingId);
     Task<object?> ProcessPaymentAsync(ShoppingCart cart, string paymentMethod, AppUser user);
+    Task<string> VerifyAbaPaymentAsync(string tranId);
 }

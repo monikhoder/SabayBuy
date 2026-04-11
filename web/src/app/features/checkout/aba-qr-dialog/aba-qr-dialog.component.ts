@@ -47,6 +47,5 @@ export class AbaQrDialogComponent {
 
   checkPaymentStatus(): void {
     this.dialogRef.close('success');
-    this.router.navigate(['/checkout/success']);
   }
 }

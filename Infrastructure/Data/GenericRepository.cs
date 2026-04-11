@@ -2,6 +2,7 @@ using System;
 using Core.Entities;
 using Core.Interface;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace Infrastructure.Data;
 
@@ -78,3 +79,5 @@ public class GenericRepository<T>(StoreContext context) : IGenericRepository<T> 
         return SpecificationEvaluator<T>.Getquery<T,TResult>(context.Set<T>().AsQueryable(), spec);
     }
 }
+
+

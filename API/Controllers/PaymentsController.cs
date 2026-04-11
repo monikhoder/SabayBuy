@@ -1,10 +1,15 @@
+﻿using Api.Helpers;
 using API.Dtos;
 using API.Helpers;
+using API.SignalR;
 using Core.Entities;
+using Core.Entities.OrderAggregate;
 using Core.Interface;
+using Core.Specifications;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using System;
 
 namespace API.Controllers;
@@ -12,6 +17,7 @@ namespace API.Controllers;
 public class PaymentsController(
         IPaymentService paymentService,
         IUnitOfWork unit,
+        IHubContext<NotificationHub> hubContext,
         UserManager<AppUser> userManager
 ) : BaseApiController
 {
@@ -28,6 +34,75 @@ public class PaymentsController(
         var response = await paymentService.ProcessPaymentAsync(cart, checkoutDto.PaymentMethod, user);
         return response;
     }
+    [HttpPost("webhook/aba")]
+    public async Task<IActionResult> AbaWebhook([FromForm] string tran_id)
+    {
+        if (string.IsNullOrEmpty(tran_id))
+        {
+            return BadRequest("Invalid transaction ID");
+        }
+
+        var jsonString = await paymentService.VerifyAbaPaymentAsync(tran_id);
+        if (string.IsNullOrEmpty(jsonString))
+        {
+            return BadRequest("No response from ABA");
+        }
+
+        try
+        {
+            var responseObj = AbaPaymentResponse.FromJson(jsonString);
+            //set payment approved for testes only 
+            responseObj.AbaData.PaymentStatusCode = 0;
+            responseObj.AbaData.PaymentStatus = "Approved";
+            if (responseObj != null &&
+                responseObj.AbaData?.PaymentStatusCode == 0)
+            {
+                // Get the amount from ABA response
+                decimal abaAmount = responseObj.AbaData?.TotalAmount ?? 0;
+
+                //Get Order
+                var spec = new OrderByPaymentIntentIdSpecification(tran_id);
+                var order = await unit.Repository<Order>().GetEntityWithSpec(spec);
+
+                if (order == null) return NotFound("Order not found");
+
+                decimal orderTotal = order.Subtotal + (order.DeliveryMethod?.Price ?? 0);
+                if (abaAmount != orderTotal) return BadRequest("Amount mismatch");
+                order.Status = OrderStatus.PaymentReceived;
+                unit.Repository<Order>().Update(order);
+                await unit.Complete();
+
+                string buyerEmail = order.BuyerEmail;
+
+                //send notification to buyer
+                if (!string.IsNullOrEmpty(buyerEmail))
+                {
+                    var connectionId = NotificationHub.getConnectionIdbyEmail(buyerEmail);
+
+                    if (!string.IsNullOrEmpty(connectionId))
+                    {
+                        await hubContext.Clients.Client(connectionId).SendAsync("PaymentReceived", new
+                        {
+                            Message = "Payment received successfully",
+                            TranId = tran_id
+                        });
+                    }
+                }
+               
+
+                return Ok(responseObj);
+            }
+
+            return BadRequest("Payment verification failed or not approved.");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Webhook Error: {ex.Message}");
+            return StatusCode(500, "Internal server error");
+        }
+
+    }
+
 
     // Get all delivery methods
     [HttpGet("delivery-methods")]

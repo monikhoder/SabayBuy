@@ -6,7 +6,7 @@ import { ShoppingCartComponent } from "./shopping-cart/shopping-cart.component";
 
 @Component({
   selector: 'app-cart',
-  imports: [RouterLink, AppOrderSummaryComponent, ShoppingCartComponent],
+  imports: [ AppOrderSummaryComponent, ShoppingCartComponent],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.scss',
 })

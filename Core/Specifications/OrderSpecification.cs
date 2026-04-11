@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,7 +17,7 @@ namespace Core.Specifications
                 AddOrderByDescending(x => x.OrderDate);
         }
         public OrderSpecification(string email, OrderSpecParams specParams)
-            : base(x => x.BuyerEmail == email && (string.IsNullOrEmpty(specParams.Status) || x.Status.ToString() == specParams.Status))
+            : base(x => x.BuyerEmail == email && (string.IsNullOrEmpty(specParams.Status) || x.Status == ParseStatus(specParams.Status)))
         {
             AddInclude(x => x.DeliveryMethod);
             AddInclude(x => x.OrderItems);
@@ -58,6 +59,15 @@ namespace Core.Specifications
         {
             AddInclude("OrderItems");
             AddInclude("DeliveryMethod");
+        }
+
+        private static OrderStatus? ParseStatus(string status)
+        {
+            if (Enum.TryParse<OrderStatus>(status, true, out var result))
+            {
+                return result;
+            }
+            return null;
         }
     }
 }

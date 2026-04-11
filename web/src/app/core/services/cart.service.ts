@@ -33,6 +33,13 @@ export class CartService {
       next: cart => this.cart.set(cart)
     })
   }
+  deleteCart(id: string){
+    return this.http.delete(this.baseUrl + 'cart?id=' + id).subscribe({
+      next: () => {
+        this.cart.set(null);
+      }
+    });
+  }
 
   addItemToCart(item: CartItem | Product, variantId: string, increase = 1, quantity?: string){
     const cart = this.cart() ?? this.createCart()
@@ -42,8 +49,8 @@ export class CartService {
     cart.items = this.addOrUpdateItem(cart.items, item, variantId, increase, quantity);
     this.setCart(cart);
   }
-  
-  
+
+
   private addOrUpdateItem(items: CartItem[], item: CartItem, variantId: string, increase: number, quantity?: string): CartItem[] {
     const index = items.findIndex(x => x.productId === item.productId && x.productVariantId === variantId);
     if(quantity != null && this.isNumber(quantity)){
@@ -106,5 +113,5 @@ export class CartService {
     localStorage.setItem('cart_id' , cart.id);
     return cart;
   }
-  
+
 }

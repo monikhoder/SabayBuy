@@ -1,0 +1,16 @@
+:host {
+    display: block;
+}
+
+tr {
+    transition: background-color 0.2s ease-in-out;
+}
+
+.mat-mdc-flat-button {
+    --mdc-flat-button-container-shape: 0.5rem;
+    line-height: 1.5;
+}
+
+mat-icon {
+    vertical-align: middle;
+}

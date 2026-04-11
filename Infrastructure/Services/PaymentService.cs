@@ -1,4 +1,4 @@
-using Core.Entities;
+﻿using Core.Entities;
 using Core.Interface;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -55,19 +55,39 @@ public class PaymentService(
             case "stripe":
                // return await ProcessStripePayment(totalPrice, cart.Id);
 
-            case "cash":
+            case "cod":
                 return ProcessCashOnDelivery(totalPrice, cart.Id);
 
             default:
                 throw new Exception("Payment method not supported");
         }
     }
+    public async Task<string> VerifyAbaPaymentAsync(string tranId)
+    {
+        var merchantId = config["AbaPayWay:MerchantId"];
+        var apiKey = config["AbaPayWay:ApiKey"];
+        var checkApiUrl = config["AbaPayWay:ApiUrl"] + "/check-transaction-2";
+        var reqTime = DateTime.Now.ToString("yyyyMMddHHmmss");
+
+        string hashString = reqTime + merchantId + tranId;
+        string hash = GetHmacSha512(hashString, apiKey);
+
+        using var client = new HttpClient();
+        var formData = new MultipartFormDataContent();
+        formData.Add(new StringContent(reqTime), "req_time");
+        formData.Add(new StringContent(merchantId), "merchant_id");
+        formData.Add(new StringContent(tranId), "tran_id");
+        formData.Add(new StringContent(hash), "hash");
+
+        var response = await client.PostAsync(checkApiUrl, formData);
+        return await response.Content.ReadAsStringAsync();
+    }
 
     private async Task<object?> ProcessAbaPayment(decimal price, string cartId, AppUser user)
     {
         var merchantId = config["AbaPayWay:MerchantId"];
         var apiKey = config["AbaPayWay:ApiKey"];
-        var apiUrl = config["AbaPayWay:ApiUrl"];
+        var apiUrl = config["AbaPayWay:ApiUrl"] + "/purchase";
         var reqTime = DateTime.Now.ToString("yyyyMMddHHmmss");
         var tranId = Guid.NewGuid().ToString("N").Substring(0, 20);
         var amountStr = price.ToString("0.00");
@@ -79,8 +99,9 @@ public class PaymentService(
         var returnUrl = config["AbaPayWay:ReturnUrl"];
         var type = "purchase";
         var currency = "USD";
+        var payment_option = "cards";
 
-        string hashString = reqTime + merchantId + tranId + amountStr + firstName + lastName + email + phone + type + returnUrl + currency;
+        string hashString = reqTime + merchantId + tranId + amountStr + firstName + lastName + email + phone + type + payment_option + returnUrl + currency;
         string hash = GetHmacSha512(hashString, apiKey);
 
         using var client = new HttpClient();
@@ -97,6 +118,7 @@ public class PaymentService(
         formData.Add(new StringContent(merchantId), "merchant_id");
         formData.Add(new StringContent(returnUrl), "return_url");
         formData.Add(new StringContent(type), "type");
+        formData.Add(new StringContent(payment_option), "payment_option");
         formData.Add(new StringContent(currency), "currency");
 
         var response = await client.PostAsync(apiUrl, formData);
@@ -123,4 +145,6 @@ public class PaymentService(
                     return Convert.ToBase64String(hashBytes);
                 }
             }
-    }
+
+    
+}

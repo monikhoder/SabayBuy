@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+
+@plugin "flowbite/plugin";
+@source "../node_modules/flowbite";
+
+@layer components {
+  .my-container {
+    @apply mx-auto max-w-7xl;
+  }
+
+  .bg-primary-700 {
+    @apply bg-violet-700;
+  }
+  .bg-primary-600 {
+    @apply bg-violet-600;
+  }
+  .bg-primary-700:hover {
+    @apply bg-violet-800;
+  }
+  .text-primary-600 {
+    @apply text-violet-600;
+  }
+  .text-danger-600 {
+    @apply text-red-600;
+  }
+}

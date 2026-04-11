@@ -5,6 +5,8 @@ import { DeliveryMethod } from '../../shared/models/deliveryMethod';
 import { PaymentMethod } from '../../shared/models/paymentMethod';
 import { CartService } from './cart.service';
 import { CheckOut } from '../../shared/models/checkout';
+import { CreateOrder } from '../../shared/models/order';
+import { AccountService } from './account.service';
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +15,7 @@ export class CheckoutService {
   baseUrl = environment.apiUrl;
   private http = inject(HttpClient);
   cartService = inject(CartService);
+  accountService = inject(AccountService);
   AvailableShippingMethods = signal<DeliveryMethod[]>([]);
   selectedShippingMethod = signal<DeliveryMethod | null>(null);
   selectedPaymentMethod = signal<string>('aba');
@@ -60,4 +63,6 @@ export class CheckoutService {
         this.selectedShippingMethod.set(methods.length > 0 ? methods[0] : null);
       });
   }
+
+   
 }
