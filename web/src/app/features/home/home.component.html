@@ -65,7 +65,11 @@
       <div *ngFor="let category of Categories()"
            [routerLink]="['/products']" [queryParams]="{category: category.categoryName}"
            class="flex flex-col items-center p-4 bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer">
-        <mat-icon class="mb-2 !text-3xl text-primary-600">category</mat-icon>
+          @if(category.icon){
+            <img src="{{category.icon}}" class="h-12 w-12 object-contain">
+          }@else {
+            <mat-icon class="mb-2 text-primary-600">category</mat-icon>
+          }
         <span class="text-sm font-medium text-gray-700">{{category.categoryName}}</span>
       </div>
     </div>
@@ -78,27 +82,7 @@
       <button mat-stroked-button color="primary" routerLink="/products">Shop All</button>
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-      <mat-card *ngFor="let product of featuredProducts()" class="product-card">
-        <div class="relative overflow-hidden group">
-          <img mat-card-image [src]="product.baseImageUrl" [alt]="product.productName"
-               class="h-64 w-full object-contain transition-transform duration-300 group-hover:scale-110">
-          <div class="absolute bottom-2 right-2">
-            <button mat-mini-fab color="accent">
-              <mat-icon>shopping_cart</mat-icon>
-            </button>
-          </div>
-        </div>
-        <mat-card-content class="pt-4">
-          <p class="text-xs text-gray-500 uppercase tracking-wider mb-1">{{product.categoryName}}</p>
-          <h3 class="text-lg font-bold text-gray-900 mb-2 truncate">{{product.productName}}</h3>
-          <div class="flex justify-between items-center">
-            <span class="text-xl font-bold text-primary-600">{{product.price | currency}}</span>
-          </div>
-        </mat-card-content>
-        <mat-card-actions align="end">
-          <button mat-button [routerLink]="['/product', product.id]">Details</button>
-        </mat-card-actions>
-      </mat-card>
+      <app-product-card *ngFor="let product of featuredProducts()" [product]="product"></app-product-card>
     </div>
   </section>
 

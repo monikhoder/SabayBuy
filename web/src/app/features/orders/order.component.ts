@@ -6,6 +6,7 @@ import { DatePipe, CurrencyPipe } from '@angular/common';
 import { OrderParams } from '../../shared/models/orderParams';
 import { FormsModule } from '@angular/forms';
 import { MatIcon } from "@angular/material/icon";
+import { LoadingService } from '../../core/services/loading.service';
 
 @Component({
   selector: 'app-order',
@@ -21,6 +22,7 @@ import { MatIcon } from "@angular/material/icon";
 })
 export class OrderComponent implements OnInit {
   private orderService = inject(OrderService);
+  loadingService = inject(LoadingService);
   myorders: Order[] = [];
   orderParams = new OrderParams();
   totalCount = 0;

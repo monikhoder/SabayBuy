@@ -32,7 +32,7 @@ builder.Services.AddCors(opt =>
 {
     opt.AddPolicy("CorsPolicy", policy =>
     {
-        policy.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:4200", "https://localhost:4200");
+        policy.WithOrigins("http://localhost:4200", "https://localhost:4200").AllowAnyHeader().AllowAnyMethod().AllowCredentials();
     });
 });
 builder.Services.AddSingleton<IConnectionMultiplexer> ( config =>
@@ -94,6 +94,6 @@ app.UseHttpsRedirection();
 
 app.MapControllers();
 app.MapGroup("api").MapIdentityApi<AppUser>();
-app.MapHub<NotificationHub>("/hubs/notification");
+app.MapHub<NotificationHub>("hub/notifications");
 
 app.Run();

@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatCardModule } from '@angular/material/card';
+import { ProductCardComponent } from '../product-list/product-card/product-card.component';
 
 @Component({
   selector: 'app-home',
@@ -18,7 +18,7 @@ import { MatCardModule } from '@angular/material/card';
     RouterLink,
     MatButtonModule,
     MatIconModule,
-    MatCardModule
+    ProductCardComponent
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',

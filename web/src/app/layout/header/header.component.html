@@ -184,61 +184,7 @@
             id="locationDropdown2"
             class="z-50 hidden w-72 divide-y divide-gray-100 overflow-hidden overflow-y-auto rounded-lg bg-white shadow dark:divide-gray-600 dark:bg-gray-700"
           >
-            <!-- <ul class="p-2 text-start text-sm font-medium text-gray-900 dark:text-white">
-              <li class="py-2">
-                <form class="mx-auto max-w-md">
-                  <label
-                    for="country-search"
-                    class="sr-only mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                    >Search</label
-                  >
-                  <div class="relative">
-                    <div
-                      class="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3"
-                    >
-                      <svg
-                        class="h-4 w-4 text-gray-500 dark:text-gray-400"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          stroke="currentColor"
-                          stroke-linecap="round"
-                          stroke-width="2"
-                          d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"
-                        />
-                      </svg>
-                    </div>
-                    <input
-                      type="search"
-                      id="location-search"
-                      class="block w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-2 ps-9 text-sm text-gray-900 dark:border-gray-500 dark:bg-gray-600 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
-                      placeholder="Search for address"
-                      required
-                    />
-                  </div>
-                </form>
-              </li>
-              @for (location of accountService.currentUser()?.addresses; track $index) {
-                <li
-                  class="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"
-                >
-                  <input
-                    id="address-checkbox-{{ location.id }}"
-                    type="checkbox"
-                    value=""
-                    class="h-4 w-4 rounded border-gray-300 bg-gray-100 text-primary-600 focus:ring-2 focus:ring-primary-500 dark:border-gray-500 dark:bg-gray-600 dark:ring-offset-gray-800 dark:focus:ring-primary-600"
-                  />
-                  <label
-                    for="address-checkbox-{{ location.id }}"
-                    class="inline-flex w-full items-center gap-2 text-gray-900 dark:text-gray-300"
-                    >{{ location.line1 }} {{ location.city }}  ({{ location.zipCode }})</label
-                  >
-                </li>
-              }
-            </ul> -->
+            
             <ul class="p-2 text-start text-sm font-medium text-gray-900 dark:text-white">
               @for (address of accountService.currentUser()?.addresses; track $index) {
                 <li>

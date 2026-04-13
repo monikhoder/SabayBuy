@@ -1,5 +1,5 @@
 export class OrderParams {
-  defaultPageSize: number = 1;
+  defaultPageSize: number = 10;
   pageIndex: number = 1;
   pageSize: number = this.defaultPageSize;
   status: string = '';

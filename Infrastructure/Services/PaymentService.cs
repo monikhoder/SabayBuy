@@ -47,6 +47,7 @@ public class PaymentService(
     public async Task<object?> ProcessPaymentAsync(ShoppingCart cart, string paymentMethod, AppUser user)
     {
         decimal totalPrice = cart.TotalPrice ?? 0;
+        Console.WriteLine($"Total price to be paid: {totalPrice}");
         switch (paymentMethod.ToLower())
         {
             case "aba":
@@ -85,12 +86,14 @@ public class PaymentService(
 
     private async Task<object?> ProcessAbaPayment(decimal price, string cartId, AppUser user)
     {
+        Console.WriteLine($"Processing ABA payment for cart {cartId} with amount {price}");
         var merchantId = config["AbaPayWay:MerchantId"];
         var apiKey = config["AbaPayWay:ApiKey"];
         var apiUrl = config["AbaPayWay:ApiUrl"] + "/purchase";
         var reqTime = DateTime.Now.ToString("yyyyMMddHHmmss");
         var tranId = Guid.NewGuid().ToString("N").Substring(0, 20);
-        var amountStr = price.ToString("0.00");
+        var amountStr = price.ToString();
+        Console.WriteLine($"Amount String : {amountStr}");
 
         var firstName = user.FirstName ?? "Customer";
         var lastName = user.LastName ?? "Customer";

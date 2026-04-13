@@ -2,25 +2,6 @@
     display: block;
 }
 
-.product-card {
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    border: none !important;
-    background: white;
-    overflow: hidden;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-
-    &:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 14px 28px rgba(0,0,0,0.1), 0 10px 10px rgba(0,0,0,0.05) !important;
-    }
-
-    mat-card-content {
-        flex-grow: 1;
-    }
-}
-
 .bg-primary-100 {
     background-color: rgba(139, 92, 246, 0.1);
 }

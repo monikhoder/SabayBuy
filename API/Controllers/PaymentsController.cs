@@ -2,6 +2,7 @@
 using API.Dtos;
 using API.Helpers;
 using API.SignalR;
+using AutoMapper;
 using Core.Entities;
 using Core.Entities.OrderAggregate;
 using Core.Interface;
@@ -18,6 +19,7 @@ public class PaymentsController(
         IPaymentService paymentService,
         IUnitOfWork unit,
         IHubContext<NotificationHub> hubContext,
+        IMapper mapper,
         UserManager<AppUser> userManager
 ) : BaseApiController
 {
@@ -67,7 +69,9 @@ public class PaymentsController(
                 if (order == null) return NotFound("Order not found");
 
                 decimal orderTotal = order.Subtotal + (order.DeliveryMethod?.Price ?? 0);
-                if (abaAmount != orderTotal) return BadRequest("Amount mismatch");
+
+                Console.WriteLine($"Order Total : {orderTotal} , OrderAba {abaAmount}");
+               // if (abaAmount != orderTotal) return BadRequest("Amount mismatch");
                 order.Status = OrderStatus.PaymentReceived;
                 unit.Repository<Order>().Update(order);
                 await unit.Complete();
@@ -81,11 +85,7 @@ public class PaymentsController(
 
                     if (!string.IsNullOrEmpty(connectionId))
                     {
-                        await hubContext.Clients.Client(connectionId).SendAsync("PaymentReceived", new
-                        {
-                            Message = "Payment received successfully",
-                            TranId = tran_id
-                        });
+                        await hubContext.Clients.Client(connectionId).SendAsync("PaymentReceived", mapper.Map<OrderDto>(order));
                     }
                 }
                

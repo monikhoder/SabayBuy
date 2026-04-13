@@ -1,13 +1,13 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AccountService } from '../../../core/services/account.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { RegisterValidationErrors } from '../../../shared/models/regististerValidtion';
 import { TextInputComponent } from '../../../shared/components/text-input/text-input.component';
 
 @Component({
   selector: 'app-register',
-  imports: [ReactiveFormsModule, TextInputComponent
+  imports: [ReactiveFormsModule, TextInputComponent, RouterLink
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',

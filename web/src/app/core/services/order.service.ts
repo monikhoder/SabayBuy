@@ -11,6 +11,7 @@ import { OrderParams } from '../../shared/models/orderParams';
 export class OrderService {
   baseUrl = environment.apiUrl;
   private http = inject(HttpClient);
+  orderComplete = false;
 
   createOrder(order: CreateOrder) {
     return this.http.post<Order>(this.baseUrl + 'orders', order);

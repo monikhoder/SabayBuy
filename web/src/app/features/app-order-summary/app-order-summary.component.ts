@@ -50,6 +50,7 @@ export class AppOrderSummaryComponent {
           complete: () => {
             this.cartService.deleteCart(this.cartService.cart()?.id || '');
             this.cartService.cart.set(null);
+            this.orderService.orderComplete = true;
           }
         });
       },
@@ -71,11 +72,10 @@ export class AppOrderSummaryComponent {
 
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result === 'success') {
-        this.router.navigate(['/checkout/success'], { state: { orderId } });
+      if (result === true) {
+        // AbaQrDialogComponent already handles navigation on success
       } else {
         console.log('Payment cancelled by user.');
-        // Maybe redirect to order detail or somewhere they can retry?
       }
     });
   }

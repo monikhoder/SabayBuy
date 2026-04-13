@@ -12,6 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-product-list',
@@ -24,7 +25,8 @@ import { CommonModule } from '@angular/common';
     MatButtonModule,
     MatIconModule,
     MatMenuModule,
-    RouterLink
+    RouterLink,
+    MatProgressSpinnerModule
   ],
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.scss',
