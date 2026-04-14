@@ -21,14 +21,7 @@ public class StoreContext(DbContextOptions options) : IdentityDbContext<AppUser>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ProductConfiguration).Assembly);
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ProductVariantConfiguration).Assembly);
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(VariantAttributeConfiguration).Assembly);
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(CategoryConfiguration).Assembly);
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppUserConfiguration).Assembly);
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(DeliveryMethod).Assembly);
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(OrderConfiguration).Assembly);
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(OrderItemConfiguration).Assembly);
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(StoreContext).Assembly);
 
     }
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

@@ -57,6 +57,7 @@ TemporaryDependencyNodeTargetIdentifier=net9.0
 [sourceFiles]
 Controllers/
  AccountController.cs
+ AdminController.cs
  BaseApiController.cs
  BrandController.cs
  CartController.cs

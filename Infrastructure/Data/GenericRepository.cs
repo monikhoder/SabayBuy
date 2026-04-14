@@ -30,6 +30,8 @@ public class GenericRepository<T>(StoreContext context) : IGenericRepository<T> 
         return context.Set<T>().Any(e => e.Id == id);
     }
 
+   
+
     public Task<T?> GetByIdAsync(Guid id)
     {
         return context.Set<T>().FirstOrDefaultAsync(e => e.Id == id);

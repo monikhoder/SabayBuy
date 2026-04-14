@@ -61,7 +61,17 @@ namespace API.Controllers
             unitOfWork.Repository<Order>().Add(order);
             if (await unitOfWork.Complete())
             {
-                return Ok(order);
+                //remove stock 
+                foreach (var item in items)
+                {
+                    var productVariant = await unitOfWork.Repository<ProductVariant>().GetByIdAsync(item.ItemOrdered.ProductVariantId);
+                    if (productVariant != null)
+                    {
+                        productVariant.StockQuantity -= item.Quantity;
+                        unitOfWork.Repository<ProductVariant>().Update(productVariant);
+                    }
+                }
+                return Ok(mapper.Map<OrderDto>(order));
             }
 
             return BadRequest("Problem creating order");

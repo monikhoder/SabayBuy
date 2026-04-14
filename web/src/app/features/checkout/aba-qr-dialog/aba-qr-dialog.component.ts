@@ -31,7 +31,10 @@ import { SignalrService } from '../../../core/services/signalr.service';
       </div>
 
       <p class="mt-2 text-lg">
-        Total Amount: <span class="font-bold text-green-600">\${{ signalrService.orderSignal()?.total ||0 }}</span>
+        Total Amount: <span class="font-bold text-green-600">\${{ data.totalAmount }}</span>
+      </p>
+      <p class="mt-2 text-lg">
+        Tran_ID: <span class="font-bold text-green-600">{{ data.tran_id }}</span>
       </p>
 
       <p class="mt-2 text-md font-medium" [ngClass]="isExpired ? 'text-red-500' : 'text-blue-600'">
@@ -45,7 +48,7 @@ import { SignalrService } from '../../../core/services/signalr.service';
       </button>
     </mat-dialog-actions>
   `,
-})
+  })
 export class AbaQrDialogComponent implements OnInit, OnDestroy {
   data = inject(MAT_DIALOG_DATA);
   dialogRef = inject(MatDialogRef<AbaQrDialogComponent>);
@@ -60,7 +63,7 @@ export class AbaQrDialogComponent implements OnInit, OnDestroy {
 
     effect(() => {
       const orderSignal = this.signalrService.orderSignal();
-      if (orderSignal !== null) {
+      if (orderSignal !== null && orderSignal.paymentIntentId === this.data.tran_id) {
         this.handlePaymentSuccess();
       }
     });

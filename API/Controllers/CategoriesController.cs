@@ -28,34 +28,55 @@ namespace API.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult<CategoryDto>> CreateCategory(CreateCategoryDto category)
+        public async Task<ActionResult<CategoryDto>> CreateCategory(CreateCategoryDto categoryDto)
         {
+            var spec = new CategoryByNameSpecification(categoryDto.CategoryName);
+            var existingCategory = await unit.Repository<Category>().GetEntityWithSpec(spec);
 
-            return await CreateResult<Category, CreateCategoryDto, CategoryDto>(
-                unit.Repository<Category>(),
-                category,
-                mapper,
-                nameof(GetCategory),
-                entity => new { id = entity.Id });
+            if (existingCategory != null)
+            {
+                return BadRequest("Category with this name already exists");
+            }
+
+            var newCategory = mapper.Map<CreateCategoryDto, Category>(categoryDto);
+            unit.Repository<Category>().Add(newCategory);
+            if (await unit.Complete())
+            {
+                var categoryToReturn = mapper.Map<Category, CategoryDto>(newCategory);
+                return CreatedAtAction(nameof(GetCategory), new { id = categoryToReturn.Id }, categoryToReturn);
+            }
+            return BadRequest("Failed to create category");
         }
         [HttpPut("{id}")]
-        public async Task<ActionResult<CategoryDto>> UpdateCategory(Guid id, UpdateCategoryDto category)
+        public async Task<ActionResult<CategoryDto>> UpdateCategory(Guid id, UpdateCategoryDto categoryDto)
         {
-           var spec = new CategoriesSpecification(id);
-           var existingCategory = await unit.Repository<Category>().GetEntityWithSpec(spec);
-                if (existingCategory == null)
-                {
-                    return NotFound();
-                }
-                mapper.Map(category, existingCategory);
-                unit.Repository<Category>().Update(existingCategory);
+            var spec = new CategoriesSpecification(id);
+            var existingCategory = await unit.Repository<Category>().GetEntityWithSpec(spec);
+            if (existingCategory == null)
+            {
+                return NotFound();
+            }
 
-                if (await unit.Complete())
-                {
-                    return mapper.Map<Category, CategoryDto>(existingCategory);
-                }
+            if (!string.IsNullOrEmpty(categoryDto.CategoryName) && existingCategory.CategoryName != categoryDto.CategoryName)
+            {
+                var nameSpec = new CategoryByNameSpecification(categoryDto.CategoryName);
+                var categoryWithName = await unit.Repository<Category>().GetEntityWithSpec(nameSpec);
 
-                return BadRequest("Failed to update category");
+                if (categoryWithName != null)
+                {
+                    return BadRequest("Category with this name already exists");
+                }
+            }
+
+            mapper.Map(categoryDto, existingCategory);
+            unit.Repository<Category>().Update(existingCategory);
+
+            if (await unit.Complete())
+            {
+                return mapper.Map<Category, CategoryDto>(existingCategory);
+            }
+
+            return BadRequest("Failed to update category");
         }
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteCategory(Guid id)

@@ -10,12 +10,7 @@ namespace Core.Specifications
 {
     public class OrderSpecification : BaseSpecification<Order>
     {
-        public OrderSpecification() : base(x => true)
-        {
-                AddInclude(x => x.DeliveryMethod);
-                AddInclude(x => x.OrderItems);
-                AddOrderByDescending(x => x.OrderDate);
-        }
+        
         public OrderSpecification(string email, OrderSpecParams specParams)
             : base(x => x.BuyerEmail == email && (string.IsNullOrEmpty(specParams.Status) || x.Status == ParseStatus(specParams.Status)))
         {
@@ -49,11 +44,38 @@ namespace Core.Specifications
                 AddOrderByDescending(x => x.OrderDate);
             }
         }
-        public OrderSpecification(string email) : base(x => x.BuyerEmail == email)
+        public OrderSpecification(OrderSpecParams specParams)
+            : base(x =>  (string.IsNullOrEmpty(specParams.Status) || x.Status == ParseStatus(specParams.Status)))
         {
             AddInclude(x => x.DeliveryMethod);
             AddInclude(x => x.OrderItems);
-            AddOrderByDescending(x => x.OrderDate);
+            ApplyPaging(specParams.PageSize * (specParams.PageIndex - 1), specParams.PageSize);
+
+            if (!string.IsNullOrEmpty(specParams.Sort))
+            {
+                switch (specParams.Sort)
+                {
+                    case "dateAsc":
+                        AddOrderBy(x => x.OrderDate);
+                        break;
+                    case "dateDesc":
+                        AddOrderByDescending(x => x.OrderDate);
+                        break;
+                    case "totalAsc":
+                        AddOrderBy(x => x.Subtotal);
+                        break;
+                    case "totalDesc":
+                        AddOrderByDescending(x => x.Subtotal);
+                        break;
+                    default:
+                        AddOrderByDescending(x => x.OrderDate);
+                        break;
+                }
+            }
+            else
+            {
+                AddOrderByDescending(x => x.OrderDate);
+            }
         }
         public OrderSpecification(Guid id, string email) : base(x => x.Id == id && x.BuyerEmail == email)
         {

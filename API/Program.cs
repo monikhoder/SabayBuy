@@ -6,6 +6,7 @@ using Core.Entities;
 using Core.Interface;
 using Infrastructure.Data;
 using Infrastructure.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using StackExchange.Redis;
 
@@ -54,6 +55,7 @@ builder.Services.AddIdentityApiEndpoints<AppUser>( options =>
             options.Password.RequireDigit = false;
             options.Password.RequireNonAlphanumeric = false;
         })
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<StoreContext>();
 
 var app = builder.Build();
@@ -61,22 +63,21 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
-    var loggerFactory = services.GetRequiredService<ILoggerFactory>();
 
     try
     {
         var context = services.GetRequiredService<StoreContext>();
+        var userManager = services.GetRequiredService<UserManager<AppUser>>();
 
         // Update Migration to Database
         await context.Database.MigrateAsync();
 
         // seed data to database
-        await StoreContextSeed.SeedAsync(context, loggerFactory);
+        await StoreContextSeed.SeedAsync(context, userManager);
     }
     catch (Exception ex)
     {
-        var logger = loggerFactory.CreateLogger<Program>();
-        logger.LogError(ex, "Somthing wrong when seeding data");
+        Console.WriteLine(ex.Message);
     }
 }
 app.UseMiddleware<ExceptionMiddleware>();

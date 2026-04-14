@@ -3,6 +3,7 @@ using API.Dtos;
 using API.Helpers;
 using API.SignalR;
 using AutoMapper;
+using Azure;
 using Core.Entities;
 using Core.Entities.OrderAggregate;
 using Core.Interface;
@@ -45,6 +46,7 @@ public class PaymentsController(
         }
 
         var jsonString = await paymentService.VerifyAbaPaymentAsync(tran_id);
+        Console.WriteLine($"check trx respone {jsonString}");
         if (string.IsNullOrEmpty(jsonString))
         {
             return BadRequest("No response from ABA");
@@ -70,8 +72,6 @@ public class PaymentsController(
 
                 decimal orderTotal = order.Subtotal + (order.DeliveryMethod?.Price ?? 0);
 
-                Console.WriteLine($"Order Total : {orderTotal} , OrderAba {abaAmount}");
-               // if (abaAmount != orderTotal) return BadRequest("Amount mismatch");
                 order.Status = OrderStatus.PaymentReceived;
                 unit.Repository<Order>().Update(order);
                 await unit.Complete();

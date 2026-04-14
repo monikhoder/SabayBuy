@@ -63,6 +63,7 @@ Config/
  OrderItemConfiguration.cs
  ProductConfiguration.cs
  ProductVariantConfiguration.cs
+ RoleConfiguration.cs
  VariantAttributeConfiguration.cs
 Data/
  GenericRepository.cs
@@ -93,6 +94,8 @@ Migrations/
  20260403141738_ChangeZipcodeToString.Designer.cs
  20260404031126_AddProductVariantsToOrderItems.cs
  20260404031126_AddProductVariantsToOrderItems.Designer.cs
+ 20260414065811_RoleAdded.cs
+ 20260414065811_RoleAdded.Designer.cs
  StoreContextModelSnapshot.cs
 obj/Debug/net9.0/
  .NETCoreApp,Version=v9.0.AssemblyAttributes.cs

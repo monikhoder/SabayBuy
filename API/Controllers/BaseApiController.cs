@@ -38,26 +38,7 @@ public class BaseApiController : ControllerBase
         return Ok(mappedEntity);
     }
 
-    protected async Task<ActionResult<TDto>> CreateResult<TEntity, TCreateDto, TDto>(
-        IGenericRepository<TEntity> repo,
-        TCreateDto createDto,
-        IMapper mapper,
-        string getActionName,
-        Func<TEntity, object> getRouteValues)
-        where TEntity : BaseEntity
-        where TDto : class
-    {
-        var entity = mapper.Map<TCreateDto, TEntity>(createDto);
-        repo.Add(entity);
-
-        if (await repo.SaveAllAsync())
-        {
-            var resultDto = mapper.Map<TEntity, TDto>(entity);
-            return CreatedAtAction(getActionName, getRouteValues(entity), resultDto);
-        }
-
-        return BadRequest("Failed to create entity");
-    }
+   
 
 
 }

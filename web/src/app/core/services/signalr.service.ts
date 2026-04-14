@@ -20,7 +20,7 @@ export class SignalrService {
       .build();
 
     this.hubConnection.start().catch((error) => console.log('Error establishing connection: ', error));
-    this.hubConnection.on('PaymentReceived', (order : Order) =>{
+    this.hubConnection.on("PaymentReceived", (order : Order) =>{
       this.orderSignal.set(order);
     } )
   }

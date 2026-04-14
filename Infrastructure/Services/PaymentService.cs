@@ -81,6 +81,7 @@ public class PaymentService(
         formData.Add(new StringContent(hash), "hash");
 
         var response = await client.PostAsync(checkApiUrl, formData);
+       
         return await response.Content.ReadAsStringAsync();
     }
 
@@ -92,7 +93,8 @@ public class PaymentService(
         var apiUrl = config["AbaPayWay:ApiUrl"] + "/purchase";
         var reqTime = DateTime.Now.ToString("yyyyMMddHHmmss");
         var tranId = Guid.NewGuid().ToString("N").Substring(0, 20);
-        var amountStr = price.ToString();
+        Console.WriteLine($"Tran_ID : {tranId}");
+        var amountStr = price.ToString("F2", System.Globalization.CultureInfo.InvariantCulture);
         Console.WriteLine($"Amount String : {amountStr}");
 
         var firstName = user.FirstName ?? "Customer";
@@ -105,7 +107,11 @@ public class PaymentService(
         var payment_option = "cards";
 
         string hashString = reqTime + merchantId + tranId + amountStr + firstName + lastName + email + phone + type + payment_option + returnUrl + currency;
+        Console.WriteLine($"HashString : {hashString}");
         string hash = GetHmacSha512(hashString, apiKey);
+
+        Console.WriteLine($"Hash : {hash}");
+
 
         using var client = new HttpClient();
         var formData = new MultipartFormDataContent();
@@ -126,7 +132,7 @@ public class PaymentService(
 
         var response = await client.PostAsync(apiUrl, formData);
         var responseString = await response.Content.ReadAsStringAsync();
-
+        Console.WriteLine($"ABA Response: {responseString}");
         var jsonDocument = JsonDocument.Parse(responseString);
         return jsonDocument.RootElement;
     }

@@ -6,7 +6,7 @@ import { CheckoutService } from '../../core/services/checkout.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AbaQrDialogComponent } from '../checkout/aba-qr-dialog/aba-qr-dialog.component';
 import { OrderService } from '../../core/services/order.service';
-import { CreateOrder } from '../../shared/models/order';
+import { CreateOrder, Order } from '../../shared/models/order';
 import { AccountService } from '../../core/services/account.service';
 
 @Component({
@@ -32,13 +32,13 @@ export class AppOrderSummaryComponent {
   onCheckoutSubmit() {
     this.isProcessing.set(true);
     this.checkoutService.createPaymentIntent().subscribe({
-      next: (response: any) => {
-        const orderDto = this.createOrderDto(response.status.tran_id || '');
+      next: (payment_response: any) => {
+        const orderDto = this.createOrderDto(payment_response.status.tran_id || '');
         this.orderService.createOrder(orderDto).subscribe({
           next: (order) => {
             this.isProcessing.set(false);
-            if (this.checkoutService.selectedPaymentMethod() === 'aba' && response.qrImage) {
-              this.openAbaQrDialog(response.qrImage, order.id);
+            if (this.checkoutService.selectedPaymentMethod() === 'aba' && payment_response.qrImage) {
+              this.openAbaQrDialog(payment_response.qrImage, order.total.toString(), payment_response.status.tran_id);
             } else {
               this.router.navigate(['/checkout/success'], { state: { orderId: order.id } });
             }
@@ -60,20 +60,20 @@ export class AppOrderSummaryComponent {
       }
     });
   }
-  openAbaQrDialog(qrImageBase64: string, orderId: string) {
+  openAbaQrDialog(qrImageBase64: string, totalAmount: string, tran_id:string) {
     const dialogRef = this.dialog.open(AbaQrDialogComponent, {
       width: '400px',
       disableClose: true,
       data: {
         qrImage: qrImageBase64,
-        totalAmount: this.cartService.cart()?.totalPrice || 0
+        totalAmount: totalAmount,
+        tran_id: tran_id
       }
     });
 
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
-        // AbaQrDialogComponent already handles navigation on success
       } else {
         console.log('Payment cancelled by user.');
       }

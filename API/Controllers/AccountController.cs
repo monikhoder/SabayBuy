@@ -17,11 +17,20 @@ namespace API.Controllers
         public async Task<ActionResult> register(RegisterDto registerDto)
         {
             var user = mapper.Map<RegisterDto, AppUser>(registerDto);
-            var result = await signInManager.UserManager.CreateAsync(user, registerDto.Password);
+            var Createresult = await signInManager.UserManager.CreateAsync(user, registerDto.Password);
+            var AddRoleResult = await signInManager.UserManager.AddToRoleAsync(user, "Customer");
 
-            if (!result.Succeeded)
+            if (!Createresult.Succeeded)
             {
-                foreach (var error in result.Errors)
+                foreach (var error in Createresult.Errors)
+                {
+                    ModelState.AddModelError(error.Code, error.Description);
+                }
+                return ValidationProblem();
+            }
+            if (!AddRoleResult.Succeeded)
+            {
+                foreach (var error in AddRoleResult.Errors)
                 {
                     ModelState.AddModelError(error.Code, error.Description);
                 }
@@ -44,8 +53,10 @@ namespace API.Controllers
             if (User.Identity?.IsAuthenticated == false) return NoContent();
 
             var user = await signInManager.UserManager.GetUserByEmailWithAddress(User);
+            var userDto = mapper.Map<AppUser, UserDto>(user);
+            userDto.Role = User.FindFirstValue(ClaimTypes.Role);
             return Ok(
-                  mapper.Map<AppUser, UserDto>(user)
+                 userDto
             );
         }
         [HttpGet("is-authenticated")]
@@ -115,7 +126,6 @@ namespace API.Controllers
             var result = await signInManager.UserManager.UpdateAsync(user);
             if (!result.Succeeded) return BadRequest();
             return Ok(mapper.Map<AppUser, UserDto>(user));
-
         }
     }
 }
