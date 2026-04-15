@@ -49,6 +49,9 @@ export class AccountService {
   addAddress(address: Address) {
     return this.http.post<User>(this.baseUrl + 'account/address', address);
   }
+  isAdmin(){
+    return this.currentUser()?.role === 'Admin';
+  }
   updateAddress(address: Address, id: string) {
     return this.http.put(this.baseUrl + 'account/address/' + id, address);
   }

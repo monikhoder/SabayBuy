@@ -12,6 +12,7 @@ import { emptyCartGuard } from './core/guards/empty-cart-guard';
 import { OrderComponent } from './features/orders/order.component';
 import { OrderDetailedComponent } from './features/orders/order-detailed/order-detailed.component';
 import { orderCompleteGuard } from './core/guards/order-complete-guard';
+import { roleGuard } from './core/guards/role-guard';
 import { ShopLayoutComponent } from './layout/shop-layout/shop-layout.component';
 import { AdminLayoutComponent } from './layout/admin-layout/admin-layout.component';
 import { ProductListComponent } from './features/Shopping/product-list/product-list.component';
@@ -42,10 +43,11 @@ export const routes: Routes = [
   {
     path: 'admin',
     component: AdminLayoutComponent,
-    canActivate: [authGuard], 
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['Admin', 'Stock', 'Seller'] },
     children: [
       { path: 'dashboard', component: HomeComponent },
-      { path: 'products', component: ProductListComponent },
+      { path: 'products', component: ProductListComponent, canActivate: [roleGuard], data: { roles: ['Admin', 'Stock'] } },
       { path: 'orders', component: OrderComponent },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
     ]
