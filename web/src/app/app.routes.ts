@@ -1,7 +1,5 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './features/home/home.component';
-import { ProductListComponent } from './features/product-list/product-list.component';
-import { ProductDetailsComponent } from './features/product-details/product-details.component';
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
 import { ServerErrorComponent } from './shared/components/server-error/server-error.component';
 import { CartComponent } from './features/cart/cart.component';
@@ -14,19 +12,44 @@ import { emptyCartGuard } from './core/guards/empty-cart-guard';
 import { OrderComponent } from './features/orders/order.component';
 import { OrderDetailedComponent } from './features/orders/order-detailed/order-detailed.component';
 import { orderCompleteGuard } from './core/guards/order-complete-guard';
+import { ShopLayoutComponent } from './layout/shop-layout/shop-layout.component';
+import { AdminLayoutComponent } from './layout/admin-layout/admin-layout.component';
+import { ProductListComponent } from './features/Shopping/product-list/product-list.component';
+import { ProductDetailsComponent } from './features/Shopping/product-details/product-details.component';
 
 export const routes: Routes = [
-  {path: '', component: HomeComponent},
-  {path: 'products', component: ProductListComponent},
-  {path: 'product/:id', component: ProductDetailsComponent},
-  {path: 'cart', component: CartComponent},
-  {path: 'checkout', component: CheckoutComponent, canActivate: [authGuard, emptyCartGuard]},
-  {path: 'checkout/success', component: SuccessPageComponent, canActivate: [authGuard, orderCompleteGuard]},
-  {path: 'orders', component: OrderComponent, canActivate: [authGuard]},
-  {path: 'orders/:id', component: OrderDetailedComponent, canActivate: [authGuard]},
-  {path: 'account/login', component: LoginComponent},
-  {path: 'account/register', component: RegisterComponent},
-  {path: 'not-found', component: NotFoundComponent},
-  {path: 'server-error', component: ServerErrorComponent},
-  {path: '**', redirectTo: '/not-found', pathMatch: 'full'}
+  // Shop Routes
+  {
+    path: '',
+    component: ShopLayoutComponent,
+    children: [
+      { path: '', component: HomeComponent },
+      { path: 'products', component: ProductListComponent },
+      { path: 'product/:id', component: ProductDetailsComponent },
+      { path: 'cart', component: CartComponent },
+      { path: 'checkout', component: CheckoutComponent, canActivate: [authGuard, emptyCartGuard] },
+      { path: 'checkout/success', component: SuccessPageComponent, canActivate: [authGuard, orderCompleteGuard] },
+      { path: 'orders', component: OrderComponent, canActivate: [authGuard] },
+      { path: 'orders/:id', component: OrderDetailedComponent, canActivate: [authGuard] },
+      { path: 'account/login', component: LoginComponent },
+      { path: 'account/register', component: RegisterComponent },
+      { path: 'not-found', component: NotFoundComponent },
+      { path: 'server-error', component: ServerErrorComponent },
+    ]
+  },
+
+  // Admin Routes
+  {
+    path: 'admin',
+    component: AdminLayoutComponent,
+    canActivate: [authGuard], 
+    children: [
+      { path: 'dashboard', component: HomeComponent },
+      { path: 'products', component: ProductListComponent },
+      { path: 'orders', component: OrderComponent },
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
+    ]
+  },
+
+  { path: '**', redirectTo: '/not-found', pathMatch: 'full' }
 ];

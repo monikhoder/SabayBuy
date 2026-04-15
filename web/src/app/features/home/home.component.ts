@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { ProductCardComponent } from '../product-list/product-card/product-card.component';
+import { ProductCardComponent } from '../Shopping/product-list/product-card/product-card.component';
 
 @Component({
   selector: 'app-home',

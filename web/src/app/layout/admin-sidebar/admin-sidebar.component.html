@@ -1,0 +1,62 @@
+<aside class="w-64 bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700 h-full transition-transform">
+  <div class="h-full px-4 py-6 overflow-y-auto">
+    <div class="mb-6 px-2">
+      <h2 class="text-xs font-bold text-gray-400 uppercase tracking-widest">Management</h2>
+    </div>
+    
+    <ul class="space-y-1 font-medium">
+      <li>
+        <a routerLink="/admin/dashboard" routerLinkActive="bg-violet-50 text-violet-700 dark:bg-gray-700 dark:text-violet-400" 
+           class="flex items-center p-3 text-gray-700 rounded-xl dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 group transition-all duration-200">
+          <mat-icon class="text-gray-400 group-hover:text-violet-600 transition-colors">dashboard</mat-icon>
+          <span class="ms-3">Dashboard</span>
+        </a>
+      </li>
+      
+      <li>
+        <a routerLink="/admin/products" routerLinkActive="bg-violet-50 text-violet-700 dark:bg-gray-700 dark:text-violet-400" 
+           class="flex items-center p-3 text-gray-700 rounded-xl dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 group transition-all duration-200">
+          <mat-icon class="text-gray-400 group-hover:text-violet-600 transition-colors">inventory_2</mat-icon>
+          <span class="ms-3">Products</span>
+        </a>
+      </li>
+
+      <li>
+        <a routerLink="/admin/orders" routerLinkActive="bg-violet-50 text-violet-700 dark:bg-gray-700 dark:text-violet-400" 
+           class="flex items-center p-3 text-gray-700 rounded-xl dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 group transition-all duration-200">
+          <mat-icon class="text-gray-400 group-hover:text-violet-600 transition-colors">shopping_bag</mat-icon>
+          <span class="ms-3">Orders</span>
+        </a>
+      </li>
+
+      <li>
+        <a routerLink="/admin/categories" routerLinkActive="bg-violet-50 text-violet-700 dark:bg-gray-700 dark:text-violet-400" 
+           class="flex items-center p-3 text-gray-700 rounded-xl dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 group transition-all duration-200">
+          <mat-icon class="text-gray-400 group-hover:text-violet-600 transition-colors">category</mat-icon>
+          <span class="ms-3">Categories</span>
+        </a>
+      </li>
+    </ul>
+
+    <div class="mt-10 mb-6 px-2">
+      <h2 class="text-xs font-bold text-gray-400 uppercase tracking-widest">System</h2>
+    </div>
+
+    <ul class="space-y-1 font-medium">
+        <li>
+            <a routerLink="/admin/users" routerLinkActive="bg-violet-50 text-violet-700 dark:bg-gray-700 dark:text-violet-400" 
+               class="flex items-center p-3 text-gray-700 rounded-xl dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 group transition-all duration-200">
+              <mat-icon class="text-gray-400 group-hover:text-violet-600 transition-colors">people</mat-icon>
+              <span class="ms-3">Users</span>
+            </a>
+          </li>
+      <li>
+        <a routerLink="/admin/settings" routerLinkActive="bg-violet-50 text-violet-700 dark:bg-gray-700 dark:text-violet-400" 
+           class="flex items-center p-3 text-gray-700 rounded-xl dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 group transition-all duration-200">
+          <mat-icon class="text-gray-400 group-hover:text-violet-600 transition-colors">settings</mat-icon>
+          <span class="ms-3">Settings</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</aside>

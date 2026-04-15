@@ -1,4 +1,5 @@
 ﻿using Core.Entities;
+using Core.Entities.OrderAggregate;
 using Core.Interface;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -67,7 +68,7 @@ public class PaymentService(
     {
         var merchantId = config["AbaPayWay:MerchantId"];
         var apiKey = config["AbaPayWay:ApiKey"];
-        var checkApiUrl = config["AbaPayWay:ApiUrl"] + "/check-transaction-2";
+        var checkApiUrl = config["AbaPayWay:ApiUrl"] + "payment-gateway/v1/payments/check-transaction-2";
         var reqTime = DateTime.Now.ToString("yyyyMMddHHmmss");
 
         string hashString = reqTime + merchantId + tranId;
@@ -87,15 +88,12 @@ public class PaymentService(
 
     private async Task<object?> ProcessAbaPayment(decimal price, string cartId, AppUser user)
     {
-        Console.WriteLine($"Processing ABA payment for cart {cartId} with amount {price}");
         var merchantId = config["AbaPayWay:MerchantId"];
         var apiKey = config["AbaPayWay:ApiKey"];
-        var apiUrl = config["AbaPayWay:ApiUrl"] + "/purchase";
+        var apiUrl = config["AbaPayWay:ApiUrl"] + "payment-gateway/v1/payments/purchase";
         var reqTime = DateTime.Now.ToString("yyyyMMddHHmmss");
         var tranId = Guid.NewGuid().ToString("N").Substring(0, 20);
-        Console.WriteLine($"Tran_ID : {tranId}");
         var amountStr = price.ToString("F2", System.Globalization.CultureInfo.InvariantCulture);
-        Console.WriteLine($"Amount String : {amountStr}");
 
         var firstName = user.FirstName ?? "Customer";
         var lastName = user.LastName ?? "Customer";
@@ -154,6 +152,5 @@ public class PaymentService(
                     return Convert.ToBase64String(hashBytes);
                 }
             }
-
-    
+   
 }

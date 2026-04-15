@@ -1,6 +1,4 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Category } from '../../../shared/models/category';
-import { productParams } from '../../../shared/models/productParams';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSliderModule } from '@angular/material/slider';
@@ -10,6 +8,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDividerModule } from '@angular/material/divider';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Category } from '../../../../shared/models/category';
+import { productParams } from '../../../../shared/models/productParams';
 
 @Component({
   selector: 'app-filter',

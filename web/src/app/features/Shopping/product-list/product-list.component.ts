@@ -1,18 +1,18 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { ShopServices } from '../../core/services/shop.service';
-import { Category } from '../../shared/models/category';
-import { Product } from '../../shared/models/product';
 import { ProductCardComponent } from "./product-card/product-card.component";
 import { FilterComponent } from "./filter/filter.component";
 import { SortComponent } from "./sort/sort.component";
-import { productParams } from '../../shared/models/productParams';
-import { LoadingService } from '../../core/services/loading.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { ShopServices } from '../../../core/services/shop.service';
+import { LoadingService } from '../../../core/services/loading.service';
+import { Category } from '../../../shared/models/category';
+import { Product } from '../../../shared/models/product';
+import { productParams } from '../../../shared/models/productParams';
 
 @Component({
   selector: 'app-product-list',

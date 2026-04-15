@@ -1,7 +1,7 @@
 import { Component, inject, Input } from '@angular/core';
-import { Product } from '../../../shared/models/product';
 import { RouterLink } from '@angular/router';
-import { CartService } from '../../../core/services/cart.service';
+import { CartService } from '../../../../core/services/cart.service';
+import { Product } from '../../../../shared/models/product';
 
 @Component({
   selector: 'app-product-card',
