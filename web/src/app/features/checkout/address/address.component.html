@@ -4,14 +4,14 @@
       <label for="fullName" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"> Full Name* </label>
       <input type="text" id="fullName" formControlName="fullName"
         class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
-        placeholder="Bonnie Green" required />
+        placeholder="John Doe" required />
     </div>
 
     <div>
       <label for="phoneNumber" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"> Phone Number* </label>
       <input type="text" id="phoneNumber" formControlName="phoneNumber"
         class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
-        placeholder="123-456-7890" required />
+        placeholder="010 123 123" required />
     </div>
 
     <div class="sm:col-span-2">
@@ -32,28 +32,28 @@
       <label for="city" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"> City* </label>
       <input type="text" id="city" formControlName="city"
         class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
-        placeholder="San Francisco" required />
+        placeholder="Phnom Penh" required />
     </div>
 
     <div>
       <label for="state" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"> State* </label>
       <input type="text" id="state" formControlName="state"
         class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
-        placeholder="California" required />
+        placeholder="Phnom Penh" required />
     </div>
 
     <div>
       <label for="zipCode" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"> Zip Code* </label>
       <input type="text" id="zipCode" formControlName="zipCode"
         class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
-        placeholder="94101" required />
+        placeholder="12000" required />
     </div>
 
     <div>
       <label for="country" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"> Country* </label>
       <input type="text" id="country" formControlName="country"
         class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
-        placeholder="United States" required />
+        placeholder="Cambodia" required />
     </div>
 
     <div class="flex items-center sm:col-span-2">
@@ -62,13 +62,20 @@
       <label for="isDefault" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Set as default address</label>
     </div>
 
-    <div class="sm:col-span-2">
+    <div class="sm:col-span-2 flex gap-4">
+      @if (addressToEdit) {
+        <button type="button" (click)="onCancel()"
+          class="w-full sm:w-auto px-5 py-2.5 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">
+          Cancel
+        </button>
+      }
+
       <button type="submit" [disabled]="addressForm.invalid"
         class="flex w-full items-center justify-center gap-2 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700 disabled:opacity-50">
         <svg class="h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7 7V5" />
         </svg>
-        Add new address
+        {{ addressToEdit ? 'Update address' : 'Add new address' }}
       </button>
     </div>
   </div>

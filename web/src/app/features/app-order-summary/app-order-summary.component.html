@@ -13,13 +13,15 @@
           $ {{ cartService.cartTotal().toFixed(2) }}
         </dd>
       </dl>
-
-      <dl class="flex items-center justify-between gap-4">
+      @if(location.path() === '/checkout') {
+        <dl class="flex items-center justify-between gap-4">
         <dt class="text-base font-normal text-gray-500 dark:text-gray-400">Shipping fee</dt>
-        <dd class="text-base font-medium text-danger-600 dark:text-white">
-          $ {{ cartService.deliveryFee().toFixed(2) }}
+        <dd class="text-base font-medium text-gray-900 dark:text-white">
+          $ {{ checkoutService.selectedShippingMethod()?.price ?? '-' }}
         </dd>
       </dl>
+      }
+
     </div>
 
     <dl
@@ -27,7 +29,7 @@
     >
       <dt class="text-base font-bold text-gray-900 dark:text-white">Total</dt>
       <dd class="text-base font-bold text-gray-900 dark:text-white">
-        $ {{ cartService.total().toFixed(2) }}
+        $ {{ (cartService.cartTotal() + (checkoutService.selectedShippingMethod()?.price ?? 0)).toFixed(2) }}
       </dd>
     </dl>
   </div>
@@ -68,7 +70,7 @@
   }@else {
     <button
       (click)="onCheckoutSubmit()"
-      [disabled]="cartService.cartCount() <= 0"
+      [disabled]=""
       class="flex w-full items-center justify-center cursor-pointer disabled:bg-gray-500 disabled:pointer-events-none rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
     >
       {{ isProcessing() ? 'Processing...' : 'Confirm Order' }}

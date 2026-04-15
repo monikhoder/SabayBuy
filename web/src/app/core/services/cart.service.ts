@@ -14,10 +14,6 @@ export class CartService {
   cart = signal<Cart | null> (null);
   cartCount = computed(() => this.cart()?.items.reduce((total, item) => total + item.quantity, 0) ?? 0);
   cartTotal = computed(() => this.cart()?.items.reduce((total, item) => total + item.price * item.quantity, 0) ?? 0);
-  discount = computed(() => this.cartTotal() > 100 ? 5 : 0);
-  saving = computed(() => this.cartTotal() * this.discount() / 100);
-  deliveryFee = computed(() => this.cartCount() > 0 ? 2 : 0);
-  total = computed(() => this.cartTotal() + this.deliveryFee() - this.saving());
 
 
   getCart(id: string){

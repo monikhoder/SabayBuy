@@ -5,10 +5,17 @@
         <div class="mx-auto w-full flex-none lg:max-w-2xl xl:max-w-4xl">
           <mat-stepper #stepper class="bg-white border border-gray-200 shadow-sm rounded-lg">
             <mat-step label="Shipping">
-              @if (accountService.currentUser()?.addresses == null || accountService.currentUser()?.addresses?.length == 0) {
-                <app-address></app-address>
+              @if (accountService.currentUser()?.addresses == null || accountService.currentUser()?.addresses?.length == 0 || isEditingAddress()) {
+                <app-address 
+                  [addressToEdit]="addressToEdit()"
+                  (cancel)="cancelEdit()"
+                  (saveSuccess)="onSaveAddressSuccess()">
+                </app-address>
               } @else {
-                <app-address-list></app-address-list>
+                <app-address-list 
+                  (addAddress)="onAddAddress()"
+                  (editAddress)="onEditAddress($event)">
+                </app-address-list>
                 <app-shipping></app-shipping>
               }
               <div class="mt-6 flex items-center justify-end p-4 border-t border-gray-200 dark:border-gray-700">

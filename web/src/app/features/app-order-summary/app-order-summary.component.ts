@@ -8,6 +8,7 @@ import { AbaQrDialogComponent } from '../checkout/aba-qr-dialog/aba-qr-dialog.co
 import { OrderService } from '../../core/services/order.service';
 import { CreateOrder, Order } from '../../shared/models/order';
 import { AccountService } from '../../core/services/account.service';
+import { SnackbarService } from '../../core/services/snackbar.service';
 
 @Component({
   selector: 'app-app-order-summary',
@@ -23,6 +24,7 @@ export class AppOrderSummaryComponent {
   location = inject(Location);
   dialog = inject(MatDialog);
   router = inject(Router);
+  snack = inject(SnackbarService);
 
   qrCodeImage = signal<string | null>(null);
   isProcessing = signal<boolean>(false);
@@ -30,35 +32,47 @@ export class AppOrderSummaryComponent {
 
 
   onCheckoutSubmit() {
-    this.isProcessing.set(true);
-    this.checkoutService.createPaymentIntent().subscribe({
-      next: (payment_response: any) => {
-        const orderDto = this.createOrderDto(payment_response.status.tran_id || '');
-        this.orderService.createOrder(orderDto).subscribe({
-          next: (order) => {
-            this.isProcessing.set(false);
-            if (this.checkoutService.selectedPaymentMethod() === 'aba' && payment_response.qrImage) {
-              this.openAbaQrDialog(payment_response.qrImage, order.total.toString(), payment_response.status.tran_id);
-            } else {
-              this.router.navigate(['/checkout/success'], { state: { orderId: order.id } });
+    if(this.checkoutBtnEnable()){
+      this.isProcessing.set(true);
+      this.checkoutService.createPaymentIntent().subscribe({
+        next: (payment_response: any) => {
+          const orderDto = this.createOrderDto(payment_response.status.tran_id || '');
+          this.orderService.createOrder(orderDto).subscribe({
+            next: (order) => {
+              this.isProcessing.set(false);
+              if (this.checkoutService.selectedPaymentMethod() === 'aba' && payment_response.qrImage) {
+                this.openAbaQrDialog(payment_response.qrImage, order.total.toString(), payment_response.status.tran_id);
+              } else {
+                this.router.navigate(['/checkout/success'], { state: { orderId: order.id } });
+              }
+            },
+            error: (error) => {
+              this.isProcessing.set(false);
+              console.error('Error creating order', error);
+            },
+            complete: () => {
+              this.cartService.deleteCart(this.cartService.cart()?.id || '');
+              this.cartService.cart.set(null);
+              this.orderService.orderComplete = true;
             }
-          },
-          error: (error) => {
-            this.isProcessing.set(false);
-            console.error('Error creating order', error);
-          },
-          complete: () => {
-            this.cartService.deleteCart(this.cartService.cart()?.id || '');
-            this.cartService.cart.set(null);
-            this.orderService.orderComplete = true;
-          }
-        });
-      },
-      error: (error) => {
-        this.isProcessing.set(false);
-        console.error('Error during checkout', error);
-      }
-    });
+          });
+        },
+        error: (error) => {
+          this.isProcessing.set(false);
+          console.error('Error during checkout', error);
+        }
+      });
+    }else{
+        if(this.checkoutService.selectedShippingMethod() === null){
+          this.snack.error("Please select a shipping method");
+        }if(this.checkoutService.selectedPaymentMethod() === null){
+          this.snack.error("Please select a payment method");
+        }if(this.checkoutService.accountService.selectedAddress() === null){
+          this.snack.error("Please select a shipping address");
+        }if(this.checkoutService.accountService.selectedAddress() === null){
+          this.snack.error("Please select a shipping address");
+        }
+    }
   }
   openAbaQrDialog(qrImageBase64: string, totalAmount: string, tran_id:string) {
     const dialogRef = this.dialog.open(AbaQrDialogComponent, {
@@ -99,6 +113,9 @@ export class AppOrderSummaryComponent {
       paymentIntentId: paymentIntentId || '',
     };
     return createOrderDto;
+  }
+  checkoutBtnEnable(){
+    return this.checkoutService.selectedShippingMethod() && this.checkoutService.selectedPaymentMethod() && this.checkoutService.accountService.selectedAddress();
   }
 
 }

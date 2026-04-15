@@ -30,7 +30,14 @@ export class AccountService {
     return this.http.get<User>(this.baseUrl + 'account/user-info').pipe(
       map((user) => {
         this.currentUser.set(user);
-        this.selectedAddress.set(user.addresses?.find((addr) => addr.isDefault) ?? null);
+        const defaultAddress = user.addresses?.find((addr) => addr.isDefault);
+        if (defaultAddress) {
+          this.selectedAddress.set(defaultAddress);
+        } else if (user.addresses && user.addresses.length > 0) {
+          this.selectedAddress.set(user.addresses[0]);
+        } else {
+          this.selectedAddress.set(null);
+        }
         return user;
       }),
       catchError((error) => {
@@ -54,6 +61,9 @@ export class AccountService {
   }
   updateAddress(address: Address, id: string) {
     return this.http.put(this.baseUrl + 'account/address/' + id, address);
+  }
+  deleteAddress(id: string) {
+    return this.http.delete(this.baseUrl + 'account/address/' + id);
   }
   getAutState() {
     return this.http.get<{ isAuthenticated: boolean }>(this.baseUrl + 'account/is-authenticated');
