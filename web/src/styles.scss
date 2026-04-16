@@ -17,6 +17,19 @@ html {
     density: 0,
   ));
 }
+:root {
+  @include mat.paginator-overrides((
+    container-text-color: black,
+    container-background-color: transparent,
+
+  ));
+  @include mat.checkbox-overrides((
+    selected-hover-icon-color: rgb(112,8,231),
+    selected-focus-icon-color: rgb(112,8,231),
+    disabled-selected-checkmark-color: rgb(112,8,231),
+    selected-icon-color: rgb(112,8,231),
+  ));
+}
 
 body {
   // Default the application to a light color theme. This can be changed to

@@ -7,3 +7,9 @@ export type Category = {
   updatedAt: string;
   subCategories: Category[];
 }
+
+export type AddCategory ={
+  categoryName: string;
+  icon?: string;
+  parentCategoryId?: string;
+}

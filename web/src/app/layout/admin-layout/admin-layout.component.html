@@ -1,14 +1,36 @@
-<div class="flex flex-col h-screen overflow-hidden bg-gray-50 dark:bg-gray-900">
+<!-- Mobile Warning Overlay -->
+<div class="flex flex-col items-center justify-center h-screen bg-gray-50 dark:bg-gray-900 p-6 text-center md:hidden">
+  <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 max-w-md w-full">
+    <div class="flex justify-center mb-4">
+      <div class="p-3 bg-primary-100 dark:bg-primary-900/30 rounded-full">
+        <svg class="w-12 h-12 text-primary-600 dark:text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+        </svg>
+      </div>
+    </div>
+    <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-3">Desktop Required</h2>
+    <p class="text-sm text-gray-600 dark:text-gray-400 mb-6">
+      The admin dashboard contains complex data tables and management tools that require a larger screen. Please switch to a desktop or tablet device to manage your data properly.
+    </p>
+    <button routerLink="/" class="w-full rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 transition-colors">
+      Return to Home
+    </button>
+  </div>
+</div>
+
+<!-- Desktop Admin Layout -->
+<div class="hidden md:flex flex-col h-screen overflow-hidden bg-gray-50 dark:bg-gray-900">
   <!-- Reusing current navbar -->
   <app-header></app-header>
+
 
   <div class="flex flex-1 overflow-hidden">
     <!-- Admin Sidebar -->
     <app-admin-sidebar></app-admin-sidebar>
 
     <!-- Main Content Area -->
-    <main class="flex-1 overflow-y-auto p-4 md:p-8">
-      <div class="max-w-7xl mx-auto">
+    <main class="flex-1 overflow-y-auto">
+      <div class="mx-auto ">
         <router-outlet></router-outlet>
       </div>
     </main>

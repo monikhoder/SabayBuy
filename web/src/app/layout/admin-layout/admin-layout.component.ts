@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterOutlet, RouterLink } from '@angular/router';
 import { Header } from '../header/header.component';
 import { AdminSidebarComponent } from '../admin-sidebar/admin-sidebar.component';
 import { CommonModule } from '@angular/common';
@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-admin-layout',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, Header, AdminSidebarComponent],
+  imports: [CommonModule, RouterOutlet, RouterLink, Header, AdminSidebarComponent],
   templateUrl: './admin-layout.component.html',
   styleUrl: './admin-layout.component.scss'
 })

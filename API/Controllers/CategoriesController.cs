@@ -89,6 +89,7 @@ namespace API.Controllers
             {
                 return BadRequest("Cannot delete category with subcategories");
             }
+            
             if(category.Products != null && category.Products.Any())
             {
                 return BadRequest("Cannot delete category with products");

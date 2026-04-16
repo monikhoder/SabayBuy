@@ -25,4 +25,7 @@
   .text-danger-600 {
     @apply text-red-600;
   }
+  .bg-danger-700{
+    @apply bg-red-700
+  }
 }

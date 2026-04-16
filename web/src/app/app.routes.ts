@@ -17,6 +17,10 @@ import { ShopLayoutComponent } from './layout/shop-layout/shop-layout.component'
 import { AdminLayoutComponent } from './layout/admin-layout/admin-layout.component';
 import { ProductListComponent } from './features/Shopping/product-list/product-list.component';
 import { ProductDetailsComponent } from './features/Shopping/product-details/product-details.component';
+import { DashboardComponent } from './features/admin/dashboard/dashboard.component';
+import { ProductsComponent } from './features/admin/products/products.component';
+import { OrdersComponent } from './features/admin/orders/orders.component';
+import { CategoriesComponent } from './features/admin/categories/categories.component';
 
 export const routes: Routes = [
   // Shop Routes
@@ -46,9 +50,10 @@ export const routes: Routes = [
     canActivate: [authGuard, roleGuard],
     data: { roles: ['Admin', 'Stock', 'Seller'] },
     children: [
-      { path: 'dashboard', component: HomeComponent },
-      { path: 'products', component: ProductListComponent, canActivate: [roleGuard], data: { roles: ['Admin', 'Stock'] } },
-      { path: 'orders', component: OrderComponent },
+      { path: 'dashboard', component: DashboardComponent },
+      { path: 'products', component: ProductsComponent, canActivate: [roleGuard], data: { roles: ['Admin', 'Stock'] } },
+      { path: 'orders', component: OrdersComponent },
+      {path: 'categories', component: CategoriesComponent, canActivate: [roleGuard], data: { roles: ['Admin', 'Stock'] }},
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
     ]
   },

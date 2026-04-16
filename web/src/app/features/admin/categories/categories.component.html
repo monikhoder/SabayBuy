@@ -1,0 +1,92 @@
+<section class="bg-white dark:bg-gray-900 ">
+    <div class="">
+       
+        <div class="flex  flex-col justify-between p-2 dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
+            <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
+                <div class="w-full md:w-1/2">
+                    <form class="flex items-center" (submit)="$event.preventDefault()">
+                        <label for="simple-search" class="sr-only">Search</label>
+                        <div class="relative w-full">
+                            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                            <input (keyup.enter)="onSearch($event)" type="text" id="simple-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Search" required="">
+                        </div>
+                    </form>
+                </div>
+                <div class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 ">
+
+                    <mat-checkbox [(ngModel)]="categoryParams.isParent" (change)="onIsParentChange()" class="">Parent Categories only</mat-checkbox>
+                    <mat-paginator [length]="totalItems"
+                                [pageSize]="categoryParams.pageSize"
+                                [pageIndex]="categoryParams.pageIndex - 1"
+                                [pageSizeOptions]="[5, 10, 15, 25, 100]"
+                                (page)="handlePageEvent($event)"
+                                aria-label="Select page"
+                                >
+                    </mat-paginator>
+                    <button type="button" (click)="openAddCategoryDialog()" class="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
+                     Add Category
+                    </button>
+                </div>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th scope="col" class="px-4 py-3">Icon</th>
+                            <th scope="col" class="px-4 py-3">Category Name</th>
+                            <th scope="col" class="px-4 py-3">Is Parent</th>
+                            <th scope="col" class="px-4 py-3">Sub Categories Count</th>
+                            <th scope="col" class="px-4 py-3">Updated At</th>
+                            <th scope="col" class="px-4 py-3 ">Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @for (category of categories; track category.id) {
+                            <tr class="border-b dark:border-gray-700">
+                                <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    @if (category.icon !== null) {
+                                        <img [src]="category.icon" alt="Icon" class="w-10 h-10 rounded-full object-cover">
+                                    }@else {
+                                        <mat-icon class="text-gray-400 group-hover:text-violet-600 transition-colors">category</mat-icon>
+                                    }
+
+                                </th>
+                                <td class="px-4 py-3">{{ category.categoryName }}</td>
+                                <td class="px-4 py-3">
+                                    @if (category.parentCategoryId === null) {
+                                    <span class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Yes</span>
+                                    } @else {
+                                    <span class="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">No</span>
+                                    }
+                                </td>
+                                <td class="px-4 py-3">{{ category.subCategories.length || 0 }}</td>
+                                <td class="px-4 py-3">{{ category.updatedAt | date:'short' }}</td>
+                                <td class="px-4 py-3 flex p-1 gap-2">
+                                    <button type="button" (click)="openUpdateCategoryDialog(category)" class="text-violet-500">
+                                        <mat-icon >edit</mat-icon>
+                                   </button>
+                                   <button type="button" class="text-red-500" (click)="confirmDelete(category); $event.stopPropagation()">
+                                        <mat-icon >delete</mat-icon>
+                                   </button>
+                                </td>
+                            </tr>
+                        }
+                        @if (categories.length === 0) {
+                            <tr>
+                                <td colspan="6" class="px-4 py-8 text-center text-gray-500 dark:text-gray-400">
+                                    No categories found.
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</section>
