@@ -31,6 +31,12 @@ public class ProductVariantsController(
         var product = await unit.Repository<Product>().GetByIdAsync(productId);
         if (product == null) return NotFound("Product not found");
 
+
+        // get duplicate sku
+        var skuspec = new ProductVariantSpecification(variantDto.Sku);
+        var sku = await unit.Repository<ProductVariant>().GetEntityWithSpec(skuspec);
+        if (sku != null) return BadRequest($"{sku.Sku} already exist");
+
         var variant = mapper.Map<CreateProductVariantDto, ProductVariant>(variantDto);
         variant.ProductId = productId;
 
@@ -66,12 +72,18 @@ public class ProductVariantsController(
         var variant = await unit.Repository<ProductVariant>().GetEntityWithSpec(spec);
 
         if (variant == null) return NotFound();
+
+        // get duplicate sku
+        var skuspec = new ProductVariantSpecification(variantDto.Sku);
+        var sku = await unit.Repository<ProductVariant>().GetEntityWithSpec(skuspec);
+        if (sku != null && sku.Id != id) return BadRequest($"{sku.Sku} already exist");
+
         mapper.Map(variantDto, variant);
         unit.Repository<ProductVariant>().Update(variant);
 
         if (await unit.Complete())
         {
-             return Ok(mapper.Map<ProductVariant, ProductVariantDto>(variant));
+            return Ok(mapper.Map<ProductVariant, ProductVariantDto>(variant));
         }
 
         return BadRequest("Failed to update variant");
@@ -90,5 +102,14 @@ public class ProductVariantsController(
         if (await unit.Complete()) return Ok("Variant deleted successfully");
 
         return BadRequest("Failed to delete variant");
+    }
+    //Delete: api/attribute/{id}
+    [HttpDelete("attribute/{id}")]
+    public async Task<ActionResult> DeleteAttribute(Guid id)
+    {
+        var attribute = await unit.Repository<VariantAttribute>().GetByIdAsync(id);
+        if (attribute == null) return NotFound();
+        if (await unit.Complete()) return Ok("Attribute delete successfully");
+        return BadRequest("Failed to delete attribute");
     }
 }

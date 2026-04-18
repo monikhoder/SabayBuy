@@ -9,6 +9,7 @@ import { RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { ProductCardComponent } from '../Shopping/product-list/product-card/product-card.component';
+import { categoryParams } from '../../shared/models/categoryParams';
 
 @Component({
   selector: 'app-home',
@@ -28,11 +29,12 @@ export class HomeComponent implements OnInit {
   Categories = signal<Category[]>([]);
   featuredProducts = signal<Product[]>([]);
   private shopServices = inject(ShopServices);
+  categoryParams = new categoryParams;
 
   ngOnInit(): void {
     initFlowbite();
-
-    this.shopServices.getCategories().subscribe({
+    this.categoryParams.isParent = true;
+    this.shopServices.getCategories(this.categoryParams).subscribe({
       next: (response) => {
         this.Categories.set(response.data);
       }

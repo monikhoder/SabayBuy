@@ -9,6 +9,7 @@ import { FileUploadService } from '../../../../core/services/file-upload.service
 import { SnackbarService } from '../../../../core/services/snackbar.service';
 import { AddCategory, Category } from '../../../../shared/models/category';
 import { categoryParams } from '../../../../shared/models/categoryParams';
+import { ShopServices } from '../../../../core/services/shop.service';
 
 @Component({
   selector: 'app-add-category-dialog',
@@ -20,6 +21,7 @@ import { categoryParams } from '../../../../shared/models/categoryParams';
 export class AddCategoryDialogComponent implements OnInit {
   dialogRef = inject(MatDialogRef<AddCategoryDialogComponent>);
   adminService = inject(AdminService);
+  shopService = inject(ShopServices);
   fileUploadService = inject(FileUploadService);
   snack = inject(SnackbarService);
   fb = inject(FormBuilder);
@@ -47,7 +49,7 @@ export class AddCategoryDialogComponent implements OnInit {
   loadParentCategories(): void {
     this.categoryParams.isParent = true;
     this.categoryParams.pageSize = 100
-    this.adminService.getCategories(this.categoryParams).subscribe({
+    this.shopService.getCategories(this.categoryParams).subscribe({
       next: (response) => {
         this.parentCategories = response.data;
       },
@@ -116,7 +118,7 @@ export class AddCategoryDialogComponent implements OnInit {
       error: (error) => {
         this.isLoading = false;
         console.error('Failed to add category:', error);
-        
+
         let errorMessage = 'An error occurred';
         if (error.error) {
           if (typeof error.error === 'string') {
@@ -129,7 +131,7 @@ export class AddCategoryDialogComponent implements OnInit {
         } else {
           errorMessage = error.message;
         }
-        
+
         this.snack.error('Failed to add category: ' + errorMessage);
       }
     });

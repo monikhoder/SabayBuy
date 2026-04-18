@@ -16,5 +16,11 @@ public class ProductVariantSpecification : BaseSpecification<ProductVariant>
     {
         AddInclude(x => x.Attributes);
     }
+    // get by sku
+    public ProductVariantSpecification(string sku)
+        : base(x => x.Sku == sku)
+    {
+
+    }
 
 }

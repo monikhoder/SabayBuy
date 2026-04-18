@@ -4,6 +4,7 @@ import { Pagination } from '../../shared/models/pagination';
 import { Category } from '../../shared/models/category';
 import { Product } from '../../shared/models/product';
 import { productParams } from '../../shared/models/productParams';
+import { categoryParams } from '../../shared/models/categoryParams';
 
 @Injectable({
   providedIn: 'root',
@@ -14,8 +15,19 @@ export class ShopServices {
 
 
 
-  getCategories() {
-    return this.http.get<Pagination<Category>>(this.baseUrl + 'Categories?isParent=true')
+  getCategories(categoryParams: categoryParams ){
+    let params = new HttpParams();
+
+    if (categoryParams.search) {
+      params = params.append('search', categoryParams.search);
+    }
+    if(categoryParams.isParent){
+      params = params.append('isParent', categoryParams.isParent);
+    }
+    params = params.append('pageIndex', categoryParams.pageIndex);
+    params = params.append('pageSize', categoryParams.pageSize);
+
+    return this.http.get<Pagination<Category>>(this.baseUrl + 'categories', { params });
   }
   getProducts(productParams: productParams) {
     let params = new HttpParams();
@@ -40,6 +52,6 @@ export class ShopServices {
   getBrands(){
     return this.http.get<string[]>(this.baseUrl + 'brand')
   }
-  
+
 
 }

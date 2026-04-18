@@ -7,45 +7,22 @@
           <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
             <li class="inline-flex items-center">
               <a routerLink="/" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-primary-600 dark:text-gray-400 dark:hover:text-white">
-                <mat-icon class="mr-2 !text-lg">home</mat-icon>
+                <mat-icon class="mr-2 text-lg!">home</mat-icon>
                 Home
               </a>
             </li>
             <li>
               <div class="flex items-center">
                 <mat-icon class="text-gray-400">chevron_right</mat-icon>
-                <span class="ms-1 text-sm font-medium text-gray-700 dark:text-gray-400 md:ms-2">Products</span>
+                <span class="ms-1 text-sm! font-medium text-gray-700 dark:text-gray-400 md:ms-2">Products</span>
               </div>
             </li>
           </ol>
         </nav>
-
-        <!-- Selected Filter Badges -->
-        <div class="flex flex-wrap gap-2">
-            @for (item of productParams.brand; track $index) {
-              <span class="inline-flex items-center bg-violet-100 text-violet-800 text-xs font-medium px-2.5 py-1 rounded-full border border-violet-200">
-                {{ item }}
-                <button type="button" (click)="removeBrandFilter(item)" class="ml-1 hover:text-violet-900">
-                  <mat-icon class="!text-sm !w-4 !h-4 flex items-center justify-center">close</mat-icon>
-                </button>
-              </span>
-            }
-            @for (item of productParams.category; track $index) {
-              <span class="inline-flex items-center bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-1 rounded-full border border-blue-200">
-                {{ item }}
-                <button type="button" (click)="removeCategoryFilter(item)" class="ml-1 hover:text-blue-900">
-                  <mat-icon class="!text-sm !w-4 !h-4 flex items-center justify-center">close</mat-icon>
-                </button>
-              </span>
-            }
-            @if (productParams.brand.length > 0 || productParams.category.length > 0) {
-                <button mat-button color="warn" class="!text-xs" (click)="resetAllFilters()">Clear All</button>
-            }
-        </div>
       </div>
 
       <div class="flex items-center space-x-2">
-        <button mat-flat-button (click)="filterComponent.toggleModal()" class="!rounded-lg !py-6 !bg-violet-700 !text-white hover:!bg-violet-800">
+        <button mat-flat-button (click)="filterComponent.toggleModal()" class="rounded-md! py-2! bg-violet-700!  hover:bg-violet-800">
           <mat-icon matPrefix class="mr-1">filter_list</mat-icon>
           Filters
           <span *ngIf="productParams.brand.length + productParams.category.length > 0"
@@ -53,14 +30,36 @@
             {{ productParams.brand.length + productParams.category.length }}
           </span>
         </button>
-
-        <button mat-flat-button [matMenuTriggerFor]="sortComponent.menu" class="!rounded-lg !py-6 !bg-violet-700 !text-white hover:!bg-violet-800">
+        <button mat-flat-button [matMenuTriggerFor]="sortComponent.menu" class="rounded-md! py-2! bg-violet-700!  hover:bg-violet-800">
           <mat-icon matPrefix class="mr-1">sort</mat-icon>
           Sort
           <mat-icon matSuffix class="ml-1">arrow_drop_down</mat-icon>
         </button>
       </div>
     </div>
+
+    <!-- Selected Filter Badges -->
+        <div class="flex flex-wrap gap-2 mb-2">
+            @for (item of productParams.brand; track $index) {
+              <span class="inline-flex items-center bg-violet-100 text-violet-800 text-xs font-medium px-2  rounded-full border border-violet-200">
+                {{ item }}
+                <button type="button" (click)="removeBrandFilter(item)" class="ml-2 hover:text-violet-900">
+                  <span>X</span>
+                </button>
+              </span>
+            }
+            @for (item of productParams.category; track $index) {
+              <span class="inline-flex items-center bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-1 rounded-full border border-blue-200">
+                {{ item }}
+                <button type="button" (click)="removeCategoryFilter(item)" class="ml-1 hover:text-blue-900">
+                 <span> X</span>
+                </button>
+              </span>
+            }
+            @if (productParams.brand.length > 0 || productParams.category.length > 0) {
+                <button mat-button color="warn" class="text-xs" (click)="resetAllFilters()">Clear All</button>
+            }
+        </div>
 
     <!-- Product List -->
     <div class="mb-4 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -71,7 +70,7 @@
 
     @if (products.length === 0 && !loadingService.loading) {
         <div class="py-20 text-center">
-            <mat-icon class="!text-6xl !w-16 !h-16 text-gray-300 mb-4">search_off</mat-icon>
+            <mat-icon class="text-6xl! w-1! h-16! text-gray-300 mb-4">search_off</mat-icon>
             <h3 class="text-xl font-bold text-gray-900">No products found</h3>
             <p class="text-gray-500">Try adjusting your filters to find what you're looking for.</p>
             <button mat-button color="primary" class="mt-4" (click)="resetAllFilters()">Reset Filters</button>

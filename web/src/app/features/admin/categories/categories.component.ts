@@ -14,16 +14,18 @@ import { SnackbarService } from '../../../core/services/snackbar.service';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { DeleteCategoryDialogComponent } from './delete-category-dialog/delete-category-dialog.component';
+import { ShopServices } from '../../../core/services/shop.service';
 
 @Component({
   selector: 'app-categories',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatIcon, MatPaginatorModule, MatCheckboxModule, MatDialogModule, MatButtonModule, DeleteCategoryDialogComponent, UpdateCategoryDialogComponent],
+  imports: [CommonModule, FormsModule, MatIcon, MatPaginatorModule, MatCheckboxModule, MatDialogModule, MatButtonModule],
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.scss',
 })
 export class CategoriesComponent implements OnInit {
   adminService = inject(AdminService);
+  shopService = inject(ShopServices);
   dialog = inject(MatDialog);
   snack = inject(SnackbarService)
 
@@ -36,7 +38,7 @@ export class CategoriesComponent implements OnInit {
   }
 
   getCategories() {
-    this.adminService.getCategories(this.categoryParams).subscribe({
+    this.shopService.getCategories(this.categoryParams).subscribe({
       next: (response: Pagination<Category>) => {
         this.categories = response.data;
         this.totalItems = response.count;

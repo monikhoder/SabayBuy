@@ -14,7 +14,8 @@ public class MappingProfiles : Profile
         CreateMap<UpdateCategoryDto, Category>();
         CreateMap<Product, ProductDto>()
         .ForMember(d => d.CategoryName, o => o.MapFrom(s => s.Category!.CategoryName))
-        .ForMember(d => d.Price, o => o.MapFrom(s => s.Variants != null && s.Variants.Count > 0 ? s.Variants.First().Price : 0));
+        .ForMember(d => d.Price, o => o.MapFrom(s => s.Variants != null && s.Variants.Count > 0 ? s.Variants.First().Price : 0))
+        .ForMember(d => d.Stock, o => o.MapFrom(s => s.Variants != null ? s.Variants.Sum(v => v.StockQuantity) : 0));
         CreateMap<ProductVariant, ProductVariantDto>();
         CreateMap<VariantAttribute, VariantAttributeDto>();
         CreateMap<CreateProductDto, Product>();

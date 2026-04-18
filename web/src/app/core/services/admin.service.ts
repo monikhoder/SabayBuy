@@ -4,6 +4,7 @@ import { environment } from '../../../environments/environment.development';
 import { Pagination } from '../../shared/models/pagination';
 import { AddCategory, Category } from '../../shared/models/category';
 import { categoryParams } from '../../shared/models/categoryParams';
+import { createproductDto, CreateProductVariantDto, CreateVariantAttributeDto, Product } from '../../shared/models/product';
 
 
 @Injectable({
@@ -13,20 +14,7 @@ export class AdminService {
   baseUrl = environment.apiUrl;
   private http = inject(HttpClient);
 
-  getCategories(categoryParams: categoryParams) {
-    let params = new HttpParams();
 
-    if (categoryParams.search) {
-      params = params.append('search', categoryParams.search);
-    }
-    if(categoryParams.isParent){
-      params = params.append('isParent', categoryParams.isParent);
-    }
-    params = params.append('pageIndex', categoryParams.pageIndex);
-    params = params.append('pageSize', categoryParams.pageSize);
-
-    return this.http.get<Pagination<Category>>(this.baseUrl + 'categories', { params });
-  }
   addCategory(category: AddCategory){
     return this.http.post<Category>(this.baseUrl + 'categories', category)
   }
@@ -35,5 +23,29 @@ export class AdminService {
   }
   deleteCategory(id: string) {
     return this.http.delete(this.baseUrl + 'categories/' + id, { responseType: 'text' });
+  }
+  addProduct(product : createproductDto){
+    return this.http.post<Product>(this.baseUrl + 'products', product)
+  }
+  updateProduct(id: string, product: any) {
+    return this.http.put<Product>(this.baseUrl + 'products/' + id, product);
+  }
+  addProductVariant(variant: CreateProductVariantDto, productId: string) {
+    return this.http.post<any>(this.baseUrl + 'products/' + productId + '/variants', variant);
+  }
+  updateVariant(id: string, variant: CreateProductVariantDto) {
+    return this.http.put<any>(this.baseUrl + 'variants/' + id, variant);
+  }
+  addVariantAttribute(attribute: CreateVariantAttributeDto, varientId: string) {
+    return this.http.post<any>(this.baseUrl + 'variants/' + varientId + '/attributes', attribute);
+  }
+  deleteProduct(id: string) {
+    return this.http.delete(this.baseUrl + 'products/' + id, { responseType: 'text' });
+  }
+  deleteVariant(id: string) {
+    return this.http.delete(this.baseUrl + 'variants/' + id, { responseType: 'text' });
+  }
+  deleteAttribute(id:string){
+    return this.http.delete(this.baseUrl + 'attribute/' + id, { responseType: 'text' });
   }
 }

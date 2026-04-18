@@ -1,6 +1,6 @@
 <section class="bg-white dark:bg-gray-900 ">
     <div class="">
-       
+
         <div class="flex  flex-col justify-between p-2 dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
             <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
                 <div class="w-full md:w-1/2">
@@ -34,20 +34,20 @@
             </div>
             <div class="overflow-x-auto">
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-100">
                         <tr>
-                            <th scope="col" class="px-4 py-3">Icon</th>
-                            <th scope="col" class="px-4 py-3">Category Name</th>
-                            <th scope="col" class="px-4 py-3">Is Parent</th>
-                            <th scope="col" class="px-4 py-3">Sub Categories Count</th>
-                            <th scope="col" class="px-4 py-3">Updated At</th>
-                            <th scope="col" class="px-4 py-3 ">Actions</th>
+                            <th scope="col" class="px-4 py-4">Icon</th>
+                            <th scope="col" class="px-4 py-4">Category Name</th>
+                            <th scope="col" class="px-4 py-4">Is Parent</th>
+                            <th scope="col" class="px-4 py-4">Sub Categories Count</th>
+                            <th scope="col" class="px-4 py-4">Updated At</th>
+                            <th scope="col" class="px-4 py-4 ">Actions</th>
                         </tr>
                     </thead>
 
                     <tbody>
                         @for (category of categories; track category.id) {
-                            <tr class="border-b dark:border-gray-700">
+                            <tr class="border-b border-gray-200">
                                 <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     @if (category.icon !== null) {
                                         <img [src]="category.icon" alt="Icon" class="w-10 h-10 rounded-full object-cover">
@@ -66,7 +66,7 @@
                                 </td>
                                 <td class="px-4 py-3">{{ category.subCategories.length || 0 }}</td>
                                 <td class="px-4 py-3">{{ category.updatedAt | date:'short' }}</td>
-                                <td class="px-4 py-3 flex p-1 gap-2">
+                                <td class="px-4 py-3 flex p-1 gap-6">
                                     <button type="button" (click)="openUpdateCategoryDialog(category)" class="text-violet-500">
                                         <mat-icon >edit</mat-icon>
                                    </button>

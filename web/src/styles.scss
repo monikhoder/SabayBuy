@@ -29,6 +29,10 @@ html {
     disabled-selected-checkmark-color: rgb(112,8,231),
     selected-icon-color: rgb(112,8,231),
   ));
+  @include mat.button-overrides((
+    text-label-text-color: rgba(0, 0, 0, 0.833)
+  ));
+
 }
 
 body {

@@ -79,7 +79,7 @@
   <section class="mb-16">
     <div class="flex justify-between items-center mb-6">
       <h2 class="text-2xl font-bold text-gray-900">Featured Products</h2>
-      <button mat-stroked-button color="primary" routerLink="/products">Shop All</button>
+      <a routerLink="/products" class="text-primary-600 hover:underline font-medium">View all</a>
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
       <app-product-card *ngFor="let product of featuredProducts()" [product]="product"></app-product-card>

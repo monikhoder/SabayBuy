@@ -13,6 +13,8 @@ import { LoadingService } from '../../../core/services/loading.service';
 import { Category } from '../../../shared/models/category';
 import { Product } from '../../../shared/models/product';
 import { productParams } from '../../../shared/models/productParams';
+import { categoryParams } from '../../../shared/models/categoryParams';
+import { BrandGroup } from './filter/filter.component';
 
 @Component({
   selector: 'app-product-list',
@@ -39,6 +41,7 @@ export class ProductListComponent implements OnInit {
   categories: Category[] = [];
   products: Product[] = [];
   productParams = new productParams();
+  categoryParams = new categoryParams();
   count: number = 0;
 
 
@@ -49,7 +52,8 @@ export class ProductListComponent implements OnInit {
   }
 
   loadcategories() {
-    this.shopService.getCategories().subscribe({
+    this.categoryParams.isParent = true;
+    this.shopService.getCategories(this.categoryParams).subscribe({
       next: response => {
         this.categories = response.data;
       }

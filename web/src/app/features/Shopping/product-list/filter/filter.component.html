@@ -10,7 +10,7 @@
 <div class="fixed inset-y-0 right-0 z-[100] flex w-full max-w-sm flex-col bg-white shadow-2xl transition-transform duration-300 ease-in-out dark:bg-gray-800"
      [class.translate-x-0]="isOpen"
      [class.translate-x-full]="!isOpen">
-  
+
   <!-- Header -->
   <div class="flex items-center justify-between border-b border-gray-100 px-6 py-4 dark:border-gray-700">
     <div class="flex items-center gap-3">
@@ -27,7 +27,7 @@
   <!-- Scrollable content -->
   <div class="filter-content flex-1 overflow-y-auto">
     <mat-accordion multi="true" class="filter-accordion">
-      
+
       <!-- Categories Section -->
       <mat-expansion-panel [expanded]="true" class="border-b border-gray-100 mat-elevation-z0 dark:border-gray-700">
         <mat-expansion-panel-header>
@@ -35,12 +35,19 @@
             Categories
           </mat-panel-title>
         </mat-expansion-panel-header>
-        
+
         <div class="flex flex-col gap-5 py-3">
           @for (category of categories; track category.id) {
             <div class="category-group">
-              <div class="mb-3 text-xs font-bold uppercase tracking-wider text-primary-600 dark:text-primary-400">
-                {{ category.categoryName }}
+              <div class="mb-3 text-xs font-bold uppercase tracking-wider text-primary-600 dark:text-primary-400 flex items-center justify-start">
+                 <span>{{ category.categoryName }}</span>
+                 <mat-checkbox
+                  [checked]="isAllSubcategoriesSelected(category)"
+                  [indeterminate]="isSomeSubcategoriesSelected(category)"
+                  (change)="toggleAllSubcategories(category, $event.checked)"
+                  color="primary"
+                  class="custom-checkbox w-auto">
+                </mat-checkbox>
               </div>
               <div class="flex flex-col gap-2 pl-3">
                 @for (subcategory of category.subCategories; track subcategory.id) {
@@ -65,7 +72,7 @@
             Brands
           </mat-panel-title>
         </mat-expansion-panel-header>
-        
+
         <div class="flex flex-col gap-5 py-3">
           @for (group of groupedBrands; track group.letter) {
             <div class="brand-group">

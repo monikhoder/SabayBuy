@@ -89,8 +89,12 @@ namespace API.Controllers
             {
                 return BadRequest("Cannot delete category with subcategories");
             }
-            
-            if(category.Products != null && category.Products.Any())
+            var specParams = new ProductSpecParams();
+            specParams.Categories.Add(category.CategoryName);
+            var productspec = new ProductsSpecification(specParams);
+            var product = await unit.Repository<Product>().GetEntityWithSpec(productspec);
+
+            if (product != null)
             {
                 return BadRequest("Cannot delete category with products");
             }
