@@ -5,6 +5,8 @@ import { Pagination } from '../../shared/models/pagination';
 import { AddCategory, Category } from '../../shared/models/category';
 import { categoryParams } from '../../shared/models/categoryParams';
 import { createproductDto, CreateProductVariantDto, CreateVariantAttributeDto, Product } from '../../shared/models/product';
+import { OrderParams } from '../../shared/models/orderParams';
+import { Order } from '../../shared/models/order';
 
 
 @Injectable({
@@ -15,6 +17,7 @@ export class AdminService {
   private http = inject(HttpClient);
 
 
+  //Category
   addCategory(category: AddCategory){
     return this.http.post<Category>(this.baseUrl + 'categories', category)
   }
@@ -24,6 +27,7 @@ export class AdminService {
   deleteCategory(id: string) {
     return this.http.delete(this.baseUrl + 'categories/' + id, { responseType: 'text' });
   }
+  //Product
   addProduct(product : createproductDto){
     return this.http.post<Product>(this.baseUrl + 'products', product)
   }
@@ -47,5 +51,31 @@ export class AdminService {
   }
   deleteAttribute(id:string){
     return this.http.delete(this.baseUrl + 'attribute/' + id, { responseType: 'text' });
+  }
+
+  //Get all Order
+   getOrders(orderParams: OrderParams) {
+      let params = new HttpParams();
+
+      if (orderParams.status && orderParams.status !== '') {
+        params = params.append('status', orderParams.status);
+      }
+      if (orderParams.search && orderParams.search !== '') {
+        params = params.append('search', orderParams.search);
+      }
+      params = params.append('pageIndex', orderParams.pageIndex);
+      params = params.append('pageSize', orderParams.pageSize);
+
+      return this.http.get<Pagination<Order>>(this.baseUrl + 'adminOrder', { params });
+    }
+
+  //get order by ID
+  getOrderById(id: string) {
+    return this.http.get<Order>(this.baseUrl + 'adminOrder/' + id);
+  }
+
+  //update order status
+  updateOrderStatus(id: string, status: string) {
+    return this.http.put(this.baseUrl + 'adminOrder/' + id + '?orderstatus=' + status, {}, { responseType: 'text' });
   }
 }

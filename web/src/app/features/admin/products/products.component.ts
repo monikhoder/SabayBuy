@@ -143,8 +143,8 @@ export class ProductsComponent implements OnInit{
     this.getProducts();
   }
 
-  onSearch(event: any) {
-    this.productParams.search = event.target.value;
+  onSearch(value: string) {
+    this.productParams.search = value;
     this.productParams.pageIndex = 1;
     this.getProducts();
   }

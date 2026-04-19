@@ -1,0 +1,108 @@
+<div class="mb-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+  <div class="items-start justify-between border-b border-gray-100 pb-4 dark:border-gray-700 flex">
+    <div class="mb-4 flex fle-row justify-center items-center gap-2">
+      <p class="font-medium text-gray-900 dark:text-white">Order ID : #{{order.id.substring(0, 8).toUpperCase()}}</p>
+      <span [classList]="getStatusBadgeClass(order.status)">
+        {{order.status}}
+      </span>
+      <button type="button" class="inline-flex items-center font-medium text-primary-700 hover:underline dark:text-primary-500">
+        <svg class="me-2 h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 15v2a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-2m-8 1V4m0 12-4-4m4 4 4-4" />
+        </svg>
+        Download invoice
+      </button>
+    </div>
+    <div class="space-y-4 sm:flex sm:space-x-4 sm:space-y-0">
+      @if (getActionButtonText(order.status, order.paymentMethod)) {
+        <button
+          type="button"
+          [classList]="getActionButtonClass(order.status, order.paymentMethod)"
+          (click)="onStatusUpdate()">
+          {{getActionButtonText(order.status, order.paymentMethod)}}
+        </button>
+      }
+      <a [routerLink]="['/orders', order.id]" [queryParams]="{returnUrl: '/admin/orders'}" class="inline-flex w-full justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700 sm:mt-0 sm:w-auto">Order details</a>
+    </div>
+  </div>
+  <div class="mb-4 items-center sm:flex sm:flex-wrap xl:flex">
+    <dl class="mt-4 flex items-center text-gray-500 dark:text-gray-400 sm:me-8">
+      <dt class="me-2 font-medium text-gray-900 dark:text-white">Order date:</dt>
+      <dd>{{order.orderDate | date: 'dd.MM.yyyy'}}</dd>
+    </dl>
+    <dl class="mt-4 flex items-center text-gray-500 dark:text-gray-400 sm:me-8">
+      <dt class="me-2 font-medium text-gray-900 dark:text-white">Email:</dt>
+      <dd>{{order.buyerEmail}}</dd>
+    </dl>
+    <dl class="mt-4 flex items-center text-gray-500 dark:text-gray-400">
+      <dt class="me-2 font-medium text-gray-900 dark:text-white">Payment method:</dt>
+      <dd class="flex items-center">
+        <span class="ms-1">{{order.paymentMethod.toUpperCase()}}</span>
+      </dd>
+    </dl>
+  </div>
+  @if (order.status.toLowerCase() === 'pending') {
+    @if (order.paymentMethod.toLowerCase() === 'cod') {
+      <div class="flex items-center rounded-lg bg-yellow-50 px-4 py-3 text-sm text-yellow-800 dark:bg-gray-700 dark:text-yellow-300" role="alert">
+        <svg class="me-2 hidden h-4 w-4 shrink-0 sm:flex" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+        </svg>
+        <div>Order is <span class="font-medium">pending</span> - awaiting confirmation</div>
+      </div>
+    } @else {
+      <div class="flex items-center rounded-lg bg-yellow-50 px-4 py-3 text-sm text-yellow-800 dark:bg-gray-700 dark:text-yellow-300" role="alert">
+        <svg class="me-2 hidden h-4 w-4 shrink-0 sm:flex" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+        </svg>
+        <div>Order is <span class="font-medium">pending</span> - waiting for payment</div>
+      </div>
+    }
+  }
+  @if (order.status.toLowerCase() === 'paymentreceived') {
+    <div class="flex items-center rounded-lg bg-emerald-50 px-4 py-3 text-sm text-emerald-800 dark:bg-gray-700 dark:text-emerald-300" role="alert">
+      <svg class="me-2 hidden h-4 w-4 shrink-0 sm:flex" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 11.917 9.724 16.5 19 7.5" />
+      </svg>
+      <div>Payment <span class="font-medium">received</span> - ready for order confirmation</div>
+    </div>
+  }
+  @if (order.status.toLowerCase() === 'orderconfirm') {
+    <div class="flex items-center rounded-lg bg-blue-50 px-4 py-3 text-sm text-blue-800 dark:bg-gray-700 dark:text-blue-300" role="alert">
+      <svg class="me-2 hidden h-4 w-4 shrink-0 sm:flex" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 0 0-2 2v4m5-6h8M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m0 0h3a2 2 0 0 1 2 2v4m0 0v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-6m18 0s-4 2-9 2-9-2-9-2m9-2h.01" />
+      </svg>
+      <div>Order is being <span class="font-medium">processed</span> - preparing for shipment</div>
+    </div>
+  }
+  @if (order.status.toLowerCase() === 'shipped') {
+    <div class="flex items-center rounded-lg bg-purple-50 px-4 py-3 text-sm text-purple-800 dark:bg-gray-700 dark:text-purple-300" role="alert">
+      <svg class="me-2 hidden h-4 w-4 shrink-0 sm:flex" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h6l2 4m-8-4v8m0-8V6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v9h2m8 0H9m4 0h2m4 0h2v-4m0 0h-5m3.5 5.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Zm-10 0a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z" />
+      </svg>
+      <div>Order has been <span class="font-medium">shipped</span> - expected delivery on <span class="font-medium">{{getExpectedDeliveryDate(order.orderDate)}}</span></div>
+    </div>
+  }
+  @if (order.status.toLowerCase() === 'delivered') {
+    <div class="flex items-center rounded-lg bg-green-50 px-4 py-3 text-sm text-green-800 dark:bg-gray-700 dark:text-green-300" role="alert">
+      <svg class="me-2 hidden h-4 w-4 shrink-0 sm:flex" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 11.917 9.724 16.5 19 7.5" />
+      </svg>
+      <div>Order has been <span class="font-medium">delivered</span> - successfully received by customer</div>
+    </div>
+  }
+  @if (order.status.toLowerCase() === 'receivedorder') {
+    <div class="flex items-center rounded-lg bg-green-200 px-4 py-3 text-sm text-green-800 dark:bg-gray-700 dark:text-green-300" role="alert">
+      <svg class="me-2 hidden h-4 w-4 shrink-0 sm:flex" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 11.917 9.724 16.5 19 7.5" />
+      </svg>
+      <div>Order has been <span class="font-medium">Received</span> - successfully confirm by customer</div>
+    </div>
+  }
+  @if (order.status.toLowerCase() === 'cancelled') {
+    <div class="flex items-center rounded-lg bg-red-50 px-4 py-3 text-sm text-red-800 dark:bg-gray-700 dark:text-red-300" role="alert">
+      <svg class="me-2 hidden h-4 w-4 shrink-0 sm:flex" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6" />
+      </svg>
+      <div>Order has been <span class="font-medium">cancelled</span> - no further action required</div>
+    </div>
+  }
+</div>

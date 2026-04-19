@@ -10,7 +10,7 @@ namespace Core.Specifications
 {
     public class OrderSpecification : BaseSpecification<Order>
     {
-        
+        //Get My Order
         public OrderSpecification(string email, OrderSpecParams specParams)
             : base(x => x.BuyerEmail == email && (string.IsNullOrEmpty(specParams.Status) || x.Status == ParseStatus(specParams.Status)))
         {
@@ -44,8 +44,11 @@ namespace Core.Specifications
                 AddOrderByDescending(x => x.OrderDate);
             }
         }
+        //Get all orders (Admin / sale)
         public OrderSpecification(OrderSpecParams specParams)
-            : base(x =>  (string.IsNullOrEmpty(specParams.Status) || x.Status == ParseStatus(specParams.Status)))
+            : base(x =>  (string.IsNullOrEmpty(specParams.Status) || x.Status == ParseStatus(specParams.Status)) &&
+                (string.IsNullOrEmpty(specParams.Search) || x.Id.ToString().ToLower().Contains(specParams.Search.ToLower()))
+            )
         {
             AddInclude(x => x.DeliveryMethod);
             AddInclude(x => x.OrderItems);
@@ -77,7 +80,14 @@ namespace Core.Specifications
                 AddOrderByDescending(x => x.OrderDate);
             }
         }
+        //Get my  order by ID
         public OrderSpecification(Guid id, string email) : base(x => x.Id == id && x.BuyerEmail == email)
+        {
+            AddInclude("OrderItems");
+            AddInclude("DeliveryMethod");
+        }
+        //get order by ID (admin / Sale)
+        public OrderSpecification(Guid id) : base(x => x.Id == id)
         {
             AddInclude("OrderItems");
             AddInclude("DeliveryMethod");

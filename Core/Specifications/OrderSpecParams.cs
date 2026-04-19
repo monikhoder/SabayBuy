@@ -14,4 +14,5 @@ public class OrderSpecParams
     }
     public string? Status { get; set; }
     public string? Sort { get; set; }
+    public string? Search {get; set;}
 }

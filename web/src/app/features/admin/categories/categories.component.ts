@@ -47,8 +47,8 @@ export class CategoriesComponent implements OnInit {
     });
   }
 
-  onSearch(event: any) {
-    this.categoryParams.search = event.target.value;
+  onSearch(value: string) {
+    this.categoryParams.search = value;
     this.categoryParams.pageIndex = 1;
     this.getCategories();
   }

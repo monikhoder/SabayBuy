@@ -3,7 +3,7 @@
     <!-- Header -->
     <div class="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
       <div>
-        <a routerLink="/orders" class="text-sm font-medium text-primary-600 hover:underline flex items-center mb-2">
+        <a [routerLink]="backRoute" class="text-sm font-medium text-primary-600 hover:underline flex items-center mb-2">
           <mat-icon class="mr-1" style="font-size: 18px; width: 18px; height: 18px;">arrow_back</mat-icon>
           Back to Orders
         </a>
@@ -71,7 +71,7 @@
 
       <!-- Right Column: Summary & Details -->
       <div class="w-full lg:w-1/3 space-y-6">
-        
+
         <!-- Order Summary -->
         <div class="bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 p-6">
           <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Order Summary</h2>
@@ -124,9 +124,12 @@
               <span class="text-gray-500 dark:text-gray-400">Buyer Email:</span>
               <span class="font-medium text-gray-900 dark:text-white">{{order.buyerEmail}}</span>
             </div>
-            <div class="mt-2 text-xs text-gray-400 dark:text-gray-500 break-all bg-gray-50 dark:bg-gray-900 p-2 rounded">
+            @if (order.paymentMethod !== 'cod') {
+              <div class="mt-2 text-xs text-gray-400 dark:text-gray-500 break-all bg-gray-50 dark:bg-gray-900 p-2 rounded">
               Intent ID: {{order.paymentIntentId}}
             </div>
+            }
+
           </div>
         </div>
 

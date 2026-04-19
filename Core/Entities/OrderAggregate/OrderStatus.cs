@@ -11,8 +11,12 @@ namespace Core.Entities.OrderAggregate
         Pending,
         PaymentReceived,
         PaymentFailed,
+        OrderConfirm,
         Shipped,
         Delivered,
-        Cancelled
+        ReceivedOrder,
+        Cancelled,
+        Refunded,
+        Complete
     }
 }

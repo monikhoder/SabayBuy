@@ -20,14 +20,18 @@ export class OrderService {
   getOrdersForUser(orderParams: OrderParams) {
     let params = new HttpParams();
 
-    if (orderParams.status && orderParams.status !== 'All orders') {
+    if (orderParams.status && orderParams.status !== '') {
       params = params.append('status', orderParams.status);
+    }
+    if (orderParams.search && orderParams.search !== '') {
+      params = params.append('search', orderParams.search);
     }
     params = params.append('pageIndex', orderParams.pageIndex);
     params = params.append('pageSize', orderParams.pageSize);
 
     return this.http.get<Pagination<Order>>(this.baseUrl + 'orders', { params });
   }
+  
 
   getOrderById(id: string) {
     return this.http.get<Order>(this.baseUrl + 'orders/' + id);
