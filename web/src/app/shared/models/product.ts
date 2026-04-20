@@ -28,6 +28,7 @@ export type Product = {
   categoryName: string;
   price: number;
   stock: number;
+  isActive: boolean;
   createdAt: string;
   updatedAt: string;
   variants: ProductVariant[];

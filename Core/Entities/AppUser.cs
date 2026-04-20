@@ -12,7 +12,7 @@ namespace Core.Entities
     {
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
-
+        public string? ProfileUrl { get; set; }
         //Navigation
 
         public virtual ICollection<Address> Addresses { get; set; } = new List<Address>();

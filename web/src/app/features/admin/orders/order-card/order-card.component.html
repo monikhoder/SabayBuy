@@ -13,12 +13,20 @@
       </button>
     </div>
     <div class="space-y-4 sm:flex sm:space-x-4 sm:space-y-0">
-      @if (getActionButtonText(order.status, order.paymentMethod)) {
+      @if (getNextStatus(order.status, order.paymentMethod)) {
         <button
           type="button"
-          [classList]="getActionButtonClass(order.status, order.paymentMethod)"
-          (click)="onStatusUpdate()">
-          {{getActionButtonText(order.status, order.paymentMethod)}}
+          class="w-full rounded-lg bg-primary-700 px-3 py-2 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 sm:w-auto"
+          (click)="onStatusUpdate(getNextStatus(order.status, order.paymentMethod))">
+          Mark as {{getNextStatus(order.status, order.paymentMethod)}}
+        </button>
+      }
+      @if (isCancellable(order.status)) {
+        <button
+          type="button"
+          class="w-full rounded-lg bg-red-700 px-3 py-2 text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900 sm:w-auto"
+          (click)="onStatusUpdate('Cancelled')">
+          Cancel order
         </button>
       }
       <a [routerLink]="['/orders', order.id]" [queryParams]="{returnUrl: '/admin/orders'}" class="inline-flex w-full justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700 sm:mt-0 sm:w-auto">Order details</a>

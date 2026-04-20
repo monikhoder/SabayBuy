@@ -78,4 +78,8 @@ export class AdminService {
   updateOrderStatus(id: string, status: string) {
     return this.http.put(this.baseUrl + 'adminOrder/' + id + '?orderstatus=' + status, {}, { responseType: 'text' });
   }
+  //Update product status togle
+  updateProductStatus(id:string){
+    return this.http.put(this.baseUrl + 'Products/status/' + id , {}, { responseType: 'text' });
+  }
 }

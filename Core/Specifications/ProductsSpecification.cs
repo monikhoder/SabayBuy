@@ -9,7 +9,8 @@ public class ProductsSpecification : BaseSpecification<Product>
         : base(x =>
             (string.IsNullOrEmpty(specParams.Search) || x.ProductName.ToLower().Contains(specParams.Search.ToLower())) &&
             (specParams.Categories.Count == 0 || specParams.Categories.Contains(x.Category!.CategoryName)) &&
-            (specParams.Brands.Count == 0 || specParams.Brands.Contains(x.Brand))
+            (specParams.Brands.Count == 0 || specParams.Brands.Contains(x.Brand)) &&
+            (specParams.IsActive == null || x.IsActive == specParams.IsActive)
         )
     {
         ApplyPaging(specParams.PageSize * (specParams.PageIndex - 1), specParams.PageSize

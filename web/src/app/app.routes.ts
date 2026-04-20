@@ -21,6 +21,7 @@ import { DashboardComponent } from './features/admin/dashboard/dashboard.compone
 import { ProductsComponent } from './features/admin/products/products.component';
 import { OrdersComponent } from './features/admin/orders/orders.component';
 import { CategoriesComponent } from './features/admin/categories/categories.component';
+import { ProfileComponent } from './features/account/profile/profile.component';
 
 export const routes: Routes = [
   // Shop Routes
@@ -38,6 +39,7 @@ export const routes: Routes = [
       { path: 'orders/:id', component: OrderDetailedComponent, canActivate: [authGuard] },
       { path: 'account/login', component: LoginComponent },
       { path: 'account/register', component: RegisterComponent },
+      { path: 'account/profile', component: ProfileComponent , canActivate: [authGuard]},
       { path: 'not-found', component: NotFoundComponent },
       { path: 'server-error', component: ServerErrorComponent },
     ]

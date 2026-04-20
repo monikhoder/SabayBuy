@@ -107,8 +107,12 @@
                           <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{product.brand}}</td>
                           <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">${{product.price}}</td>
                           <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{product.stock}}</td>
-                          <td class="px-4 py-3 whitespace-nowrap">
-                              <div class="w-fit bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-100 dark:text-green-800">Active</div>
+                          <td class="" (click)="$event.stopPropagation()">
+                              <mat-slide-toggle 
+                                class="max-h-0.5!" 
+                                [checked]="product.isActive"
+                                (change)="toggleProductStatus(product)">
+                              </mat-slide-toggle>
                           </td>
                       </tr>
                        <tr [class.hidden]="expandedProductId !== product.id" class="flex-1 overflow-x-auto w-full">

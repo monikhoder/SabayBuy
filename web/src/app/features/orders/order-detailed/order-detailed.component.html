@@ -48,7 +48,8 @@
                   <div class="flex items-center gap-4">
                     <!-- Placeholder image -->
                     <div class="w-20 h-20 bg-gray-100 dark:bg-gray-700 rounded-md flex items-center justify-center shrink-0 border border-gray-200 dark:border-gray-600">
-                       <mat-icon class="text-gray-400" style="font-size: 32px; width: 32px; height: 32px;">shopping_bag</mat-icon>
+                       
+                      <mat-icon class="text-gray-400" style="font-size: 32px; width: 32px; height: 32px;">shopping_bag</mat-icon>
                     </div>
                     <div>
                       <a [routerLink]="['/product', item.productId]" class="text-base font-semibold text-gray-900 hover:text-primary-600 dark:text-white dark:hover:text-primary-500 hover:underline">
@@ -58,7 +59,7 @@
                       <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Qty: {{item.quantity}}</p>
                     </div>
                   </div>
-                  <div class="text-right sm:text-right text-left">
+                  <div class="text-right sm:text-right">
                     <p class="text-lg font-bold text-gray-900 dark:text-white">{{item.price * item.quantity | currency}}</p>
                     <p class="text-sm text-gray-500 dark:text-gray-400">{{item.price | currency}} each</p>
                   </div>

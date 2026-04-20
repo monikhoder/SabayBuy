@@ -31,10 +31,14 @@ export class OrderService {
 
     return this.http.get<Pagination<Order>>(this.baseUrl + 'orders', { params });
   }
-  
+
 
   getOrderById(id: string) {
     return this.http.get<Order>(this.baseUrl + 'orders/' + id);
+  }
+  //update order status
+  updateOrderStatus(id: string, status: string) {
+    return this.http.put(this.baseUrl + 'orders/' + id + '?orderstatus=' + status, {}, { responseType: 'text' });
   }
 
 }

@@ -41,6 +41,9 @@ export class ShopServices {
     if (productParams.search) {
       params = params.append('search', productParams.search);
     }
+    if(productParams.isActive !== null){
+      params = params.append('isActive', productParams.isActive)
+    }
     params = params.append('sort', productParams.sort);
     params = params.append('pageIndex', productParams.pageIndex);
     params = params.append('pageSize', productParams.pageSize);

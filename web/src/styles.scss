@@ -32,6 +32,12 @@ html {
   @include mat.button-overrides((
     text-label-text-color: rgba(0, 0, 0, 0.833)
   ));
+  @include mat.slide-toggle-overrides((
+    handle-surface-color: rgb(112,8,231),
+    selected-handle-color: white,
+    selected-focus-track-color: rgb(112,8,231),
+    selected-track-color: rgb(112,8,231)
+  ));
 
 }
 

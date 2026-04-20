@@ -12,7 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class OrderCardComponent {
   @Input() order!: Order;
-  @Output() statusUpdate = new EventEmitter<{ orderId: string, currentStatus: string, paymentMethod?: string }>();
+  @Output() statusUpdate = new EventEmitter<{ orderId: string, targetStatus: string }>();
 
   getStatusBadgeClass(status: string): string {
     switch (status.toLowerCase()) {
@@ -65,59 +65,15 @@ export class OrderCardComponent {
     return '';
   }
 
-  getActionButtonText(status: string, paymentMethod?: string): string {
+  isCancellable(status: string): boolean {
     const statusLower = status.toLowerCase();
-    const paymentMethodLower = paymentMethod?.toLowerCase();
-
-    if (statusLower === 'pending' && paymentMethodLower === 'cod') {
-      const nextStatus = this.getNextStatus(status, paymentMethod);
-      if (nextStatus) {
-        return `Mark as ${nextStatus}`;
-      }
-    }
-
-    const nextStatus = this.getNextStatus(status, paymentMethod);
-    if (nextStatus) {
-      return `Mark as ${nextStatus}`;
-    }
-
-    if (this.isCancellable(status, paymentMethod)) {
-      return 'Cancel order';
-    }
-
-    return '';
+    return statusLower === 'pending' || statusLower === 'orderconfirm' || statusLower === 'paymentreceived';
   }
 
-  isCancellable(status: string, paymentMethod?: string): boolean {
-    const statusLower = status.toLowerCase();
-    return statusLower === 'pending' || statusLower === 'orderconfirm';
-  }
-
-  getActionButtonClass(status: string, paymentMethod?: string): string {
-    const statusLower = status.toLowerCase();
-    const paymentMethodLower = paymentMethod?.toLowerCase();
-
-    if (statusLower === 'pending' && paymentMethodLower === 'cod') {
-      return 'w-full rounded-lg bg-primary-700 px-3 py-2 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 sm:w-auto';
-    }
-
-    const nextStatus = this.getNextStatus(status, paymentMethod);
-    if (nextStatus) {
-      return 'w-full rounded-lg bg-primary-700 px-3 py-2 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 sm:w-auto';
-    }
-
-    if (this.isCancellable(status, paymentMethod)) {
-      return 'w-full rounded-lg bg-red-700 px-3 py-2 text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900 sm:w-auto';
-    }
-
-    return '';
-  }
-
-  onStatusUpdate() {
+  onStatusUpdate(targetStatus: string) {
     this.statusUpdate.emit({
       orderId: this.order.id,
-      currentStatus: this.order.status,
-      paymentMethod: this.order.paymentMethod
+      targetStatus: targetStatus
     });
   }
 }

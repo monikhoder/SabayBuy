@@ -64,30 +64,15 @@ export class OrdersComponent implements OnInit {
     this.getOrders();
   }
 
-  updateOrderStatus(orderId: string, currentStatus: string, paymentMethod?: string) {
-    const statusLower = currentStatus.toLowerCase();
-    const paymentMethodLower = paymentMethod?.toLowerCase();
-    let newStatus = '';
+  updateOrderStatus(event: {orderId: string, targetStatus: string}) {
+    const {orderId, targetStatus} = event;
 
-    // Determine next status based on current status and payment method
-    if (statusLower === 'pending' && paymentMethodLower === 'cod') {
-      newStatus = 'OrderConfirm';
-    } else if (statusLower === 'paymentreceived') {
-      newStatus = 'OrderConfirm';
-    } else if (statusLower === 'orderconfirm') {
-      newStatus = 'Shipped';
-    } else if (statusLower === 'shipped') {
-      newStatus = 'Delivered';
-    } else if (statusLower === 'pending' || statusLower === 'orderconfirm') {
-      newStatus = 'Cancelled';
-    }
-
-    if (!newStatus) {
+    if (!targetStatus) {
       this.snack.error('No further actions available for this order status');
       return;
     }
 
-    this.adminService.updateOrderStatus(orderId, newStatus).subscribe({
+    this.adminService.updateOrderStatus(orderId, targetStatus).subscribe({
       next: (response) => {
         this.snack.success(response);
         this.getOrders(); // Refresh the orders list

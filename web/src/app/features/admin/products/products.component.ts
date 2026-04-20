@@ -20,11 +20,13 @@ import { Category } from '../../../shared/models/category';
 import { categoryParams } from '../../../shared/models/categoryParams';
 import { BrandGroup, FilterComponent } from '../../Shopping/product-list/filter/filter.component';
 import { SortComponent } from '../../Shopping/product-list/sort/sort.component';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { AdminService } from '../../../core/services/admin.service';
 
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatMenuModule, MatButtonModule, MatPaginatorModule, MatDialogModule, MatIconModule, FilterComponent, SortComponent],
+  imports: [CommonModule, FormsModule, MatMenuModule, MatButtonModule, MatPaginatorModule,MatSlideToggleModule, MatDialogModule, MatIconModule, FilterComponent, SortComponent],
   templateUrl: './products.component.html',
   styleUrl: './products.component.scss',
 })
@@ -33,6 +35,7 @@ export class ProductsComponent implements OnInit{
   @ViewChild('sortComponent') sortComponent!: SortComponent;
 
   shopService = inject(ShopServices);
+  adminService = inject(AdminService);
   snack = inject(SnackbarService)
   dialog = inject(MatDialog)
   productParams = new productParams();
@@ -52,6 +55,16 @@ export class ProductsComponent implements OnInit{
 
   toggleProduct(productId: any) {
     this.expandedProductId = this.expandedProductId === productId ? null : productId;
+  }
+
+  toggleProductStatus(product: Product) {
+    this.adminService.updateProductStatus(product.id).subscribe({
+      next: () => {
+        product.isActive = !product.isActive;
+        this.snack.success('Product status updated successfully');
+      },
+      error: (error) => this.snack.error(error.message || 'Failed to update product status')
+    });
   }
 
   getProducts(){

@@ -88,7 +88,17 @@ public class ProductVariantsController(
 
         return BadRequest("Failed to update variant");
     }
-
+    //Put : api/variants/status/{id}
+    [HttpPut("variants/status/{id}")]
+    public async Task<ActionResult> UpdatevariantsStatus(Guid id)
+    {
+        var variants = await unit.Repository<ProductVariant>().GetByIdAsync(id);
+        if (variants == null) return NotFound();
+        if (variants.IsActive) variants.IsActive = false; else variants.IsActive = true;
+        unit.Repository<ProductVariant>().Update(variants);
+        if (await unit.Complete()) return Ok("Variants status updated");
+        return BadRequest("Failed to update variants status");
+    }
 
     // DELETE: api/variants/{id}
     [HttpDelete("variants/{id}")]

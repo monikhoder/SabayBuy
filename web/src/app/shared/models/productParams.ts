@@ -6,4 +6,5 @@ export class productParams {
   pageSize: number = this.defaultPageSize;
   pageIndex: number = 1;
   search: string = '';
+  isActive: boolean | null = null
 }

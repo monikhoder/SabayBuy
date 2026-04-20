@@ -2,6 +2,7 @@
 using API.Helpers;
 using AutoMapper;
 using Core.Entities;
+using Core.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -126,6 +127,67 @@ namespace API.Controllers
             var result = await signInManager.UserManager.UpdateAsync(user);
             if (!result.Succeeded) return BadRequest();
             return Ok(mapper.Map<AppUser, UserDto>(user));
+        }
+
+        // Update profile picture
+        [Authorize]
+        [HttpPut("profile-picture")]
+        public async Task<ActionResult> UpdateProfilePicture(UpdateProfilePictureDto updateProfilePictureDto)
+        {
+            var user = await signInManager.UserManager.GetUserByEmailWithAddress(User);
+            
+            user.ProfileUrl = updateProfilePictureDto.ProfileUrl;
+            
+            var result = await signInManager.UserManager.UpdateAsync(user);
+            if (!result.Succeeded) return BadRequest("Failed to update profile picture");
+
+            var userDto = mapper.Map<AppUser, UserDto>(user);
+            userDto.Role = User.FindFirstValue(ClaimTypes.Role);
+            return Ok(userDto);
+        }
+
+        // update profile (first name last name)
+        [Authorize]
+        [HttpPut("profile")]
+        public async Task<ActionResult> UpdateProfile(UpdateProfileDto profileDto)
+        {
+            var user = await signInManager.UserManager.GetUserByEmailWithAddress(User);
+            
+            user.FirstName = profileDto.FirstName;
+            user.LastName = profileDto.LastName;
+            if (profileDto.PhoneNumber != null)
+            {
+                user.PhoneNumber = profileDto.PhoneNumber;
+            }
+
+            var result = await signInManager.UserManager.UpdateAsync(user);
+            if (!result.Succeeded) return BadRequest("Failed to update profile");
+
+            var userDto = mapper.Map<AppUser, UserDto>(user);
+            userDto.Role = User.FindFirstValue(ClaimTypes.Role);
+            return Ok(userDto);
+        }
+
+        [Authorize]
+        [HttpPost("change-password")]
+        public async Task<ActionResult> ChangePassword(ChangePasswordDto changePasswordDto)
+        {
+            var user = await signInManager.UserManager.GetUserByEmailWithAddress(User);
+            if (user == null) return Unauthorized();
+
+            var result = await signInManager.UserManager.ChangePasswordAsync(user, 
+                changePasswordDto.CurrentPassword, changePasswordDto.NewPassword);
+
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(error.Code, error.Description);
+                }
+                return ValidationProblem();
+            }
+
+            return Ok();
         }
     }
 }

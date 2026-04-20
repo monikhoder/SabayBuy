@@ -30,6 +30,7 @@ public class ProductSpecParams
         }
 
     }
+    public bool? IsActive { get; set; }
     public string? Sort { get; set; }
     public string? Search { get; set; }
 

@@ -7,6 +7,7 @@ import { OrderParams } from '../../shared/models/orderParams';
 import { FormsModule } from '@angular/forms';
 import { MatIcon } from "@angular/material/icon";
 import { LoadingService } from '../../core/services/loading.service';
+import { SnackbarService } from '../../core/services/snackbar.service';
 
 @Component({
   selector: 'app-order',
@@ -23,6 +24,7 @@ import { LoadingService } from '../../core/services/loading.service';
 export class OrderComponent implements OnInit {
   private orderService = inject(OrderService);
   loadingService = inject(LoadingService);
+  private snack = inject(SnackbarService);
   myorders: Order[] = [];
   orderParams = new OrderParams();
   totalCount = 0;
@@ -42,6 +44,19 @@ export class OrderComponent implements OnInit {
       },
     });
   }
+
+  onStatusUpdate(id: string, status: string) {
+    this.orderService.updateOrderStatus(id, status).subscribe({
+      next: (response) => {
+        this.snack.success(response);
+        this.getOrders();
+      },
+      error: (error) => {
+        this.snack.error(error.error || 'Failed to update order status');
+      }
+    });
+  }
+
   HandlePaginationChange(pageNumber: number) {
     this.orderParams.pageSize += this.orderParams.defaultPageSize;
     this.getOrders(); // Reload orders with new page number

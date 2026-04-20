@@ -60,6 +60,7 @@ export class ProductListComponent implements OnInit {
     })
   }
   loadProducts() {
+    this.productParams.isActive = true;
     this.shopService.getProducts(this.productParams).subscribe({
       next: response => {
         this.products = response.data;

@@ -43,7 +43,7 @@
             @for (order of orders; track order) {
               <app-order-card 
                 [order]="order"
-                (statusUpdate)="updateOrderStatus($event.orderId, $event.currentStatus, $event.paymentMethod)">
+                (statusUpdate)="updateOrderStatus($event)">
               </app-order-card>
             }
         </div>

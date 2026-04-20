@@ -47,6 +47,7 @@ export class HomeComponent implements OnInit {
       sort: 'name',
       pageIndex: 1,
       pageSize: 4,
+      isActive: true,
       defaultPageSize: 4
     };
 

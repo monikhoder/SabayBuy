@@ -88,7 +88,7 @@ export class CartService {
     return {
       productId: item.id,
       productName: item.productName,
-      price: item.price,
+      price: item.variants.find(x => x.id === variantId)?.price ?? item.price,
       imageUrl: item.variants.find(x => x.id === variantId)?.imageUrl ?? item.baseImageUrl!,
       quantity: 0,
       productVariantName: this.listattributes(item, variantId),

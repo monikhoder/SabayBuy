@@ -86,7 +86,7 @@ namespace API.Controllers
                     }
                     break;
                 case OrderStatus.Cancelled :
-                    if(order.Status == OrderStatus.Pending ||order.Status == OrderStatus.OrderConfirm)
+                    if(order.Status == OrderStatus.Pending || order.Status == OrderStatus.OrderConfirm || order.Status == OrderStatus.PaymentReceived || order.Status == OrderStatus.PaymentFailed)
                     {
                          order.Status = orderstatus;
                     }

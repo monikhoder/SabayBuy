@@ -5,6 +5,8 @@ using Core.Entities;
 using Core.Interface;
 using Core.Specifications;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {
@@ -51,6 +53,18 @@ namespace API.Controllers
             mapper.Map(productDto, product);
             unit.Repository<Product>().Update(product);
             if (await unit.Complete()) return Ok(mapper.Map<Product, ProductDto>(product));
+            return BadRequest("Failed to update product");
+        }
+        [Authorize(Roles = "Admin,Stock")]
+        //Put : api/products/status/{id}
+        [HttpPut("status/{id}")]
+        public async Task<ActionResult> UpdateProductStatus(Guid id)
+        {
+            var product = await unit.Repository<Product>().GetByIdAsync(id);
+            if (product == null) return NotFound();
+            if (product.IsActive) product.IsActive = false; else product.IsActive = true;
+             unit.Repository<Product>().Update(product);
+            if (await unit.Complete()) return Ok("Product status updated");
             return BadRequest("Failed to update product");
         }
 

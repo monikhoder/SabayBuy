@@ -125,11 +125,12 @@
               <div class="mt-4 flex flex-wrap gap-3">
                 @for (variant of product.variants; track variant.id) {
                   <label [for]="variant.id"
+                         (click)="variantChange(variant.id)"
                          [class.ring-2]="variantId() === variant.id"
                          [class.ring-primary-600]="variantId() === variant.id"
                          class="cursor-pointer bg-white border border-gray-200 rounded-lg p-3 hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 transition-all flex flex-col min-w-[120px]">
                     <input type="radio" [id]="variant.id" name="variant" [value]="variant.id"
-                           class="hidden" (change)="variantChange(variant.id)" [checked]="variantId() === variant.id">
+                           class="hidden" [checked]="variantId() === variant.id">
                     <span class="text-sm font-bold text-gray-900 dark:text-white">{{ variant.price | currency }}</span>
                     <div class="mt-1">
                       @for (attr of variant.attributes; track $index) {

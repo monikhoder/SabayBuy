@@ -68,4 +68,20 @@ export class AccountService {
   getAutState() {
     return this.http.get<{ isAuthenticated: boolean }>(this.baseUrl + 'account/is-authenticated');
   }
+
+  updateProfile(values: { firstName: string, lastName: string, phoneNumber?: string }) {
+    return this.http.put<User>(this.baseUrl + 'account/profile', values).pipe(
+      tap(user => this.currentUser.set(user))
+    );
+  }
+
+  updateProfilePicture(profileUrl: string) {
+    return this.http.put<User>(this.baseUrl + 'account/profile-picture', { profileUrl }).pipe(
+      tap(user => this.currentUser.set(user))
+    );
+  }
+
+  changePassword(values: any) {
+    return this.http.post(this.baseUrl + 'account/change-password', values);
+  }
 }

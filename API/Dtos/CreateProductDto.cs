@@ -13,6 +13,7 @@ public class CreateProductDto
     [Required(ErrorMessage = "Brand cannot be empty")]
     [StringLength(15, ErrorMessage = "Brand cannot exceed 15 characters")]
      public string Brand { get; set; } = string.Empty;
+    public bool IsActive { get; set; } = true;
     [Required(ErrorMessage = "Category cannot be empty")] public Guid CategoryId { get; set; }
 
     [Required(ErrorMessage = "Product variants cannot be empty")] public List<CreateProductVariantDto> Variants { get; set; } = new();
@@ -31,6 +32,7 @@ public class CreateProductVariantDto
     [Range(0, int.MaxValue, ErrorMessage = "Stock quantity must be a non-negative integer")]
      public int StockQuantity { get; set; }
     public string? ImageUrl { get; set; }
+    public bool IsActive { get; set; } = true;
     public List<CreateVariantAttributeDto> Attributes { get; set; } = new();
 }
 
