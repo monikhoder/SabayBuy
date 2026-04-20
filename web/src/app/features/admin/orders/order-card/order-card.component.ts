@@ -3,10 +3,12 @@ import { Order } from '../../../../shared/models/order';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
+import { AdminBadgeComponent } from './../../shared/admin-badge/admin-badge.component';
 
 @Component({
   selector: 'app-order-card',
-  imports: [CommonModule, RouterLink, MatButtonModule],
+  standalone: true,
+  imports: [CommonModule, RouterLink, MatButtonModule, AdminBadgeComponent],
   templateUrl: './order-card.component.html',
   styleUrl: './order-card.component.scss',
 })

@@ -10,11 +10,12 @@ import { SnackbarService } from '../../../../core/services/snackbar.service';
 import { AddCategory, Category } from '../../../../shared/models/category';
 import { categoryParams } from '../../../../shared/models/categoryParams';
 import { ShopServices } from '../../../../core/services/shop.service';
+import { AdminLoadingButtonComponent } from './../../shared/admin-loading-button/admin-loading-button.component';
 
 @Component({
   selector: 'app-add-category-dialog',
   standalone: true,
-  imports: [MatDialogModule, MatButtonModule, ReactiveFormsModule, CommonModule, MatProgressSpinnerModule],
+  imports: [MatDialogModule, MatButtonModule, ReactiveFormsModule, CommonModule, MatProgressSpinnerModule, AdminLoadingButtonComponent],
   templateUrl: './add-category-dialog.component.html',
   styleUrl: './add-category-dialog.component.scss'
 })

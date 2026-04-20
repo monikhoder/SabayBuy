@@ -15,11 +15,12 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { DeleteCategoryDialogComponent } from './delete-category-dialog/delete-category-dialog.component';
 import { ShopServices } from '../../../core/services/shop.service';
+import { AdminSearchComponent } from '../shared/admin-search/admin-search.component';
 
 @Component({
   selector: 'app-categories',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatIcon, MatPaginatorModule, MatCheckboxModule, MatDialogModule, MatButtonModule],
+  imports: [CommonModule, FormsModule, MatIcon, MatPaginatorModule, MatCheckboxModule, MatDialogModule, MatButtonModule, AdminSearchComponent],
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.scss',
 })

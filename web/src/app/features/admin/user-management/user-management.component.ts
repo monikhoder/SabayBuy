@@ -11,6 +11,8 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { SnackbarService } from '../../../core/services/snackbar.service';
 import { PromoteUserDialogComponent } from './promote-user-dialog/promote-user-dialog.component';
+import { AdminSearchComponent } from '../shared/admin-search/admin-search.component';
+import { AdminBadgeComponent } from '../shared/admin-badge/admin-badge.component';
 
 @Component({
   selector: 'app-user-management',
@@ -21,7 +23,9 @@ import { PromoteUserDialogComponent } from './promote-user-dialog/promote-user-d
     MatIconModule,
     MatPaginatorModule,
     MatDialogModule,
-    MatButtonModule
+    MatButtonModule,
+    AdminSearchComponent,
+    AdminBadgeComponent
   ],
   templateUrl: './user-management.component.html',
   styleUrl: './user-management.component.scss'

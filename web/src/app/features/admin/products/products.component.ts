@@ -22,11 +22,12 @@ import { BrandGroup, FilterComponent } from '../../Shopping/product-list/filter/
 import { SortComponent } from '../../Shopping/product-list/sort/sort.component';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { AdminService } from '../../../core/services/admin.service';
+import { AdminSearchComponent } from '../shared/admin-search/admin-search.component';
 
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatMenuModule, MatButtonModule, MatPaginatorModule,MatSlideToggleModule, MatDialogModule, MatIconModule, FilterComponent, SortComponent],
+  imports: [CommonModule, FormsModule, MatMenuModule, MatButtonModule, MatPaginatorModule,MatSlideToggleModule, MatDialogModule, MatIconModule, FilterComponent, SortComponent, AdminSearchComponent],
   templateUrl: './products.component.html',
   styleUrl: './products.component.scss',
 })

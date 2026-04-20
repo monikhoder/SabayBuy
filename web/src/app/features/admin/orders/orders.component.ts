@@ -14,11 +14,12 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { AdminService } from '../../../core/services/admin.service';
 import { OrderCardComponent } from './order-card/order-card.component';
+import { AdminSearchComponent } from '../shared/admin-search/admin-search.component';
 
 @Component({
   selector: 'app-orders',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatIconModule, MatPaginatorModule, MatDialogModule, MatButtonModule, MatSelectModule, MatFormFieldModule,  OrderCardComponent],
+  imports: [CommonModule, FormsModule, MatIconModule, MatPaginatorModule, MatDialogModule, MatButtonModule, MatSelectModule, MatFormFieldModule,  OrderCardComponent, AdminSearchComponent],
   templateUrl: './orders.component.html',
   styleUrl: './orders.component.scss',
 })
