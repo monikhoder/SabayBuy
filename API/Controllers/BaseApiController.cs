@@ -5,6 +5,8 @@ using Core.Entities;
 using Core.Interface;
 using Microsoft.AspNetCore.Mvc;
 
+using Microsoft.EntityFrameworkCore;
+
 namespace API.Controllers;
 
 [Route("api/[controller]")]
@@ -38,7 +40,7 @@ public class BaseApiController : ControllerBase
         return Ok(mappedEntity);
     }
 
-   
+
 
 
 }

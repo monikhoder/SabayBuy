@@ -22,6 +22,7 @@ import { ProductsComponent } from './features/admin/products/products.component'
 import { OrdersComponent } from './features/admin/orders/orders.component';
 import { CategoriesComponent } from './features/admin/categories/categories.component';
 import { ProfileComponent } from './features/account/profile/profile.component';
+import { UserManagementComponent } from './features/admin/user-management/user-management.component';
 
 export const routes: Routes = [
   // Shop Routes
@@ -56,6 +57,7 @@ export const routes: Routes = [
       { path: 'products', component: ProductsComponent, canActivate: [roleGuard], data: { roles: ['Admin', 'Stock'] } },
       { path: 'orders', component: OrdersComponent },
       {path: 'categories', component: CategoriesComponent, canActivate: [roleGuard], data: { roles: ['Admin', 'Stock'] }},
+      { path: 'users', component: UserManagementComponent, canActivate: [roleGuard], data: { roles: ['Admin'] } },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
     ]
   },

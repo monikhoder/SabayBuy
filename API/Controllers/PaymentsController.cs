@@ -39,7 +39,7 @@ public class PaymentsController(
     }
     
     [HttpPost("webhook/aba")]
-    public async Task<IActionResult> AbaWebhook([FromForm] string tran_id)
+    public async Task<IActionResult> AbaWebhook([FromQuery] string tran_id)
     {
         if (string.IsNullOrEmpty(tran_id))
         {
