@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
 import { User } from '../../shared/models/User';
 import { Pagination } from '../../shared/models/pagination';
 import { UserParams } from '../../shared/models/userParams';

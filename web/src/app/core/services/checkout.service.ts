@@ -1,12 +1,12 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable, OnInit, signal, Signal } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { DeliveryMethod } from '../../shared/models/deliveryMethod';
 import { PaymentMethod } from '../../shared/models/paymentMethod';
 import { CartService } from './cart.service';
 import { CheckOut } from '../../shared/models/checkout';
-import { CreateOrder } from '../../shared/models/order';
 import { AccountService } from './account.service';
+import { tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +16,7 @@ export class CheckoutService {
   private http = inject(HttpClient);
   cartService = inject(CartService);
   accountService = inject(AccountService);
-  AvailableShippingMethods = signal<DeliveryMethod[]>([]);
+  availableShippingMethods = signal<DeliveryMethod[]>([]);
   selectedShippingMethod = signal<DeliveryMethod | null>(null);
   selectedPaymentMethod = signal<string>('aba');
 
@@ -46,22 +46,26 @@ export class CheckoutService {
   ]);
 
   createPaymentIntent() {
+    const selectedAddress = this.accountService.selectedAddress();
+
     const checkoutDto: CheckOut = {
       cartId: this.cartService.cart()!.id,
       paymentMethod: this.selectedPaymentMethod(),
       deliveryMethodId: this.selectedShippingMethod()?.id || '',
-      shippingAddressId: this.selectedShippingMethod()?.id || '',
+      shippingAddressId: selectedAddress?.id || '',
     };
     return this.http.post(this.baseUrl + 'Payments/checkout', checkoutDto)
   }
 
   getAvailableShippingMethods(zip: string) {
     return this.http
-      .get(this.baseUrl + 'Payments/delivery-methods/' + zip)
-      .subscribe((methods: any) => {
-        this.AvailableShippingMethods.set(methods);
-        this.selectedShippingMethod.set(methods.length > 0 ? methods[0] : null);
-      });
+      .get<DeliveryMethod[]>(this.baseUrl + 'Payments/delivery-methods/' + zip)
+      .pipe(
+        tap((methods) => {
+          this.availableShippingMethods.set(methods);
+          this.selectedShippingMethod.set(methods.length > 0 ? methods[0] : null);
+        })
+      );
   }
 
    

@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
 import { Pagination } from '../../shared/models/pagination';
 import { AddCategory, Category } from '../../shared/models/category';
 import { categoryParams } from '../../shared/models/categoryParams';

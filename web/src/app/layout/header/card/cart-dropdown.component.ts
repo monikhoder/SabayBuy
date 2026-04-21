@@ -16,4 +16,8 @@ export class CartDropdownComponent implements OnInit {
   ngOnInit(): void {
     initFlowbite();
   }
+
+  removeItem(productId: string, variantId: string) {
+    this.cartService.removeItemFromCart(productId, variantId).subscribe();
+  }
 }

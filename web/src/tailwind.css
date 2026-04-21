@@ -10,6 +10,34 @@
     @apply mx-auto max-w-7xl;
   }
 
+  .app-panel {
+    @apply rounded-2xl border border-gray-200 bg-white shadow-sm;
+  }
+
+  .app-dropdown-panel {
+    @apply rounded-2xl border border-gray-200 bg-white shadow-xl;
+  }
+
+  .app-input {
+    @apply block w-full rounded-xl border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:border-violet-500 focus:outline-none focus:ring-4 focus:ring-violet-100;
+  }
+
+  .app-btn-primary {
+    @apply inline-flex items-center justify-center rounded-xl bg-violet-700 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-violet-800 focus:outline-none focus:ring-4 focus:ring-violet-200 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .app-btn-secondary {
+    @apply inline-flex items-center justify-center rounded-xl border border-gray-300 bg-white px-5 py-2.5 text-sm font-semibold text-gray-800 transition hover:bg-gray-50 focus:outline-none focus:ring-4 focus:ring-gray-100 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .app-link {
+    @apply font-medium text-violet-700 transition hover:text-violet-800 hover:underline;
+  }
+
+  .app-chip {
+    @apply inline-flex items-center rounded-full border px-2.5 py-1 text-xs font-semibold;
+  }
+
   .bg-primary-700 {
     @apply bg-violet-700;
   }

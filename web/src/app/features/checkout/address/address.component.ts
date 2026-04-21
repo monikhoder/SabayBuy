@@ -60,7 +60,7 @@ export class AddressComponent implements OnInit {
             this.accountService.getUser().subscribe();
           },
           complete: () => {
-            this.checkoutService.getAvailableShippingMethods(address.zipCode);
+            this.checkoutService.getAvailableShippingMethods(address.zipCode).subscribe();
             this.snack.success('Address updated successfully');
             this.saveSuccess.emit();
           },
@@ -75,7 +75,7 @@ export class AddressComponent implements OnInit {
             )
           },
           complete: () => {
-            this.checkoutService.getAvailableShippingMethods(address.zipCode);
+            this.checkoutService.getAvailableShippingMethods(address.zipCode).subscribe();
             this.snack.success('Address added successfully');
             this.addressForm.reset();
             this.saveSuccess.emit();

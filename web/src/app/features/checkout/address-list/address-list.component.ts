@@ -24,7 +24,7 @@ export class AddressListComponent {
   // Method to select an address
   selectAddress(address: Address): void {
     this.accountService.selectedAddress.set(address);
-    this.checkoutService.getAvailableShippingMethods(address.zipCode);
+    this.checkoutService.getAvailableShippingMethods(address.zipCode).subscribe();
   }
 
   // Method to get the currently selected address

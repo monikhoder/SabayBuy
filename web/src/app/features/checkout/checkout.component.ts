@@ -30,7 +30,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     effect(() => {
       const address = this.accountService.selectedAddress();
       if (address) {
-        this.checkoutService.getAvailableShippingMethods(address.zipCode);
+        this.checkoutService.getAvailableShippingMethods(address.zipCode).subscribe();
       }
     });
   }

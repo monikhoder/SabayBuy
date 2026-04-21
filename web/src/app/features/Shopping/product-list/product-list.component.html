@@ -22,7 +22,7 @@
       </div>
 
       <div class="flex items-center space-x-2">
-        <button mat-flat-button (click)="filterComponent.toggleModal()" class="rounded-md! py-2! bg-violet-700!  hover:bg-violet-800">
+        <button mat-flat-button (click)="filterComponent.toggleModal()" class="app-btn-primary rounded-xl!">
           <mat-icon matPrefix class="mr-1">filter_list</mat-icon>
           Filters
           <span *ngIf="productParams.brand.length + productParams.category.length > 0"
@@ -30,7 +30,7 @@
             {{ productParams.brand.length + productParams.category.length }}
           </span>
         </button>
-        <button mat-flat-button [matMenuTriggerFor]="sortComponent.menu" class="rounded-md! py-2! bg-violet-700!  hover:bg-violet-800">
+        <button mat-flat-button [matMenuTriggerFor]="sortComponent.menu" class="app-btn-primary rounded-xl!">
           <mat-icon matPrefix class="mr-1">sort</mat-icon>
           Sort
           <mat-icon matSuffix class="ml-1">arrow_drop_down</mat-icon>
@@ -41,7 +41,7 @@
     <!-- Selected Filter Badges -->
         <div class="flex flex-wrap gap-2 mb-2">
             @for (item of productParams.brand; track $index) {
-              <span class="inline-flex items-center bg-violet-100 text-violet-800 text-xs font-medium px-2  rounded-full border border-violet-200">
+              <span class="app-chip border-violet-200 bg-violet-100 text-violet-800">
                 {{ item }}
                 <button type="button" (click)="removeBrandFilter(item)" class="ml-2 hover:text-violet-900">
                   <span>X</span>
@@ -49,7 +49,7 @@
               </span>
             }
             @for (item of productParams.category; track $index) {
-              <span class="inline-flex items-center bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-1 rounded-full border border-blue-200">
+              <span class="app-chip border-blue-200 bg-blue-100 text-blue-800">
                 {{ item }}
                 <button type="button" (click)="removeCategoryFilter(item)" class="ml-1 hover:text-blue-900">
                  <span> X</span>
@@ -57,7 +57,7 @@
               </span>
             }
             @if (productParams.brand.length > 0 || productParams.category.length > 0) {
-                <button mat-button color="warn" class="text-xs" (click)="resetAllFilters()">Clear All</button>
+                <button mat-button color="warn" class="app-link text-xs" (click)="resetAllFilters()">Clear All</button>
             }
         </div>
 
@@ -79,7 +79,7 @@
 
     <div class="w-full text-center py-8">
       @if (productParams && count > productParams.pageSize) {
-        <button (click)="HandlePaginationChange(1)" type="button" class="inline-flex items-center  text-white bg-violet-600 hover:bg-violet-700  border border-violet-600 focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-2xl text-xs px-3 py-1.5 focus:outline-none">
+        <button (click)="HandlePaginationChange(1)" type="button" class="app-btn-primary rounded-2xl px-3 py-1.5 text-xs">
           @if (loadingService.loading === true) {
           <div role="status">
               <svg aria-hidden="true" class="inline w-4 h-4 text-white animate-spin fill-white mr-2" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -51,8 +51,10 @@ export class AppOrderSummaryComponent {
               console.error('Error creating order', error);
             },
             complete: () => {
-              this.cartService.deleteCart(this.cartService.cart()?.id || '');
-              this.cartService.cart.set(null);
+              const cartId = this.cartService.cart()?.id;
+              if (cartId) {
+                this.cartService.deleteCart(cartId).subscribe();
+              }
               this.orderService.orderComplete = true;
             }
           });

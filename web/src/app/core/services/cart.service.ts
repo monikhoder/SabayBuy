@@ -1,9 +1,9 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Cart, CartItem } from '../../shared/models/cart';
 import { Product } from '../../shared/models/product';
-import { map } from 'rxjs';
+import { map, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -25,16 +25,14 @@ export class CartService {
     )
   }
   setCart(cart: Cart){
-    return this.http.post<Cart>(this.baseUrl + 'cart' , cart).subscribe({
-      next: cart => this.cart.set(cart)
-    })
+    return this.http.post<Cart>(this.baseUrl + 'cart' , cart).pipe(
+      tap(updatedCart => this.cart.set(updatedCart))
+    );
   }
   deleteCart(id: string){
-    return this.http.delete(this.baseUrl + 'cart?id=' + id).subscribe({
-      next: () => {
-        this.cart.set(null);
-      }
-    });
+    return this.http.delete(this.baseUrl + 'cart?id=' + id).pipe(
+      tap(() => this.cart.set(null))
+    );
   }
 
   addItemToCart(item: CartItem | Product, variantId: string, increase = 1, quantity?: string){
@@ -43,7 +41,7 @@ export class CartService {
       item = this.mapProductToCartItem(item, variantId);
     }
     cart.items = this.addOrUpdateItem(cart.items, item, variantId, increase, quantity);
-    this.setCart(cart);
+    return this.setCart(cart);
   }
 
 
@@ -79,7 +77,7 @@ export class CartService {
   removeItemFromCart(productId: string, variantId: string){
     const cart = this.cart() ?? this.createCart()
     cart.items = this.removeItem(cart.items, productId, variantId);
-    this.setCart(cart);
+    return this.setCart(cart);
   }
  private  removeItem(items: CartItem[], productId: string, variantId: string): CartItem[] {
     return items.filter(x => x.productId !== productId || x.productVariantId !== variantId);

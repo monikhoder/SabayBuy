@@ -15,4 +15,10 @@ export class ProductCardComponent {
   @Input() product?: Product;
 
   cartService = inject(CartService);
+
+  addToCart() {
+    if (!this.product?.variants.length) return;
+
+    this.cartService.addItemToCart(this.product, this.product.variants[0].id).subscribe();
+  }
 }

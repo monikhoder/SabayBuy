@@ -108,4 +108,10 @@ export class ProductDetailsComponent implements OnInit {
       this.currentImageIndex.set(this.imageUrl().length);
     }
   }
+
+  addToCart() {
+    if (!this.product || !this.variantId()) return;
+
+    this.cartService.addItemToCart(this.product, this.variantId()).subscribe();
+  }
 }

@@ -1,14 +1,14 @@
 <!-- Profile Dropdown -->
 <div
   id="accountDropdown"
-  class="hidden z-50 w-full max-w-lg divide-y divide-gray-100 overflow-hidden rounded-md bg-white antialiased shadow dark:divide-gray-600 dark:bg-gray-700"
+  class="app-dropdown-panel hidden z-50 w-full max-w-lg divide-y divide-gray-100 overflow-hidden antialiased dark:divide-gray-600"
 >
   @if (accountService.currentUser()) {
     <div>
       <button
         id="dropdownUserNameButton"
         type="button"
-        class="dark:hover-bg-gray-700 flex w-full items-center justify-between bg-white p-4 hover:bg-gray-100 focus:outline-none dark:bg-gray-700 dark:hover:bg-gray-600"
+        class="flex w-full items-center justify-between bg-white p-4 hover:bg-gray-50 focus:outline-none"
         type="button"
       >
         <span class="sr-only">Open user menu</span>
@@ -182,7 +182,7 @@
       <div class="flex flex-col space-y-3">
         <a
           routerLink="/account/login"
-          class="inline-flex w-full items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 transition-colors duration-200"
+          class="app-btn-primary w-full"
         >
           <svg class="mr-2 h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12H4m12 0-4 4m4-4-4-4m3-4h2a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3h-2"/>
@@ -191,7 +191,7 @@
         </a>
         <a
           routerLink="/account/register"
-          class="inline-flex w-full items-center justify-center rounded-lg border border-gray-300 bg-white px-5 py-2.5 text-center text-sm font-medium text-gray-900 hover:bg-gray-50 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700 transition-colors duration-200"
+          class="app-btn-secondary w-full"
         >
           Create an account
         </a>
