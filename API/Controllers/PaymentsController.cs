@@ -117,6 +117,11 @@ public class PaymentsController(
     [HttpGet("delivery-methods/{zipCode}")]
     public async Task<ActionResult<IReadOnlyList<DeliveryMethod>>> GetDeliveryMethodsByZipCode(string zipCode)
     {
+        if (string.IsNullOrWhiteSpace(zipCode) || zipCode.Length < 2)
+        {
+            return BadRequest("Zip code must be at least 2 characters.");
+        }
+
         var deliveryMethods = await unit.Repository<DeliveryMethod>().ListAllAsync();
         string firstTwoDigits = zipCode.Substring(0, 2);
         return Ok(deliveryMethods.Where(dm => dm.AvailableZipcodes.Contains(firstTwoDigits)).ToList());

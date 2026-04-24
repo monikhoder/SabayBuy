@@ -7,10 +7,13 @@ namespace API.Dtos;
 
 public class CreateProductDto
 {
-    [Required(ErrorMessage = "Product name cannot be empty")] public string ProductName { get; set; } = string.Empty;
+    [Required(ErrorMessage = "Product name cannot be empty")]
+    [RegularExpression(@".*\S.*", ErrorMessage = "Product name cannot be whitespace")]
+    public string ProductName { get; set; } = string.Empty;
     [StringLength(1000, ErrorMessage = "Description cannot exceed 1000 characters")] public string? Description { get; set; }
     public string? BaseImageUrl { get; set; }
     [Required(ErrorMessage = "Brand cannot be empty")]
+    [RegularExpression(@".*\S.*", ErrorMessage = "Brand cannot be whitespace")]
     [StringLength(15, ErrorMessage = "Brand cannot exceed 15 characters")]
      public string Brand { get; set; } = string.Empty;
     public bool IsActive { get; set; } = true;
@@ -39,10 +42,12 @@ public class CreateProductVariantDto
 public class CreateVariantAttributeDto
 {
     [Required(ErrorMessage = "Attribute name is required")]
+    [RegularExpression(@".*\S.*", ErrorMessage = "Attribute name cannot be whitespace")]
     [StringLength(15, ErrorMessage = "Attribute name cannot exceed 15 characters")]
      public string AttributeName { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "Attribute value is required")]
+    [RegularExpression(@".*\S.*", ErrorMessage = "Attribute value cannot be whitespace")]
     [StringLength(15, ErrorMessage = "Attribute value cannot exceed 15 characters")]
      public string AttributeValue { get; set; } = string.Empty;
 }

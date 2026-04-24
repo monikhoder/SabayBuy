@@ -7,11 +7,13 @@ public class UpdateProductDto
 {
     [StringLength(100, ErrorMessage = "Product name cannot exceed 100 characters")]
     [Required(ErrorMessage = "Product name cannot be empty")]
+    [RegularExpression(@".*\S.*", ErrorMessage = "Product name cannot be whitespace")]
     public string ProductName { get; set; } = string.Empty;
     [StringLength(1000, ErrorMessage = "Description cannot exceed 1000 characters")]
     public string? Description { get; set; }
     public string? BaseImageUrl { get; set; }
     [Required(ErrorMessage = "Brand cannot be empty")]
+    [RegularExpression(@".*\S.*", ErrorMessage = "Brand cannot be whitespace")]
     [StringLength(15, ErrorMessage = "Brand cannot exceed 15 characters")]
     public string? Brand { get; set; }
     public Guid? CategoryId { get; set; }

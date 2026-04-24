@@ -6,6 +6,7 @@ namespace API.Dtos
     public class CreateOrderDto
     {
         [Required]
+        [RegularExpression(@".*\S.*", ErrorMessage = "Cart id cannot be whitespace")]
         public string CartId { get; set; } = string.Empty;
         [Required]
         public Guid DeliveryMethodId { get; set; }

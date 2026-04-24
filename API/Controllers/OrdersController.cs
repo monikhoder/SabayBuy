@@ -24,9 +24,19 @@ namespace API.Controllers
 
             foreach (var item in cart.Items)
             {
-                var productItems = await unitOfWork.Repository<Product>().GetByIdAsync(Guid.Parse(item.ProductId));
+                if (!Guid.TryParse(item.ProductId, out var productId))
+                {
+                    return BadRequest($"Invalid product id in cart: {item.ProductId}");
+                }
+
+                if (!Guid.TryParse(item.ProductVariantId, out var productVariantId))
+                {
+                    return BadRequest($"Invalid product variant id in cart: {item.ProductVariantId}");
+                }
+
+                var productItems = await unitOfWork.Repository<Product>().GetByIdAsync(productId);
                 if (productItems == null) return BadRequest($"Product with id {item.ProductId} not found");
-                var productVariant = await unitOfWork.Repository<ProductVariant>().GetByIdAsync(Guid.Parse(item.ProductVariantId));
+                var productVariant = await unitOfWork.Repository<ProductVariant>().GetByIdAsync(productVariantId);
                 if (productVariant == null) return BadRequest($"Product variant with id {item.ProductVariantId} not found");
                 var itemOrdered = new ProductItemOrdered
                 {
