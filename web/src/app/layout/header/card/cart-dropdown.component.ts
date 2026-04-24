@@ -1,6 +1,5 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { initFlowbite } from 'flowbite';
 import { CartService } from '../../../core/services/cart.service';
 
 @Component({
@@ -9,13 +8,10 @@ import { CartService } from '../../../core/services/cart.service';
   templateUrl: './cart-dropdown.component.html',
   styleUrl: './cart-dropdown.component.scss',
 })
-export class CartDropdownComponent implements OnInit {
+export class CartDropdownComponent {
+  @Input() open = false;
 
   cartService = inject(CartService);
-
-  ngOnInit(): void {
-    initFlowbite();
-  }
 
   removeItem(productId: string, variantId: string) {
     this.cartService.removeItemFromCart(productId, variantId).subscribe();

@@ -5,7 +5,7 @@ import { SortComponent } from "./sort/sort.component";
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { ShopServices } from '../../../core/services/shop.service';
@@ -35,6 +35,7 @@ import { BrandGroup } from './filter/filter.component';
 })
 export class ProductListComponent implements OnInit {
   private shopService = inject(ShopServices);
+  private activatedRoute = inject(ActivatedRoute);
   loadingService = inject(LoadingService)
   brands: string[] = [];
   groupedBrands: BrandGroup[] = []
@@ -47,8 +48,33 @@ export class ProductListComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadcategories();
-    this.loadProducts();
     this.loadBrands();
+    this.activatedRoute.queryParamMap.subscribe(params => {
+      this.applyQueryParams(params.get('q') ?? '', params.get('type') ?? 'product');
+      this.loadProducts();
+    });
+  }
+
+  private applyQueryParams(query: string, type: string) {
+    this.productParams = new productParams();
+    this.productParams.isActive = true;
+
+    const trimmedQuery = query.trim();
+    if (!trimmedQuery) {
+      return;
+    }
+
+    if (type === 'category') {
+      this.productParams.category = [trimmedQuery];
+      return;
+    }
+
+    if (type === 'brand') {
+      this.productParams.brand = [trimmedQuery];
+      return;
+    }
+
+    this.productParams.search = trimmedQuery;
   }
 
   loadcategories() {

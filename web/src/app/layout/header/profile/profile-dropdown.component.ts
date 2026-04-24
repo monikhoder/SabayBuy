@@ -1,4 +1,4 @@
-import { afterNextRender, Component, inject } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { AccountService } from '../../../core/services/account.service';
 import { Router, RouterLink } from '@angular/router';
 import { HasRoleDirective } from '../../../shared/directives/has-role.directive';
@@ -10,17 +10,17 @@ import { HasRoleDirective } from '../../../shared/directives/has-role.directive'
   styleUrl: './profile-dropdown.component.scss',
 })
 export class ProfileDropdownComponent {
-  accountService = inject(AccountService)
-  routerLink = inject(Router)
+  @Input() open = false;
+
+  accountService = inject(AccountService);
+  routerLink = inject(Router);
 
   logout() {
     this.accountService.logout().subscribe({
       next: () => {
         this.accountService.currentUser.set(null);
-        this.routerLink.navigateByUrl('/')
+        this.routerLink.navigateByUrl('/');
       }
     });
   }
 }
-
-
