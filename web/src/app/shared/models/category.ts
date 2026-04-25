@@ -3,6 +3,7 @@ export type Category = {
   categoryName: string;
   icon?: string;
   parentCategoryId?: string;
+  productCount: number;
   createdAt: string;
   updatedAt: string;
   subCategories: Category[];

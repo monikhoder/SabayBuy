@@ -40,18 +40,21 @@ export class ProductsComponent implements OnInit{
   snack = inject(SnackbarService)
   dialog = inject(MatDialog)
   productParams = new productParams();
-  Categories = signal<Category[]>([]);
+  categories: Category[] = [];
   categoryParams = new categoryParams;
   Products = signal<Product[]>([]);
   brands = signal<string[]>([]);
   groupedBrands: BrandGroup[] = [];
   totalItems = 0;
+  totalProductCount = 0;
   expandedProductId: any = null;
 
   ngOnInit(): void {
     this.getProducts();
+    this.getTotalProductCount();
     this.getCategories();
     this.getBrand();
+
   }
 
   toggleProduct(productId: any) {
@@ -78,13 +81,31 @@ export class ProductsComponent implements OnInit{
     })
   }
 
-  getCategories(){
-    this.categoryParams.isParent = true;
-    this.shopService.getCategories(this.categoryParams).subscribe({
-      next: (response) => {
-        this.Categories.set(response.data);
-      }
+  getTotalProductCount() {
+    const totalParams = new productParams();
+    totalParams.pageSize = 1;
+
+    this.shopService.getProducts(totalParams).subscribe({
+      next: (response: Pagination<Product>) => {
+        this.totalProductCount = response.count;
+      },
+      error: (error) => this.snack.error(error.message)
     });
+  }
+
+  getCategories(){
+     this.categoryParams.isParent = true;
+    this.shopService.getCategories(this.categoryParams).subscribe({
+      next: response => {
+        this.categories = response.data
+          .map(category => ({
+            ...category,
+            subCategories: category.subCategories.filter(subcategory => subcategory.productCount > 0)
+          }))
+          .filter(category => category.productCount > 0 || category.subCategories.length > 0);
+      }
+    })
+
   }
 
   getBrand(){
@@ -178,6 +199,7 @@ export class ProductsComponent implements OnInit{
      dialogRef.afterClosed().subscribe(result => {
        if (result) {
          this.getProducts();
+         this.getTotalProductCount();
        }
      });
   }
@@ -235,6 +257,10 @@ export class ProductsComponent implements OnInit{
          // Optionally close the expanded view if a product is deleted
          if (type === 'product' && this.expandedProductId === id) {
            this.expandedProductId = null;
+         }
+
+         if (type === 'product') {
+           this.getTotalProductCount();
          }
          this.getProducts();
       }

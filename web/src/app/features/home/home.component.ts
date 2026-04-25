@@ -36,7 +36,7 @@ export class HomeComponent implements OnInit {
     this.categoryParams.isParent = true;
     this.shopServices.getCategories(this.categoryParams).subscribe({
       next: (response) => {
-        this.Categories.set(response.data);
+        this.Categories.set(response.data.filter(category => category.productCount > 0));
       }
     });
 

@@ -97,8 +97,8 @@
                           <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">${{product.price}}</td>
                           <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{product.stock}}</td>
                           <td class="" (click)="$event.stopPropagation()">
-                              <mat-slide-toggle 
-                                class="max-h-0.5!" 
+                              <mat-slide-toggle
+                                class="max-h-0.5!"
                                 [checked]="product.isActive"
                                 (change)="toggleProductStatus(product)">
                               </mat-slide-toggle>
@@ -163,7 +163,7 @@
               <div class="text-xs flex items-center space-x-5">
                   <div>
                       <div class="text-gray-500 dark:text-gray-400 mb-1">Total Products</div>
-                      <div class="dark:text-white font-medium">{{totalItems}}</div>
+                      <div class="dark:text-white font-medium">{{totalProductCount}}</div>
                   </div>
                   <div>
                       <div class="text-gray-500 dark:text-gray-400 mb-1">Total selling price</div>
@@ -177,7 +177,7 @@
 
 <!-- Filter and sort components -->
 <app-filter #filterComponent
-[categories]="Categories()"
+[categories]="categories"
 [groupedBrands]="groupedBrands"
 [productParams]="productParams"
 (brandFilterChange)="handleBrandFilter($event)"

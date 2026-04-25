@@ -81,7 +81,12 @@ export class ProductListComponent implements OnInit {
     this.categoryParams.isParent = true;
     this.shopService.getCategories(this.categoryParams).subscribe({
       next: response => {
-        this.categories = response.data;
+        this.categories = response.data
+          .map(category => ({
+            ...category,
+            subCategories: category.subCategories.filter(subcategory => subcategory.productCount > 0)
+          }))
+          .filter(category => category.productCount > 0 || category.subCategories.length > 0);
       }
     })
   }

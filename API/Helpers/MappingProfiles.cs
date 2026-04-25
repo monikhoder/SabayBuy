@@ -9,7 +9,11 @@ public class MappingProfiles : Profile
 {
     public MappingProfiles()
     {
-        CreateMap<Category, CategoryDto>();
+        CreateMap<Category, CategoryDto>()
+            .ForMember(d => d.ProductCount, o => o.MapFrom(s =>
+                s.SubCategories != null && s.SubCategories.Any()
+                    ? s.SubCategories.Sum(subCategory => subCategory.Products.Count)
+                    : s.Products.Count));
         CreateMap<CreateCategoryDto, Category>();
         CreateMap<UpdateCategoryDto, Category>();
         CreateMap<Product, ProductDto>()

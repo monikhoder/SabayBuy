@@ -47,6 +47,15 @@
   }
 }
 
+::ng-deep .compact-checkbox {
+  width: auto;
+
+  .mdc-form-field,
+  label {
+    width: auto;
+  }
+}
+
 /* Scrollbar styling for the filter content */
 .filter-content {
   &::-webkit-scrollbar {

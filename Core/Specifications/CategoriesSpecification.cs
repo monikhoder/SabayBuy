@@ -14,6 +14,8 @@ public class CategoriesSpecification : BaseSpecification<Category>
         ApplyPaging(specParams.PageSize * (specParams.PageIndex - 1), specParams.PageSize);
         AddInclude(c => c.SubCategories);
         AddInclude(c => c.ParentCategory!);
+        AddInclude(c => c.Products);
+        AddInclude("SubCategories.Products");
         switch (specParams.Sort)
         {
             case "nameDesc":
@@ -28,5 +30,7 @@ public class CategoriesSpecification : BaseSpecification<Category>
     {
         AddInclude(c => c.SubCategories);
         AddInclude(c => c.ParentCategory!);
+        AddInclude(c => c.Products);
+        AddInclude("SubCategories.Products");
     }
 }
