@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -34,8 +35,16 @@ namespace POS
 
             if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
             {
+                lbl_email.Text = "Email can not empty";
                 lbl_email.Visible = string.IsNullOrWhiteSpace(email);
                 lbl_password.Visible = string.IsNullOrWhiteSpace(password);
+                return;
+            }
+
+            if (!IsValidEmail(email))
+            {
+                lbl_email.Text = "Invalid email adress";
+                lbl_email.Visible = true;
                 return;
             }
 
@@ -59,6 +68,19 @@ namespace POS
 
         private void txtEmail_KeyPress(object sender, KeyPressEventArgs e)
         {
+        }
+
+        private bool IsValidEmail(string email)
+        {
+            try
+            {
+                var mailAddress = new MailAddress(email);
+                return mailAddress.Address == email;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         private void txtEmail_TextChange(object sender, EventArgs e)

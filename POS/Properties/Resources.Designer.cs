@@ -69,5 +69,25 @@ namespace POS.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap sabay_buy_logo_header {
+            get {
+                object obj = ResourceManager.GetObject("sabay-buy-logo-header", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap sabay_buy_logo_header1 {
+            get {
+                object obj = ResourceManager.GetObject("sabay-buy-logo-header1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

@@ -56,6 +56,35 @@ namespace POS.ApiServices
             }
         }
 
+        public async Task<ApiResult<bool>> LogoutAsync()
+        {
+            try
+            {
+                var response = await Client.PostAsync("POSAccount/logout", new StringContent(string.Empty));
+                var body = await response.Content.ReadAsStringAsync();
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    return ApiResult<bool>.Fail(GetErrorMessage(response.StatusCode, body));
+                }
+
+                CurrentUser = null;
+                return ApiResult<bool>.Ok(true);
+            }
+            catch (HttpRequestException)
+            {
+                return ApiResult<bool>.Fail("Cannot connect to API. Please check that the API project is running.");
+            }
+            catch (TaskCanceledException)
+            {
+                return ApiResult<bool>.Fail("API request timeout. Please try again.");
+            }
+            catch (Exception ex)
+            {
+                return ApiResult<bool>.Fail(ex.Message);
+            }
+        }
+
         private static HttpClient CreateClient()
         {
             var handler = new HttpClientHandler
