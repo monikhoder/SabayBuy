@@ -1,0 +1,365 @@
+﻿namespace POS
+{
+    partial class FrmLogin
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmLogin));
+            this.top_panel = new System.Windows.Forms.Panel();
+            this.body_panel = new System.Windows.Forms.Panel();
+            this.icon = new KimTools.WinForms.KtPictureBox();
+            this.ktTheme = new KimTools.WinForms.KtTheme(this.components);
+            this.txtEmail = new KimTools.WinForms.KtTextBox();
+            this.txtPassword = new KimTools.WinForms.KtTextBox();
+            this.btn_exit = new KimTools.WinForms.KtButton();
+            this.btn_login = new KimTools.WinForms.KtButton();
+            this.lbl_email = new KimTools.WinForms.KtLabel();
+            this.lbl_password = new KimTools.WinForms.KtLabel();
+            this.alert_toast = new KimTools.WinForms.KtToasts(this.components);
+            this.top_panel.SuspendLayout();
+            this.body_panel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.icon)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // top_panel
+            // 
+            this.top_panel.Controls.Add(this.icon);
+            this.top_panel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.top_panel.Location = new System.Drawing.Point(0, 0);
+            this.top_panel.Name = "top_panel";
+            this.top_panel.Size = new System.Drawing.Size(430, 221);
+            this.top_panel.TabIndex = 0;
+            // 
+            // body_panel
+            // 
+            this.body_panel.Controls.Add(this.lbl_password);
+            this.body_panel.Controls.Add(this.lbl_email);
+            this.body_panel.Controls.Add(this.btn_login);
+            this.body_panel.Controls.Add(this.btn_exit);
+            this.body_panel.Controls.Add(this.txtPassword);
+            this.body_panel.Controls.Add(this.txtEmail);
+            this.body_panel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.body_panel.Location = new System.Drawing.Point(0, 221);
+            this.body_panel.Name = "body_panel";
+            this.body_panel.Size = new System.Drawing.Size(430, 426);
+            this.body_panel.TabIndex = 1;
+            // 
+            // icon
+            // 
+            this.icon.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.icon.BackColor = System.Drawing.Color.Transparent;
+            this.icon.Image = global::POS.Properties.Resources.people;
+            this.icon.ImageBrush = ((KimTools.WinForms.KtBrushNone)(KimTools.WinForms.KtBrush.None));
+            this.icon.Location = new System.Drawing.Point(144, 51);
+            this.icon.Name = "icon";
+            this.icon.Size = new System.Drawing.Size(117, 117);
+            this.icon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.icon.TabIndex = 0;
+            this.icon.TabStop = false;
+            // 
+            // ktTheme
+            // 
+            this.ktTheme.Accent = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.ktTheme.AccentContent = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.ktTheme.Base = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.ktTheme.BaseContent = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.ktTheme.Error = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.ktTheme.ErrorContent = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(228)))), ((int)(((byte)(225)))));
+            this.ktTheme.Info = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(144)))), ((int)(((byte)(255)))));
+            this.ktTheme.InfoContent = System.Drawing.Color.FromArgb(((int)(((byte)(176)))), ((int)(((byte)(224)))), ((int)(((byte)(230)))));
+            this.ktTheme.Primary = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(43)))), ((int)(((byte)(226)))));
+            this.ktTheme.PrimaryContent = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.ktTheme.Secondary = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.ktTheme.SecondaryContent = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.ktTheme.Success = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(179)))), ((int)(((byte)(113)))));
+            this.ktTheme.SuccessContent = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(255)))), ((int)(((byte)(240)))));
+            this.ktTheme.Warning = System.Drawing.Color.FromArgb(((int)(((byte)(218)))), ((int)(((byte)(165)))), ((int)(((byte)(32)))));
+            this.ktTheme.WarningContent = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(240)))));
+            // 
+            // txtEmail
+            // 
+            this.txtEmail.AcceptsReturn = false;
+            this.txtEmail.AcceptsTab = false;
+            this.txtEmail.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtEmail.AnimationSpeed = 200;
+            this.txtEmail.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
+            this.txtEmail.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
+            this.txtEmail.AutoSizeHeight = true;
+            this.txtEmail.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
+            this.txtEmail.Bg = KimTools.WinForms.KtColor.BASE_2;
+            this.txtEmail.Border = KimTools.WinForms.KtColor.SECONDARY;
+            this.txtEmail.BorderActive = KimTools.WinForms.KtColor.ACCENT;
+            this.txtEmail.Content = new KimTools.WinForms.KtColor("$PrimaryContent", null, 100);
+            this.txtEmail.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtEmail.CustomIconLeft = null;
+            this.txtEmail.CustomIconRight = null;
+            this.txtEmail.DefaultFont = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtEmail.ForeColor = System.Drawing.Color.Empty;
+            this.txtEmail.HideSelection = true;
+            this.txtEmail.IconLeft = "tabler.outline.user";
+            this.txtEmail.Lines = new string[0];
+            this.txtEmail.Location = new System.Drawing.Point(48, 59);
+            this.txtEmail.MaxLength = 32767;
+            this.txtEmail.MinimumSize = new System.Drawing.Size(1, 1);
+            this.txtEmail.Modified = false;
+            this.txtEmail.Name = "txtEmail";
+            this.txtEmail.Password = false;
+            this.txtEmail.PasswordChar = '\0';
+            this.txtEmail.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.txtEmail.SelectedText = "";
+            this.txtEmail.SelectionLength = 0;
+            this.txtEmail.SelectionStart = 0;
+            this.txtEmail.ShortcutsEnabled = true;
+            this.txtEmail.Size = new System.Drawing.Size(331, 49);
+            this.txtEmail.Style = KimTools.WinForms.KtTextBox.KtTextBoxStyle.Tailwind;
+            this.txtEmail.TabIndex = 0;
+            this.txtEmail.TextMarginBottom = 0;
+            this.txtEmail.TextPlaceholder = "Email";
+            this.txtEmail.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtEmail_KeyPress);
+            this.txtEmail.TextChange += new System.EventHandler(this.txtEmail_TextChange);
+            // 
+            // txtPassword
+            // 
+            this.txtPassword.AcceptsReturn = false;
+            this.txtPassword.AcceptsTab = false;
+            this.txtPassword.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtPassword.AnimationSpeed = 200;
+            this.txtPassword.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
+            this.txtPassword.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
+            this.txtPassword.AutoSizeHeight = true;
+            this.txtPassword.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
+            this.txtPassword.Bg = KimTools.WinForms.KtColor.BASE_2;
+            this.txtPassword.Border = KimTools.WinForms.KtColor.SECONDARY;
+            this.txtPassword.BorderActive = KimTools.WinForms.KtColor.ACCENT;
+            this.txtPassword.Content = new KimTools.WinForms.KtColor("$PrimaryContent", null, 100);
+            this.txtPassword.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtPassword.CustomIconLeft = null;
+            this.txtPassword.CustomIconRight = null;
+            this.txtPassword.DefaultFont = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPassword.ForeColor = System.Drawing.Color.Empty;
+            this.txtPassword.HideSelection = true;
+            this.txtPassword.IconLeft = "tabler.outline.key";
+            this.txtPassword.Lines = new string[0];
+            this.txtPassword.Location = new System.Drawing.Point(48, 144);
+            this.txtPassword.MaxLength = 32767;
+            this.txtPassword.MinimumSize = new System.Drawing.Size(1, 1);
+            this.txtPassword.Modified = false;
+            this.txtPassword.Name = "txtPassword";
+            this.txtPassword.Password = true;
+            this.txtPassword.PasswordChar = '\0';
+            this.txtPassword.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.txtPassword.SelectedText = "";
+            this.txtPassword.SelectionLength = 0;
+            this.txtPassword.SelectionStart = 0;
+            this.txtPassword.ShortcutsEnabled = true;
+            this.txtPassword.Size = new System.Drawing.Size(331, 49);
+            this.txtPassword.Style = KimTools.WinForms.KtTextBox.KtTextBoxStyle.Tailwind;
+            this.txtPassword.TabIndex = 1;
+            this.txtPassword.TextMarginBottom = 0;
+            this.txtPassword.TextPlaceholder = "Password";
+            this.txtPassword.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPassword_KeyPress);
+            this.txtPassword.TextChange += new System.EventHandler(this.txtPassword_TextChange);
+            // 
+            // btn_exit
+            // 
+            this.btn_exit.BackColor = System.Drawing.Color.Transparent;
+            this.btn_exit.Background = new KimTools.WinForms.KtBrushGradient(KimTools.WinForms.KtColor.PRIMARY, KimTools.WinForms.KtColor.PRIMARY);
+            this.btn_exit.BorderStyle = System.Drawing.Drawing2D.DashStyle.Solid;
+            this.btn_exit.BorderWidth = 2F;
+            this.btn_exit.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_exit.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.btn_exit.Foreground = KimTools.WinForms.KtColor.Empty;
+            this.btn_exit.Icon = "";
+            this.btn_exit.IconColor = KimTools.WinForms.KtColor.Empty;
+            this.btn_exit.IconSize = 16;
+            this.btn_exit.IconStroke = 2.5D;
+            this.btn_exit.Location = new System.Drawing.Point(48, 243);
+            this.btn_exit.Name = "btn_exit";
+            this.btn_exit.Size = new System.Drawing.Size(120, 48);
+            this.btn_exit.TabIndex = 2;
+            this.btn_exit.Text = "Exit";
+            this.btn_exit.UseVisualStyleBackColor = false;
+            this.btn_exit.Click += new System.EventHandler(this.btn_exit_Click);
+            // 
+            // btn_login
+            // 
+            this.btn_login.BackColor = System.Drawing.Color.Transparent;
+            this.btn_login.Background = new KimTools.WinForms.KtBrushGradient(KimTools.WinForms.KtColor.PRIMARY, KimTools.WinForms.KtColor.PRIMARY);
+            this.btn_login.BorderStyle = System.Drawing.Drawing2D.DashStyle.Solid;
+            this.btn_login.BorderWidth = 2F;
+            this.btn_login.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_login.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.btn_login.Foreground = KimTools.WinForms.KtColor.Empty;
+            this.btn_login.Icon = "";
+            this.btn_login.IconColor = KimTools.WinForms.KtColor.Empty;
+            this.btn_login.IconSize = 16;
+            this.btn_login.IconStroke = 2.5D;
+            this.btn_login.Location = new System.Drawing.Point(259, 243);
+            this.btn_login.Name = "btn_login";
+            this.btn_login.Size = new System.Drawing.Size(120, 48);
+            this.btn_login.TabIndex = 3;
+            this.btn_login.Text = "Login";
+            this.btn_login.UseVisualStyleBackColor = false;
+            this.btn_login.Click += new System.EventHandler(this.btn_login_Click);
+            // 
+            // lbl_email
+            // 
+            this.lbl_email.Align = System.Drawing.ContentAlignment.TopLeft;
+            this.lbl_email.Auto = false;
+            this.lbl_email.Background = KimTools.WinForms.KtColor.Empty;
+            this.lbl_email.Color = KimTools.WinForms.KtColor.ERROR;
+            this.lbl_email.Font = new System.Drawing.Font("Segoe UI Semibold", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_email.Location = new System.Drawing.Point(48, 115);
+            this.lbl_email.Name = "lbl_email";
+            this.lbl_email.Size = new System.Drawing.Size(180, 23);
+            this.lbl_email.TabIndex = 4;
+            this.lbl_email.Text = "Email can not empty";
+            this.lbl_email.Visible = false;
+            // 
+            // lbl_password
+            // 
+            this.lbl_password.Align = System.Drawing.ContentAlignment.TopLeft;
+            this.lbl_password.Auto = false;
+            this.lbl_password.Background = KimTools.WinForms.KtColor.Empty;
+            this.lbl_password.Color = KimTools.WinForms.KtColor.ERROR;
+            this.lbl_password.Font = new System.Drawing.Font("Segoe UI Semibold", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_password.Location = new System.Drawing.Point(48, 196);
+            this.lbl_password.Name = "lbl_password";
+            this.lbl_password.Size = new System.Drawing.Size(180, 23);
+            this.lbl_password.TabIndex = 5;
+            this.lbl_password.Text = "Password can not empty";
+            this.lbl_password.Visible = false;
+            // 
+            // alert_toast
+            // 
+            this.alert_toast.AllowDragging = false;
+            this.alert_toast.AllowMultipleViews = true;
+            this.alert_toast.ClickToClose = true;
+            this.alert_toast.DoubleClickToClose = true;
+            this.alert_toast.DurationAfterIdle = 3000;
+            this.alert_toast.ErrorOptions.ActionBackColor = KimTools.WinForms.KtColor.BASE_2;
+            this.alert_toast.ErrorOptions.ActionBorderColor = KimTools.WinForms.KtColor.BASE_1;
+            this.alert_toast.ErrorOptions.ActionBorderRadius = 1;
+            this.alert_toast.ErrorOptions.ActionFont = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
+            this.alert_toast.ErrorOptions.ActionForeColor = KimTools.WinForms.KtColor.CONTENT;
+            this.alert_toast.ErrorOptions.BackColor = KimTools.WinForms.KtColor.ERROR;
+            this.alert_toast.ErrorOptions.BorderColor = KimTools.WinForms.KtColor.ERROR;
+            this.alert_toast.ErrorOptions.CloseIconColor = KimTools.WinForms.KtColor.CONTENT;
+            this.alert_toast.ErrorOptions.Font = new System.Drawing.Font("Segoe UI", 11.25F);
+            this.alert_toast.ErrorOptions.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.alert_toast.ErrorOptions.Icon = ((System.Drawing.Image)(resources.GetObject("resource.Icon")));
+            this.alert_toast.ErrorOptions.IconLeftMargin = 12;
+            this.alert_toast.FadeCloseIcon = false;
+            this.alert_toast.Host = KimTools.WinForms.KtToasts.Hosts.FormOwner;
+            this.alert_toast.InformationOptions.ActionBackColor = KimTools.WinForms.KtColor.BASE_2;
+            this.alert_toast.InformationOptions.ActionBorderColor = KimTools.WinForms.KtColor.BASE_1;
+            this.alert_toast.InformationOptions.ActionBorderRadius = 1;
+            this.alert_toast.InformationOptions.ActionFont = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
+            this.alert_toast.InformationOptions.ActionForeColor = KimTools.WinForms.KtColor.CONTENT;
+            this.alert_toast.InformationOptions.BackColor = KimTools.WinForms.KtColor.INFO;
+            this.alert_toast.InformationOptions.BorderColor = KimTools.WinForms.KtColor.INFO;
+            this.alert_toast.InformationOptions.CloseIconColor = KimTools.WinForms.KtColor.CONTENT;
+            this.alert_toast.InformationOptions.Font = new System.Drawing.Font("Segoe UI", 11.25F);
+            this.alert_toast.InformationOptions.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.alert_toast.InformationOptions.Icon = ((System.Drawing.Image)(resources.GetObject("resource.Icon1")));
+            this.alert_toast.InformationOptions.IconLeftMargin = 12;
+            this.alert_toast.Margin = 10;
+            this.alert_toast.MaximumSize = new System.Drawing.Size(0, 0);
+            this.alert_toast.MaximumViews = 7;
+            this.alert_toast.MessageRightMargin = 15;
+            this.alert_toast.MinimumSize = new System.Drawing.Size(0, 0);
+            this.alert_toast.ShowBorders = false;
+            this.alert_toast.ShowCloseIcon = false;
+            this.alert_toast.ShowIcon = true;
+            this.alert_toast.ShowShadows = true;
+            this.alert_toast.SuccessOptions.ActionBackColor = KimTools.WinForms.KtColor.BASE_2;
+            this.alert_toast.SuccessOptions.ActionBorderColor = KimTools.WinForms.KtColor.BASE_1;
+            this.alert_toast.SuccessOptions.ActionBorderRadius = 1;
+            this.alert_toast.SuccessOptions.ActionFont = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
+            this.alert_toast.SuccessOptions.ActionForeColor = KimTools.WinForms.KtColor.CONTENT;
+            this.alert_toast.SuccessOptions.BackColor = KimTools.WinForms.KtColor.SUCCESS;
+            this.alert_toast.SuccessOptions.BorderColor = KimTools.WinForms.KtColor.SUCCESS;
+            this.alert_toast.SuccessOptions.CloseIconColor = KimTools.WinForms.KtColor.CONTENT;
+            this.alert_toast.SuccessOptions.Font = new System.Drawing.Font("Segoe UI", 11.25F);
+            this.alert_toast.SuccessOptions.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.alert_toast.SuccessOptions.Icon = ((System.Drawing.Image)(resources.GetObject("resource.Icon2")));
+            this.alert_toast.SuccessOptions.IconLeftMargin = 12;
+            this.alert_toast.ViewsMargin = 7;
+            this.alert_toast.WarningOptions.ActionBackColor = KimTools.WinForms.KtColor.BASE_2;
+            this.alert_toast.WarningOptions.ActionBorderColor = KimTools.WinForms.KtColor.BASE_1;
+            this.alert_toast.WarningOptions.ActionBorderRadius = 1;
+            this.alert_toast.WarningOptions.ActionFont = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
+            this.alert_toast.WarningOptions.ActionForeColor = KimTools.WinForms.KtColor.CONTENT;
+            this.alert_toast.WarningOptions.BackColor = KimTools.WinForms.KtColor.WARNING;
+            this.alert_toast.WarningOptions.BorderColor = KimTools.WinForms.KtColor.WARNING;
+            this.alert_toast.WarningOptions.CloseIconColor = KimTools.WinForms.KtColor.CONTENT;
+            this.alert_toast.WarningOptions.Font = new System.Drawing.Font("Segoe UI", 11.25F);
+            this.alert_toast.WarningOptions.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.alert_toast.WarningOptions.Icon = ((System.Drawing.Image)(resources.GetObject("resource.Icon3")));
+            this.alert_toast.WarningOptions.IconLeftMargin = 12;
+            this.alert_toast.ZoomCloseIcon = true;
+            // 
+            // FrmLogin
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Background = new KimTools.WinForms.KtBrushSolid(System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224))))));
+            this.ClientSize = new System.Drawing.Size(430, 647);
+            this.Controls.Add(this.body_panel);
+            this.Controls.Add(this.top_panel);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Name = "FrmLogin";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+            this.Text = "Form1";
+            this.top_panel.ResumeLayout(false);
+            this.body_panel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.icon)).EndInit();
+            this.ResumeLayout(false);
+
+        }
+
+        #endregion
+
+        private System.Windows.Forms.Panel top_panel;
+        private KimTools.WinForms.KtPictureBox icon;
+        private System.Windows.Forms.Panel body_panel;
+        private KimTools.WinForms.KtTextBox txtEmail;
+        public KimTools.WinForms.KtTheme ktTheme;
+        private KimTools.WinForms.KtTextBox txtPassword;
+        private KimTools.WinForms.KtButton btn_login;
+        private KimTools.WinForms.KtButton btn_exit;
+        private KimTools.WinForms.KtLabel lbl_email;
+        private KimTools.WinForms.KtLabel lbl_password;
+        private KimTools.WinForms.KtToasts alert_toast;
+    }
+}
+
