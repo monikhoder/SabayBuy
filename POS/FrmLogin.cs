@@ -1,4 +1,5 @@
-﻿using KimTools.WinForms;
+using KimTools.WinForms;
+using POS.ApiServices;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,6 +14,8 @@ namespace POS
 {
     public partial class FrmLogin : KtWindow
     {
+        private readonly POSAccountService accountService = new POSAccountService();
+
         public FrmLogin()
         {
             InitializeComponent();
@@ -20,53 +23,56 @@ namespace POS
 
         private void btn_exit_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.Cancel;
-            this.Close();
-
+            DialogResult = DialogResult.Cancel;
+            Close();
         }
 
-        private void btn_login_Click(object sender, EventArgs e)
+        private async void btn_login_Click(object sender, EventArgs e)
         {
-            if (txtEmail.Text == "" || txtPassword.Text == null || txtPassword.Text == "" || txtPassword.Text == null)
+            var email = txtEmail.Text.Trim();
+            var password = txtPassword.Text;
+
+            if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
             {
-                if(txtEmail.Text == "" || txtPassword.Text == null)
-                {
-                    lbl_email.Visible = true;
-                }
-                if (txtPassword.Text == "" || txtPassword.Text == null)
-                {
-                    lbl_password.Visible = true;
-                }
-            }
-            else
-            {
-                
+                lbl_email.Visible = string.IsNullOrWhiteSpace(email);
+                lbl_password.Visible = string.IsNullOrWhiteSpace(password);
+                return;
             }
 
+            btn_login.Enabled = false;
+            btn_login.Text = "Logging in...";
 
+            var result = await accountService.LoginAsync(email, password);
+
+            btn_login.Enabled = true;
+            btn_login.Text = "Login";
+
+            if (!result.Success)
+            {
+                MessageBox.Show(result.ErrorMessage, "POS Login", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            DialogResult = DialogResult.OK;
+            Close();
         }
 
         private void txtEmail_KeyPress(object sender, KeyPressEventArgs e)
         {
-
-
         }
 
         private void txtEmail_TextChange(object sender, EventArgs e)
         {
             lbl_email.Visible = false;
-
         }
 
         private void txtPassword_KeyPress(object sender, KeyPressEventArgs e)
         {
-
         }
 
         private void txtPassword_TextChange(object sender, EventArgs e)
         {
             lbl_password.Visible = false;
-
         }
     }
 }
