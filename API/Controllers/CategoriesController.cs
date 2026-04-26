@@ -19,6 +19,20 @@ namespace API.Controllers
             var spec = new CategoriesSpecification(specParams);
             return await CreatePageResult<Category, CategoryDto>(unit.Repository<Category>(), spec, specParams.PageIndex, specParams.PageSize, mapper);
         }
+
+        [HttpGet("with-products")]
+        public async Task<ActionResult<IReadOnlyList<CategoryDto>>> GetCategoriesWithProducts()
+        {
+            var spec = new CategoriesWithProductsSpecification();
+            var categories = await unit.Repository<Category>().ListAsync(spec);
+            var mappedCategories = mapper.Map<IReadOnlyList<Category>, IReadOnlyList<CategoryDto>>(categories);
+            var categoriesWithProducts = mappedCategories
+                .Where(category => category.ProductCount > 0)
+                .ToList();
+
+            return Ok(categoriesWithProducts);
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<CategoryDto>> GetCategory(Guid id)
         {

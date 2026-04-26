@@ -35,8 +35,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ExCSS, Version=4.2.3.0, Culture=neutral, PublicKeyToken=bdbe16be9b936b9a, processorArchitecture=MSIL">
-      <HintPath>..\packages\ExCSS.4.2.3\lib\net48\ExCSS.dll</HintPath>
+    <Reference Include="ExCSS, Version=4.3.1.0, Culture=neutral, PublicKeyToken=bdbe16be9b936b9a, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExCSS.4.3.1\lib\net48\ExCSS.dll</HintPath>
     </Reference>
     <Reference Include="KimTools.WinForms, Version=26.4.1.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\KimTools.WinForms.26.4.1.1\lib\net48\KimTools.WinForms.dll</HintPath>
@@ -113,6 +113,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiServices\CategoriesService.cs" />
+    <Compile Include="Components\ProductCard.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\ProductCard.Designer.cs">
+      <DependentUpon>ProductCard.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmLogin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -128,9 +135,13 @@
     <Compile Include="Program.cs" />
     <Compile Include="ApiServices\ApiResult.cs" />
     <Compile Include="ApiServices\POSAccountService.cs" />
+    <Compile Include="Dtos\CategoryDto.cs" />
     <Compile Include="Dtos\LoginDto.cs" />
     <Compile Include="Dtos\PosUserDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Components\ProductCard.resx">
+      <DependentUpon>ProductCard.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmLogin.resx">
       <DependentUpon>FrmLogin.cs</DependentUpon>
     </EmbeddedResource>
@@ -165,7 +176,7 @@
     <None Include="Resources\people.png" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Components\" />
+    <None Include="Resources\macbook.jpg" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\sabay-buy-logo-header.jpg" />
