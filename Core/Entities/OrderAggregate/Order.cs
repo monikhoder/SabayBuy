@@ -16,6 +16,7 @@ namespace Core.Entities.OrderAggregate
         public List<OrderItem> OrderItems { get; set; } = [];
         public decimal Subtotal { get; set; }
         public OrderStatus Status { get; set; } = OrderStatus.Pending;
+        public OrderSource Source { get; set; } = OrderSource.Web;
         public PaymentMethod PaymentMethod { get; set; } = PaymentMethod.cod;
         public string? PaymentIntentId { get; set; }
     }

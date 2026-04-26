@@ -22,6 +22,10 @@ namespace Infrastructure.Config
                 o => o.ToString(),
                 s => (OrderStatus)Enum.Parse(typeof(OrderStatus), s)
             );
+            builder.Property(x => x.Source).HasConversion(
+                o => o.ToString(),
+                s => (OrderSource)Enum.Parse(typeof(OrderSource), s)
+            );
             builder.Property(x => x.Subtotal).HasColumnType("decimal(18,2)");
             builder.HasMany(x => x.OrderItems).WithOne().OnDelete(DeleteBehavior.Cascade);
             builder.Property(x => x.OrderDate).HasConversion(

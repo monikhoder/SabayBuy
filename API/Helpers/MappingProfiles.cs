@@ -43,6 +43,7 @@ public class MappingProfiles : Profile
         CreateMap<Address, AddressDto>();
         CreateMap<Order, OrderDto>()
             .ForMember(d => d.Status, o => o.MapFrom(s => s.Status.ToString()))
+            .ForMember(d => d.Source, o => o.MapFrom(s => s.Source.ToString()))
             .ForMember(d => d.PaymentMethod, o => o.MapFrom(s => s.PaymentMethod.ToString()))
             .ForMember(d => d.DeliveryMethod, o => o.MapFrom(s => s.DeliveryMethod.ShortName))
             .ForMember(d => d.DeliveryPrice, o => o.MapFrom(s => s.DeliveryMethod.Price));
