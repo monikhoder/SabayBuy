@@ -38,6 +38,12 @@ namespace API.Controllers
                 if (productItems == null) return BadRequest($"Product with id {item.ProductId} not found");
                 var productVariant = await unitOfWork.Repository<ProductVariant>().GetByIdAsync(productVariantId);
                 if (productVariant == null) return BadRequest($"Product variant with id {item.ProductVariantId} not found");
+                if (item.Quantity <= 0) return BadRequest("Order item quantity must be greater than zero");
+                if (productVariant.StockQuantity < item.Quantity)
+                {
+                    return BadRequest($"Insufficient stock for {productItems.ProductName} ({item.ProductVariantName}). Available: {productVariant.StockQuantity}");
+                }
+
                 var itemOrdered = new ProductItemOrdered
                 {
                     ProductId = productItems.Id,
@@ -53,6 +59,9 @@ namespace API.Controllers
                     Quantity = item.Quantity
                 };
                 items.Add(orderItem);
+
+                productVariant.StockQuantity -= item.Quantity;
+                unitOfWork.Repository<ProductVariant>().Update(productVariant);
             }
             var deliveryMethod = await unitOfWork.Repository<DeliveryMethod>().GetByIdAsync(orderDto.DeliveryMethodId);
             if (deliveryMethod == null) return BadRequest("Delivery method not found");
@@ -72,16 +81,6 @@ namespace API.Controllers
             unitOfWork.Repository<Order>().Add(order);
             if (await unitOfWork.Complete())
             {
-                //remove stock
-                foreach (var item in items)
-                {
-                    var productVariant = await unitOfWork.Repository<ProductVariant>().GetByIdAsync(item.ItemOrdered.ProductVariantId);
-                    if (productVariant != null)
-                    {
-                        productVariant.StockQuantity -= item.Quantity;
-                        unitOfWork.Repository<ProductVariant>().Update(productVariant);
-                    }
-                }
                 return Ok(mapper.Map<OrderDto>(order));
             }
 

@@ -78,5 +78,6 @@ namespace API.Controllers
             if (await unit.Complete()) return Ok("Product deleted successfully");
             return BadRequest("Failed to delete product");
         }
+
     }
 }

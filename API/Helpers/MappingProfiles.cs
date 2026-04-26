@@ -21,6 +21,15 @@ public class MappingProfiles : Profile
         .ForMember(d => d.Price, o => o.MapFrom(s => s.Variants != null && s.Variants.Count > 0 ? s.Variants.First().Price : 0))
         .ForMember(d => d.Stock, o => o.MapFrom(s => s.Variants != null ? s.Variants.Sum(v => v.StockQuantity) : 0));
         CreateMap<ProductVariant, ProductVariantDto>();
+        CreateMap<ProductVariant, POSProductVariantDto>()
+            .ForMember(d => d.ProductId, o => o.MapFrom(s => s.ProductId))
+            .ForMember(d => d.ProductName, o => o.MapFrom(s => s.Product != null ? s.Product.ProductName : string.Empty))
+            .ForMember(d => d.ProductImageUrl, o => o.MapFrom(s => s.Product != null ? s.Product.BaseImageUrl : null))
+            .ForMember(d => d.Brand, o => o.MapFrom(s => s.Product != null ? s.Product.Brand : string.Empty))
+            .ForMember(d => d.CategoryName, o => o.MapFrom(s => s.Product != null && s.Product.Category != null ? s.Product.Category.CategoryName : string.Empty))
+            .ForMember(d => d.VariantId, o => o.MapFrom(s => s.Id))
+            .ForMember(d => d.VariantName, o => o.MapFrom(s => string.Join(" / ", s.Attributes.Select(a => $"{a.AttributeName}: {a.AttributeValue}"))))
+            .ForMember(d => d.VariantImageUrl, o => o.MapFrom(s => s.ImageUrl));
         CreateMap<VariantAttribute, VariantAttributeDto>();
         CreateMap<CreateProductDto, Product>();
         CreateMap<CreateProductVariantDto, ProductVariant>();
