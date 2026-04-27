@@ -5,7 +5,6 @@ using Core.Entities;
 using Core.Interface;
 using Core.Specifications;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
