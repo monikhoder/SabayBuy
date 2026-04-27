@@ -9,6 +9,8 @@ namespace Core.Entities.OrderAggregate
     public enum PaymentMethod
     {
         aba, // 0 Aba Payway
-        cod // 1 Cash on Delivery
+        cod, // 1 Cash on Delivery
+        stripe, // 2 Stripe
+        khqr // 3 KHQR
     }
 }

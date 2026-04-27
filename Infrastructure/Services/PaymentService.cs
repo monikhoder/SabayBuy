@@ -10,60 +10,9 @@ using System.Text.Json;
 namespace Infrastructure.Services;
 
 public class PaymentService(
-        IConfiguration config,
-        ICartService cartService,
-        IUnitOfWork unit
+        IConfiguration config
     ) : IPaymentService
     {
-
-    public async Task<ShoppingCart?> GetTotalPrice(string cartId, string shippingId )
-            {
-                // Get the shopping cart
-               var cart = await cartService.GetCardAsync(cartId);
-               if (cart == null) return null;
-
-               //Get shipping price
-               var shippingMethod = await unit.Repository<DeliveryMethod>().GetByIdAsync(Guid.Parse(shippingId));
-               decimal shippingPrice = shippingMethod != null ? shippingMethod.Price : 0;
-
-        //check the price of cart and update if needed
-        foreach (var item in cart.Items)
-                {
-                    var id = Guid.Parse(item.ProductVariantId);
-                    var productVariant = await unit.Repository<ProductVariant>().GetByIdAsync(id);
-                    if (productVariant == null) return null;
-                    if(item.Price != productVariant.Price)
-                    {
-                        item.Price = productVariant.Price;
-                    }
-                }
-
-                //Calculate total price ans add shipping price
-                cart.TotalPrice = (cart.Items.Sum(x => x.Quantity * x.Price) + shippingPrice);
-                //Update the cart with the new total price
-                cart = await cartService.SetCardAsync(cart);
-                return cart;
-            }
-
-    public async Task<object?> ProcessPaymentAsync(ShoppingCart cart, string paymentMethod, AppUser user)
-    {
-        decimal totalPrice = cart.TotalPrice ?? 0;
-        Console.WriteLine($"Total price to be paid: {totalPrice}");
-        switch (paymentMethod.ToLower())
-        {
-            case "aba":
-                return await ProcessAbaPayment(totalPrice, cart.Id, user);
-
-            case "stripe":
-               // return await ProcessStripePayment(totalPrice, cart.Id);
-
-            case "cod":
-                return ProcessCashOnDelivery(totalPrice, cart.Id);
-
-            default:
-                throw new Exception("Payment method not supported");
-        }
-    }
     public async Task<string> VerifyAbaPaymentAsync(string tranId)
     {
         var merchantId = config["AbaPayWay:MerchantId"];
@@ -86,7 +35,22 @@ public class PaymentService(
         return await response.Content.ReadAsStringAsync();
     }
 
-    private async Task<object?> ProcessAbaPayment(decimal price, string cartId, AppUser user)
+    public async Task<PaymentResult?> CreatePaymentForOrderAsync(PaymentMethod paymentMethod, decimal total, AppUser user, Guid orderId)
+    {
+        return paymentMethod switch
+        {
+            PaymentMethod.aba => await ProcessAbaPayment(total, user),
+            PaymentMethod.stripe => throw new NotSupportedException("Stripe payment is not implemented yet"),
+            PaymentMethod.khqr => throw new NotSupportedException("KHQR payment is not implemented yet"),
+            PaymentMethod.cod => new PaymentResult
+            {
+                PaymentResponse = ProcessCashOnDelivery(total, orderId.ToString())
+            },
+            _ => throw new NotSupportedException("Payment method not supported")
+        };
+    }
+
+    private async Task<PaymentResult?> ProcessAbaPayment(decimal price, AppUser user)
     {
         var merchantId = config["AbaPayWay:MerchantId"];
         var apiKey = config["AbaPayWay:ApiKey"];
@@ -132,7 +96,11 @@ public class PaymentService(
         var responseString = await response.Content.ReadAsStringAsync();
         Console.WriteLine($"ABA Response: {responseString}");
         var jsonDocument = JsonDocument.Parse(responseString);
-        return jsonDocument.RootElement;
+        return new PaymentResult
+        {
+            PaymentIntentId = tranId,
+            PaymentResponse = jsonDocument.RootElement.Clone()
+        };
     }
 
 

@@ -40,5 +40,17 @@ export interface CreateOrder {
   deliveryMethodId: string;
   shippingAddress: ShippingAddress;
   paymentMethod: number;
-  paymentIntentId: string;
+  paymentIntentId?: string;
+}
+
+export interface AbaCheckoutResponse {
+  order: Order;
+  payment: AbaPaymentResponse;
+}
+
+export interface AbaPaymentResponse {
+  qrImage?: string;
+  status?: {
+    tran_id?: string;
+  };
 }

@@ -6,7 +6,7 @@ import { CheckoutService } from '../../core/services/checkout.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AbaQrDialogComponent } from '../checkout/aba-qr-dialog/aba-qr-dialog.component';
 import { OrderService } from '../../core/services/order.service';
-import { CreateOrder, Order } from '../../shared/models/order';
+import { AbaCheckoutResponse, CreateOrder, Order } from '../../shared/models/order';
 import { AccountService } from '../../core/services/account.service';
 import { SnackbarService } from '../../core/services/snackbar.service';
 
@@ -29,61 +29,60 @@ export class AppOrderSummaryComponent {
   qrCodeImage = signal<string | null>(null);
   isProcessing = signal<boolean>(false);
 
-
-
   onCheckoutSubmit() {
-    if(this.checkoutBtnEnable()){
+    if (this.checkoutBtnEnable()) {
       this.isProcessing.set(true);
-      this.checkoutService.createPaymentIntent().subscribe({
-        next: (payment_response: any) => {
-          const orderDto = this.createOrderDto(payment_response.status.tran_id || '');
-          this.orderService.createOrder(orderDto).subscribe({
-            next: (order) => {
-              this.isProcessing.set(false);
-              if (this.checkoutService.selectedPaymentMethod() === 'aba' && payment_response.qrImage) {
-                this.openAbaQrDialog(payment_response.qrImage, order.total.toString(), payment_response.status.tran_id);
-              } else {
-                this.router.navigate(['/checkout/success'], { state: { orderId: order.id } });
-              }
-            },
-            error: (error) => {
-              this.isProcessing.set(false);
-              console.error('Error creating order', error);
-            },
-            complete: () => {
-              const cartId = this.cartService.cart()?.id;
-              if (cartId) {
-                this.cartService.deleteCart(cartId).subscribe();
-              }
-              this.orderService.orderComplete = true;
+      const orderDto = this.createOrderDto();
+
+      this.checkoutService.checkoutV2(orderDto).subscribe({
+        next: (response) => {
+          const order = this.getOrderFromCheckoutResponse(response);
+          this.isProcessing.set(false);
+          this.clearCartAfterOrder();
+
+          if (this.isAbaCheckoutResponse(response)) {
+            const qrImage = response.payment.qrImage;
+            const tranId = order.paymentIntentId ?? response.payment.status?.tran_id ?? '';
+
+            if (qrImage && tranId) {
+              this.openAbaQrDialog(qrImage, order.total.toString(), tranId, order.id);
+              return;
             }
-          });
+
+            this.snack.error('ABA payment QR was not returned');
+            return;
+          }
+
+          this.router.navigate(['/checkout/success'], { state: { orderId: order.id } });
         },
         error: (error) => {
           this.isProcessing.set(false);
           console.error('Error during checkout', error);
+          this.snack.error(error?.error || 'Error during checkout');
         }
       });
-    }else{
-        if(this.checkoutService.selectedShippingMethod() === null){
-          this.snack.error("Please select a shipping method");
-        }if(this.checkoutService.selectedPaymentMethod() === null){
-          this.snack.error("Please select a payment method");
-        }if(this.checkoutService.accountService.selectedAddress() === null){
-          this.snack.error("Please select a shipping address");
-        }if(this.checkoutService.accountService.selectedAddress() === null){
-          this.snack.error("Please select a shipping address");
-        }
+    } else {
+      if (this.checkoutService.selectedShippingMethod() === null) {
+        this.snack.error('Please select a shipping method');
+      }
+      if (this.checkoutService.selectedPaymentMethod() === null) {
+        this.snack.error('Please select a payment method');
+      }
+      if (this.checkoutService.accountService.selectedAddress() === null) {
+        this.snack.error('Please select a shipping address');
+      }
     }
   }
-  openAbaQrDialog(qrImageBase64: string, totalAmount: string, tran_id:string) {
+
+  openAbaQrDialog(qrImageBase64: string, totalAmount: string, tran_id: string, orderId: string) {
     const dialogRef = this.dialog.open(AbaQrDialogComponent, {
       width: '400px',
       disableClose: true,
       data: {
         qrImage: qrImageBase64,
         totalAmount: totalAmount,
-        tran_id: tran_id
+        tran_id: tran_id,
+        orderId: orderId
       }
     });
 
@@ -95,7 +94,8 @@ export class AppOrderSummaryComponent {
       }
     });
   }
-  private createOrderDto(paymentIntentId?: string): CreateOrder {
+
+  private createOrderDto(): CreateOrder {
     const createOrderDto: CreateOrder = {
       cartId: this.cartService.cart()!.id,
       deliveryMethodId: this.checkoutService.selectedShippingMethod()?.id || '',
@@ -112,12 +112,32 @@ export class AppOrderSummaryComponent {
           longitude: this.checkoutService.accountService.selectedAddress()?.longitude || 0,
       },
       paymentMethod: this.checkoutService.selectedPaymentMethod() === 'aba' ? 0 : 1,
-      paymentIntentId: paymentIntentId || '',
     };
     return createOrderDto;
   }
-  checkoutBtnEnable(){
-    return this.checkoutService.selectedShippingMethod() && this.checkoutService.selectedPaymentMethod() && this.checkoutService.accountService.selectedAddress();
+
+  private getOrderFromCheckoutResponse(response: Order | AbaCheckoutResponse): Order {
+    return this.isAbaCheckoutResponse(response) ? response.order : response;
+  }
+
+  private isAbaCheckoutResponse(response: Order | AbaCheckoutResponse): response is AbaCheckoutResponse {
+    return 'order' in response && 'payment' in response;
+  }
+
+  private clearCartAfterOrder() {
+    const cartId = this.cartService.cart()?.id;
+    if (cartId) {
+      this.cartService.deleteCart(cartId).subscribe();
+    }
+    this.orderService.orderComplete = true;
+  }
+
+  checkoutBtnEnable(): boolean {
+    return !!(
+      this.checkoutService.selectedShippingMethod() &&
+      this.checkoutService.selectedPaymentMethod() &&
+      this.checkoutService.accountService.selectedAddress()
+    );
   }
 
 }

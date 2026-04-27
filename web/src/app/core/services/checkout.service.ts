@@ -4,9 +4,9 @@ import { environment } from '../../../environments/environment';
 import { DeliveryMethod } from '../../shared/models/deliveryMethod';
 import { PaymentMethod } from '../../shared/models/paymentMethod';
 import { CartService } from './cart.service';
-import { CheckOut } from '../../shared/models/checkout';
 import { AccountService } from './account.service';
 import { tap } from 'rxjs';
+import { AbaCheckoutResponse, CreateOrder, Order } from '../../shared/models/order';
 
 @Injectable({
   providedIn: 'root',
@@ -45,16 +45,8 @@ export class CheckoutService {
     },
   ]);
 
-  createPaymentIntent() {
-    const selectedAddress = this.accountService.selectedAddress();
-
-    const checkoutDto: CheckOut = {
-      cartId: this.cartService.cart()!.id,
-      paymentMethod: this.selectedPaymentMethod(),
-      deliveryMethodId: this.selectedShippingMethod()?.id || '',
-      shippingAddressId: selectedAddress?.id || '',
-    };
-    return this.http.post(this.baseUrl + 'Payments/checkout', checkoutDto)
+  checkoutV2(order: CreateOrder) {
+    return this.http.post<Order | AbaCheckoutResponse>(this.baseUrl + 'Payments/checkout-v2', order);
   }
 
   getAvailableShippingMethods(zip: string) {

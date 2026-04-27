@@ -6,7 +6,6 @@ namespace Core.Interface;
 
 public interface IPaymentService
 {
-    Task<ShoppingCart?> GetTotalPrice(string cartId, string shippingId);
-    Task<object?> ProcessPaymentAsync(ShoppingCart cart, string paymentMethod, AppUser user);
+    Task<PaymentResult?> CreatePaymentForOrderAsync(PaymentMethod paymentMethod, decimal total, AppUser user, Guid orderId);
     Task<string> VerifyAbaPaymentAsync(string tranId);
 }
