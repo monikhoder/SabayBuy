@@ -20,20 +20,16 @@ namespace POS
     {
         private readonly POSAccountService accountService = new POSAccountService();
         private readonly CategoriesService categoriesService = new CategoriesService();
+        private readonly POSProductService productService = new POSProductService();
         private readonly Timer dateTimeTimer = new Timer();
+        private readonly Timer searchTimer = new Timer();
         private static readonly HttpClient imageClient = new HttpClient();
-        private const int CategoryScrollStep = 180;
-        private Panel categoriesViewportPanel;
+        private string selectedCategoryName;
 
         public FrmMain()
         {
             InitializeComponent();
-            LoadTestProductCards();
-            SetupCategoryViewport();
-            next_category_btn.Click += Next_category_btn_Click;
-            Prev_category_btn.Click += Prev_category_btn_Click;
-            categories_panel.Resize += Categories_panel_Resize;
-            categoriesViewportPanel.Resize += CategoriesViewportPanel_Resize;
+            ConfigureProductListLayout();
 
             UpdateCurrentUserLabel();
             UpdateDateTimeLabel();
@@ -42,34 +38,40 @@ namespace POS
             dateTimeTimer.Interval = 1000;
             dateTimeTimer.Tick += DateTimeTimer_Tick;
             dateTimeTimer.Start();
+
+            searchTimer.Interval = 350;
+            searchTimer.Tick += SearchTimer_Tick;
+            txt_search.TextChanged += txt_search_TextChanged;
         }
 
-        private void SetupCategoryViewport()
+        private void ConfigureProductListLayout()
         {
-            categoriesViewportPanel = new Panel
-            {
-                Dock = DockStyle.None,
-                BackColor = categories_panel.BackColor
-            };
-
-            categories_panel.Controls.Remove(categories_flowLayout_panel);
-            categories_panel.Controls.Add(categoriesViewportPanel);
-            categoriesViewportPanel.Controls.Add(categories_flowLayout_panel);
-
-            LayoutCategoryViewport();
-            prev_category_panel.BringToFront();
-            next_category_panel.BringToFront();
+            product_list_flowLayoutPanel.Dock = DockStyle.Fill;
+            product_list_flowLayoutPanel.Padding = new Padding(10);
         }
 
         private async void FrmMain_Shown(object sender, EventArgs e)
         {
-            await LoadProfilePictureAsync();
-            await LoadCategoryButtonsAsync();
+           // await LoadProfilePictureAsync();
+            await LoadCategoryCardsAsync();
+            await LoadProductCardsAsync();
         }
 
         private void DateTimeTimer_Tick(object sender, EventArgs e)
         {
             UpdateDateTimeLabel();
+        }
+
+        private async void SearchTimer_Tick(object sender, EventArgs e)
+        {
+            searchTimer.Stop();
+            await LoadProductCardsAsync(selectedCategoryName);
+        }
+
+        private void txt_search_TextChanged(object sender, EventArgs e)
+        {
+            searchTimer.Stop();
+            searchTimer.Start();
         }
 
         private void UpdateDateTimeLabel()
@@ -90,31 +92,6 @@ namespace POS
             username_lbl.Text = string.IsNullOrWhiteSpace(fullName) ? currentUser.Email : fullName;
         }
 
-        private async Task LoadProfilePictureAsync()
-        {
-            var currentUser = POSAccountService.CurrentUser;
-            if (currentUser == null || string.IsNullOrWhiteSpace(currentUser.ProfileUrl))
-            {
-                profile_picture.Image = Properties.Resources.people;
-                return;
-            }
-
-            try
-            {
-                var imageBytes = await imageClient.GetByteArrayAsync(currentUser.ProfileUrl);
-
-                using (var memoryStream = new MemoryStream(imageBytes))
-                using (var image = Image.FromStream(memoryStream))
-                {
-                    profile_picture.Image = new Bitmap(image);
-                }
-            }
-            catch
-            {
-                profile_picture.Image = Properties.Resources.people;
-            }
-        }
-
         private async void exit_btn_Click(object sender, EventArgs e)
         {
             exit_btn.Enabled = false;
@@ -133,29 +110,52 @@ namespace POS
             Application.Exit();
         }
 
-        private void LoadTestProductCards()
+        private async Task LoadProductCardsAsync(string categoryName = null)
         {
+            var queryParams = new POSProductQueryParams
+            {
+                PageIndex = 1,
+                PageSize = 100,
+                InStockOnly = true,
+                Search = txt_search.Text.Trim()
+            };
+
+            if (!string.IsNullOrWhiteSpace(categoryName))
+            {
+                queryParams.Categories.Add(categoryName);
+            }
+
+            var result = await productService.GetProductsAsync(queryParams);
+
+            if (!result.Success)
+            {
+                MessageBox.Show(result.ErrorMessage, "Load Products", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             var templateCard = productCard1;
+          //  var productCardSize = GetProductCardDisplaySize(templateCard);
+            var products = result.Data?.Data ?? new List<POSProductVariantDto>();
 
             product_list_flowLayoutPanel.SuspendLayout();
             product_list_flowLayoutPanel.Controls.Clear();
             product_list_flowLayoutPanel.AutoScroll = true;
             product_list_flowLayoutPanel.WrapContents = true;
             product_list_flowLayoutPanel.FlowDirection = FlowDirection.LeftToRight;
+            //product_list_flowLayoutPanel.Padding = new Padding(10);
 
-            for (int i = 1; i <= 30; i++)
+            foreach (var product in products)
             {
                 var card = new ProductCard
                 {
-                    
-                    Name = $"productCard{i}",
-                    Size = templateCard.Size,
+                    Name = $"productCard_{product.VariantId}",
                     Margin = templateCard.Margin,
                     Padding = templateCard.Padding,
                     BackColor = templateCard.BackColor,
-                    Tag = i
+                    Cursor = Cursors.Hand
                 };
-                
+
+                card.SetProduct(product);
 
                 product_list_flowLayoutPanel.Controls.Add(card);
             }
@@ -163,7 +163,7 @@ namespace POS
             product_list_flowLayoutPanel.ResumeLayout();
         }
 
-        private async Task LoadCategoryButtonsAsync()
+        private async Task LoadCategoryCardsAsync()
         {
             var result = await categoriesService.GetCategoriesWithProductsAsync();
 
@@ -173,143 +173,135 @@ namespace POS
                 return;
             }
 
-            var templateButton = Category_btn_template;
-            templateButton.Visible = true;
+            var templateCard = categoryCard1;
             var categories = result.Data ?? new List<CategoryDto>();
 
-            categories_flowLayout_panel.SuspendLayout();
-            categories_flowLayout_panel.Controls.Clear();
-            categories_flowLayout_panel.Dock = DockStyle.None;
-            categories_flowLayout_panel.AutoScroll = false;
-            categories_flowLayout_panel.WrapContents = false;
-            categories_flowLayout_panel.FlowDirection = FlowDirection.LeftToRight;
-            categories_flowLayout_panel.Left = 0;
-            categories_flowLayout_panel.Top = 0;
-            categories_flowLayout_panel.Height = categoriesViewportPanel.Height;
+            PrepareCategoryHorizontalScroll(templateCard.Size, templateCard.Margin);
+            categories_flowLayoutPanel.SuspendLayout();
+            categories_flowLayoutPanel.Controls.Clear();
+            categories_flowLayoutPanel.AutoScroll = true;
+            categories_flowLayoutPanel.WrapContents = false;
+            categories_flowLayoutPanel.FlowDirection = FlowDirection.LeftToRight;
+            categories_flowLayoutPanel.VerticalScroll.Enabled = false;
+            categories_flowLayoutPanel.HorizontalScroll.Enabled = true;
+
+            var allCategoryCard = CreateCategoryCard(templateCard, new CategoryDto
+            {
+                CategoryName = "All Categories",
+                ProductCount = categories.Sum(category => category.ProductCount)
+            });
+            allCategoryCard.SetSelected(true);
+            AttachCategoryCardClickHandlers(allCategoryCard);
+            categories_flowLayoutPanel.Controls.Add(allCategoryCard);
 
             foreach (var category in categories)
             {
-                var categoryButton = CreateCategoryButton(templateButton, category);
-                categories_flowLayout_panel.Controls.Add(categoryButton);
+                var card = CreateCategoryCard(templateCard, category);
+                AttachCategoryCardClickHandlers(card);
+                categories_flowLayoutPanel.Controls.Add(card);
             }
 
-            if (categories_flowLayout_panel.Controls.Count == 0)
-            {
-                var emptyButton = CreateCategoryButton(templateButton, new CategoryDto
-                {
-                    CategoryName = "No Categories",
-                    ProductCount = 0
-                });
-                emptyButton.Enabled = false;
-                categories_flowLayout_panel.Controls.Add(emptyButton);
-            }
-
-            ResizeCategoryFlowPanel();
-            categories_flowLayout_panel.ResumeLayout();
+            categories_flowLayoutPanel.AutoScrollMinSize = new Size(GetCategoryCardsWidth(), 0);
+            categories_flowLayoutPanel.ResumeLayout();
         }
 
-        private KtButton CreateCategoryButton(KtButton templateButton, CategoryDto category)
+        private void AttachCategoryCardClickHandlers(CategoryCard card)
         {
-            var button = new KtButton
+            card.Click += CategoryCard_Click;
+            AttachCategoryCardClickHandlers(card, CategoryCard_Click);
+        }
+
+        private CategoryCard CreateCategoryCard(CategoryCard templateCard, CategoryDto category)
+        {
+            var card = new CategoryCard
             {
-                Anchor = templateButton.Anchor,
-                BackColor = templateButton.BackColor,
-                Background = templateButton.Background,
-                BorderStyle = templateButton.BorderStyle,
-                BorderWidth = templateButton.BorderWidth,
-                Font = templateButton.Font,
-                ForeColor = templateButton.ForeColor,
-                Foreground = templateButton.Foreground,
-                Icon = templateButton.Icon,
-                IconColor = templateButton.IconColor,
-                IconSize = templateButton.IconSize,
-                IconStroke = templateButton.IconStroke,
-                Margin = templateButton.Margin,
-                Padding = templateButton.Padding,
-                Size = templateButton.Size,
-                Text = category.CategoryName,
-                UseVisualStyleBackColor = templateButton.UseVisualStyleBackColor,
-                Cursor = Cursors.Hand,
-                Tag = category
+                Name = category.Id == Guid.Empty ? "categoryCard_all" : $"categoryCard_{category.Id}",
+                Size = templateCard.Size,
+                Margin = templateCard.Margin,
+                Padding = templateCard.Padding,
+                BackColor = templateCard.BackColor,
+                Cursor = Cursors.Hand
             };
 
-            button.Click += CategoryButton_Click;
+            card.SetCategory(category);
 
-            return button;
+            return card;
         }
 
-        private void Next_category_btn_Click(object sender, EventArgs e)
+        private void AttachCategoryCardClickHandlers(Control parent, EventHandler clickHandler)
         {
-            ScrollCategories(CategoryScrollStep);
-        }
-
-        private void Prev_category_btn_Click(object sender, EventArgs e)
-        {
-            ScrollCategories(-CategoryScrollStep);
-        }
-
-        private void ScrollCategories(int amount)
-        {
-            int visibleWidth = categoriesViewportPanel.Width;
-            int maxLeft = 0;
-            int minLeft = maxLeft + visibleWidth - categories_flowLayout_panel.Width;
-            int nextLeft = categories_flowLayout_panel.Left - amount;
-
-            if (minLeft > maxLeft)
+            foreach (Control child in parent.Controls)
             {
-                minLeft = maxLeft;
+                child.Click += clickHandler;
+                AttachCategoryCardClickHandlers(child, clickHandler);
+            }
+        }
+
+        private async void CategoryCard_Click(object sender, EventArgs e)
+        {
+            var categoryCard = GetParentCategoryCard(sender as Control);
+            var category = categoryCard?.Tag as CategoryDto;
+
+            if (category == null)
+            {
+                return;
             }
 
-            if (nextLeft > maxLeft)
+            SetSelectedCategoryCard(categoryCard);
+            selectedCategoryName = category.Id == Guid.Empty ? null : category.CategoryName;
+
+            await LoadProductCardsAsync(selectedCategoryName);
+        }
+
+        private void SetSelectedCategoryCard(CategoryCard selectedCard)
+        {
+            foreach (Control control in categories_flowLayoutPanel.Controls)
             {
-                nextLeft = maxLeft;
+                if (control is CategoryCard card)
+                {
+                    card.SetSelected(card == selectedCard);
+                }
+            }
+        }
+
+        private CategoryCard GetParentCategoryCard(Control control)
+        {
+            while (control != null && !(control is CategoryCard))
+            {
+                control = control.Parent;
             }
 
-            if (nextLeft < minLeft)
+            return control as CategoryCard;
+        }
+
+        private void PrepareCategoryHorizontalScroll(Size cardSize, Padding cardMargin)
+        {
+            int cardOuterHeight = cardSize.Height + cardMargin.Top + cardMargin.Bottom;
+            int neededHeight = categories_panel.Padding.Top
+                + category_title_lbl.Height
+                + cardOuterHeight
+                + SystemInformation.HorizontalScrollBarHeight
+                + categories_panel.Padding.Bottom
+                + 6;
+
+            if (categories_panel.Height < neededHeight)
             {
-                nextLeft = minLeft;
+                categories_panel.Height = neededHeight;
+            }
+        }
+
+        private int GetCategoryCardsWidth()
+        {
+            int width = categories_flowLayoutPanel.Padding.Left + categories_flowLayoutPanel.Padding.Right;
+
+            foreach (Control control in categories_flowLayoutPanel.Controls)
+            {
+                width += control.Width + control.Margin.Left + control.Margin.Right;
             }
 
-            categories_flowLayout_panel.Left = nextLeft;
+            return width;
         }
 
-        private void CategoriesViewportPanel_Resize(object sender, EventArgs e)
-        {
-            ResizeCategoryFlowPanel();
-        }
-
-        private void Categories_panel_Resize(object sender, EventArgs e)
-        {
-            LayoutCategoryViewport();
-            ResizeCategoryFlowPanel();
-        }
-
-        private void LayoutCategoryViewport()
-        {
-            int left = prev_category_panel.Width;
-            int width = categories_panel.Width - prev_category_panel.Width - next_category_panel.Width;
-
-            if (width < 0)
-            {
-                width = 0;
-            }
-
-            categoriesViewportPanel.Bounds = new Rectangle(left, 0, width, categories_panel.Height);
-        }
-
-        private void ResizeCategoryFlowPanel()
-        {
-            int contentWidth = categories_flowLayout_panel.Padding.Left + categories_flowLayout_panel.Padding.Right;
-
-            foreach (Control control in categories_flowLayout_panel.Controls)
-            {
-                contentWidth += control.Width + control.Margin.Left + control.Margin.Right;
-            }
-
-            categories_flowLayout_panel.Width = Math.Max(contentWidth, categoriesViewportPanel.Width);
-            categories_flowLayout_panel.Height = categoriesViewportPanel.Height;
-            ScrollCategories(0);
-        }
 
         private void CategoryButton_Click(object sender, EventArgs e)
         {

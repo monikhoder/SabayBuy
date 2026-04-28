@@ -85,7 +85,7 @@ namespace POS.ApiServices
             }
         }
 
-        private static HttpClient CreateClient()
+        internal static HttpClient CreateSharedClient()
         {
             var handler = new HttpClientHandler
             {
@@ -97,6 +97,11 @@ namespace POS.ApiServices
             client.BaseAddress = new Uri(ConfigurationManager.AppSettings["ApiBaseUrl"]);
             client.Timeout = TimeSpan.FromSeconds(30);
             return client;
+        }
+
+        private static HttpClient CreateClient()
+        {
+            return CreateSharedClient();
         }
 
         private static string GetErrorMessage(HttpStatusCode statusCode, string body)

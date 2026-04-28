@@ -63,6 +63,16 @@ namespace POS.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap keyboard_and_mouse {
+            get {
+                object obj = ResourceManager.GetObject("keyboard-and-mouse", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap macbook {
             get {
                 object obj = ResourceManager.GetObject("macbook", resourceCulture);

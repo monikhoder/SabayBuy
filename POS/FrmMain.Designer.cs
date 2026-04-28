@@ -34,21 +34,19 @@
             this.body_panel = new System.Windows.Forms.Panel();
             this.body_left_panel = new System.Windows.Forms.Panel();
             this.product_panel = new System.Windows.Forms.Panel();
-            this.product_footer_panel = new KimTools.WinForms.KtPanel();
+            this.list_product_panel = new System.Windows.Forms.Panel();
             this.product_list_flowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.productCard1 = new POS.Components.ProductCard();
+            this.product_lbl = new KimTools.WinForms.KtLabel();
             this.categories_panel = new System.Windows.Forms.Panel();
-            this.categories_flowLayout_panel = new System.Windows.Forms.FlowLayoutPanel();
-            this.Category_btn_template = new KimTools.WinForms.KtButton();
-            this.prev_category_panel = new System.Windows.Forms.Panel();
-            this.Prev_category_btn = new KimTools.WinForms.KtButton();
-            this.next_category_panel = new System.Windows.Forms.Panel();
-            this.next_category_btn = new KimTools.WinForms.KtButton();
+            this.categories_flowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.categoryCard1 = new POS.Components.CategoryCard();
+            this.category_title_lbl = new KimTools.WinForms.KtLabel();
             this.order_summary_panel = new KimTools.WinForms.KtPanel();
             this.header_panel = new System.Windows.Forms.Panel();
             this.datetime_panel = new System.Windows.Forms.Panel();
             this.datetime_lbl = new KimTools.WinForms.KtLabel();
             this.profile_panel = new System.Windows.Forms.Panel();
-            this.profile_picture = new KimTools.WinForms.KtPictureBox();
             this.username_lbl = new KimTools.WinForms.KtLabel();
             this.exit_panel = new System.Windows.Forms.Panel();
             this.exit_btn = new KimTools.WinForms.KtButton();
@@ -56,20 +54,19 @@
             this.txt_search = new KimTools.WinForms.KtTextBox();
             this.logo_panel = new System.Windows.Forms.Panel();
             this.logo_header = new KimTools.WinForms.KtPictureBox();
-            this.productCard1 = new POS.Components.ProductCard();
+            this.cart_itemlbl = new KimTools.WinForms.KtLabel();
             this.bg_panel.SuspendLayout();
             this.body_panel.SuspendLayout();
             this.body_left_panel.SuspendLayout();
             this.product_panel.SuspendLayout();
+            this.list_product_panel.SuspendLayout();
             this.product_list_flowLayoutPanel.SuspendLayout();
             this.categories_panel.SuspendLayout();
-            this.categories_flowLayout_panel.SuspendLayout();
-            this.prev_category_panel.SuspendLayout();
-            this.next_category_panel.SuspendLayout();
+            this.categories_flowLayoutPanel.SuspendLayout();
+            this.order_summary_panel.SuspendLayout();
             this.header_panel.SuspendLayout();
             this.datetime_panel.SuspendLayout();
             this.profile_panel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.profile_picture)).BeginInit();
             this.exit_panel.SuspendLayout();
             this.search_panel.SuspendLayout();
             this.logo_panel.SuspendLayout();
@@ -124,169 +121,126 @@
             this.body_left_panel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.body_left_panel.Location = new System.Drawing.Point(3, 3);
             this.body_left_panel.Name = "body_left_panel";
-            this.body_left_panel.Size = new System.Drawing.Size(768, 598);
+            this.body_left_panel.Padding = new System.Windows.Forms.Padding(6, 3, 3, 3);
+            this.body_left_panel.Size = new System.Drawing.Size(859, 598);
             this.body_left_panel.TabIndex = 1;
             // 
             // product_panel
             // 
-            this.product_panel.Controls.Add(this.product_footer_panel);
-            this.product_panel.Controls.Add(this.product_list_flowLayoutPanel);
+            this.product_panel.Controls.Add(this.list_product_panel);
+            this.product_panel.Controls.Add(this.product_lbl);
             this.product_panel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.product_panel.Location = new System.Drawing.Point(0, 47);
+            this.product_panel.Location = new System.Drawing.Point(6, 139);
             this.product_panel.Name = "product_panel";
-            this.product_panel.Padding = new System.Windows.Forms.Padding(4);
-            this.product_panel.Size = new System.Drawing.Size(768, 551);
+            this.product_panel.Size = new System.Drawing.Size(850, 456);
             this.product_panel.TabIndex = 1;
             // 
-            // product_footer_panel
+            // list_product_panel
             // 
-            this.product_footer_panel.Background = new KimTools.WinForms.KtBrushSolid(KimTools.WinForms.KtColor.BASE_2);
-            this.product_footer_panel.Border = new KimTools.WinForms.KtBrushGradient(KimTools.WinForms.KtColor.BASE_1, KimTools.WinForms.KtColor.BASE_3);
-            this.product_footer_panel.BorderRadius = 24F;
-            this.product_footer_panel.BorderStyle = System.Drawing.Drawing2D.DashStyle.Solid;
-            this.product_footer_panel.BorderWidth = 1.5F;
-            this.product_footer_panel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.product_footer_panel.Foreground = KimTools.WinForms.KtColor.Empty;
-            this.product_footer_panel.Location = new System.Drawing.Point(4, 496);
-            this.product_footer_panel.Name = "product_footer_panel";
-            this.product_footer_panel.PatternColor = KimTools.WinForms.KtColor.Empty;
-            this.product_footer_panel.Size = new System.Drawing.Size(760, 51);
-            this.product_footer_panel.TabIndex = 1;
+            this.list_product_panel.Controls.Add(this.product_list_flowLayoutPanel);
+            this.list_product_panel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.list_product_panel.Location = new System.Drawing.Point(0, 36);
+            this.list_product_panel.Name = "list_product_panel";
+            this.list_product_panel.Size = new System.Drawing.Size(850, 420);
+            this.list_product_panel.TabIndex = 8;
             // 
             // product_list_flowLayoutPanel
             // 
             this.product_list_flowLayoutPanel.Controls.Add(this.productCard1);
             this.product_list_flowLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.product_list_flowLayoutPanel.Location = new System.Drawing.Point(4, 4);
+            this.product_list_flowLayoutPanel.Location = new System.Drawing.Point(0, 0);
             this.product_list_flowLayoutPanel.Name = "product_list_flowLayoutPanel";
-            this.product_list_flowLayoutPanel.Size = new System.Drawing.Size(760, 543);
-            this.product_list_flowLayoutPanel.TabIndex = 0;
-            this.product_list_flowLayoutPanel.WrapContents = false;
+            this.product_list_flowLayoutPanel.Size = new System.Drawing.Size(850, 420);
+            this.product_list_flowLayoutPanel.TabIndex = 6;
+            // 
+            // productCard1
+            // 
+            this.productCard1.BackColor = System.Drawing.Color.Transparent;
+            this.productCard1.Location = new System.Drawing.Point(2, 2);
+            this.productCard1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.productCard1.Name = "productCard1";
+            this.productCard1.Padding = new System.Windows.Forms.Padding(5);
+            this.productCard1.Size = new System.Drawing.Size(156, 228);
+            this.productCard1.TabIndex = 0;
+            // 
+            // product_lbl
+            // 
+            this.product_lbl.Align = System.Drawing.ContentAlignment.MiddleLeft;
+            this.product_lbl.Auto = false;
+            this.product_lbl.Background = KimTools.WinForms.KtColor.Empty;
+            this.product_lbl.Color = new KimTools.WinForms.KtColor(System.Drawing.Color.Black, null, 100);
+            this.product_lbl.Dock = System.Windows.Forms.DockStyle.Top;
+            this.product_lbl.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.product_lbl.Location = new System.Drawing.Point(0, 0);
+            this.product_lbl.Name = "product_lbl";
+            this.product_lbl.Size = new System.Drawing.Size(850, 36);
+            this.product_lbl.TabIndex = 7;
+            this.product_lbl.Text = "Product";
             // 
             // categories_panel
             // 
-            this.categories_panel.Controls.Add(this.categories_flowLayout_panel);
-            this.categories_panel.Controls.Add(this.prev_category_panel);
-            this.categories_panel.Controls.Add(this.next_category_panel);
+            this.categories_panel.Controls.Add(this.categories_flowLayoutPanel);
+            this.categories_panel.Controls.Add(this.category_title_lbl);
             this.categories_panel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.categories_panel.Location = new System.Drawing.Point(0, 0);
+            this.categories_panel.Location = new System.Drawing.Point(6, 3);
             this.categories_panel.Name = "categories_panel";
-            this.categories_panel.Size = new System.Drawing.Size(768, 47);
+            this.categories_panel.Size = new System.Drawing.Size(850, 136);
             this.categories_panel.TabIndex = 0;
             // 
-            // categories_flowLayout_panel
+            // categories_flowLayoutPanel
             // 
-            this.categories_flowLayout_panel.Controls.Add(this.Category_btn_template);
-            this.categories_flowLayout_panel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.categories_flowLayout_panel.Location = new System.Drawing.Point(50, 0);
-            this.categories_flowLayout_panel.Name = "categories_flowLayout_panel";
-            this.categories_flowLayout_panel.Padding = new System.Windows.Forms.Padding(1);
-            this.categories_flowLayout_panel.Size = new System.Drawing.Size(661, 47);
-            this.categories_flowLayout_panel.TabIndex = 2;
-            this.categories_flowLayout_panel.WrapContents = false;
+            this.categories_flowLayoutPanel.Controls.Add(this.categoryCard1);
+            this.categories_flowLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.categories_flowLayoutPanel.Location = new System.Drawing.Point(0, 30);
+            this.categories_flowLayoutPanel.Name = "categories_flowLayoutPanel";
+            this.categories_flowLayoutPanel.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
+            this.categories_flowLayoutPanel.Size = new System.Drawing.Size(850, 106);
+            this.categories_flowLayoutPanel.TabIndex = 4;
+            this.categories_flowLayoutPanel.WrapContents = false;
             // 
-            // Category_btn_template
+            // categoryCard1
             // 
-            this.Category_btn_template.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.Category_btn_template.BackColor = System.Drawing.Color.Transparent;
-            this.Category_btn_template.Background = new KimTools.WinForms.KtBrushSolid(System.Drawing.Color.Transparent);
-            this.Category_btn_template.BorderStyle = System.Drawing.Drawing2D.DashStyle.Solid;
-            this.Category_btn_template.BorderWidth = 2F;
-            this.Category_btn_template.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Category_btn_template.ForeColor = System.Drawing.Color.Black;
-            this.Category_btn_template.Foreground = KimTools.WinForms.KtColor.Empty;
-            this.Category_btn_template.Icon = "";
-            this.Category_btn_template.IconColor = KimTools.WinForms.KtColor.Empty;
-            this.Category_btn_template.IconSize = 16;
-            this.Category_btn_template.IconStroke = 2.5D;
-            this.Category_btn_template.Location = new System.Drawing.Point(4, 4);
-            this.Category_btn_template.Name = "Category_btn_template";
-            this.Category_btn_template.Padding = new System.Windows.Forms.Padding(5);
-            this.Category_btn_template.Size = new System.Drawing.Size(105, 40);
-            this.Category_btn_template.TabIndex = 0;
-            this.Category_btn_template.Text = "Category";
-            this.Category_btn_template.UseVisualStyleBackColor = false;
-            this.Category_btn_template.Visible = false;
+            this.categoryCard1.BackColor = System.Drawing.Color.Transparent;
+            this.categoryCard1.Location = new System.Drawing.Point(10, 2);
+            this.categoryCard1.Margin = new System.Windows.Forms.Padding(2);
+            this.categoryCard1.Name = "categoryCard1";
+            this.categoryCard1.Padding = new System.Windows.Forms.Padding(2);
+            this.categoryCard1.Size = new System.Drawing.Size(90, 98);
+            this.categoryCard1.TabIndex = 0;
             // 
-            // prev_category_panel
+            // category_title_lbl
             // 
-            this.prev_category_panel.Controls.Add(this.Prev_category_btn);
-            this.prev_category_panel.Dock = System.Windows.Forms.DockStyle.Left;
-            this.prev_category_panel.Location = new System.Drawing.Point(0, 0);
-            this.prev_category_panel.Name = "prev_category_panel";
-            this.prev_category_panel.Size = new System.Drawing.Size(50, 47);
-            this.prev_category_panel.TabIndex = 1;
-            // 
-            // Prev_category_btn
-            // 
-            this.Prev_category_btn.BackColor = System.Drawing.Color.Transparent;
-            this.Prev_category_btn.Background = new KimTools.WinForms.KtBrushSolid(System.Drawing.Color.Transparent);
-            this.Prev_category_btn.BorderStyle = System.Drawing.Drawing2D.DashStyle.Solid;
-            this.Prev_category_btn.BorderWidth = 0F;
-            this.Prev_category_btn.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Prev_category_btn.Font = new System.Drawing.Font("Moul", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel, ((byte)(0)));
-            this.Prev_category_btn.ForeColor = System.Drawing.Color.Black;
-            this.Prev_category_btn.Foreground = new KimTools.WinForms.KtColor(System.Drawing.Color.Black, null, 100);
-            this.Prev_category_btn.Icon = "";
-            this.Prev_category_btn.IconColor = KimTools.WinForms.KtColor.Empty;
-            this.Prev_category_btn.IconSize = 16;
-            this.Prev_category_btn.IconStroke = 2.5D;
-            this.Prev_category_btn.Location = new System.Drawing.Point(0, 0);
-            this.Prev_category_btn.Name = "Prev_category_btn";
-            this.Prev_category_btn.Padding = new System.Windows.Forms.Padding(0);
-            this.Prev_category_btn.Size = new System.Drawing.Size(50, 47);
-            this.Prev_category_btn.TabIndex = 1;
-            this.Prev_category_btn.Text = "<";
-            this.Prev_category_btn.UseVisualStyleBackColor = false;
-            // 
-            // next_category_panel
-            // 
-            this.next_category_panel.Controls.Add(this.next_category_btn);
-            this.next_category_panel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.next_category_panel.Location = new System.Drawing.Point(711, 0);
-            this.next_category_panel.Name = "next_category_panel";
-            this.next_category_panel.Size = new System.Drawing.Size(57, 47);
-            this.next_category_panel.TabIndex = 0;
-            // 
-            // next_category_btn
-            // 
-            this.next_category_btn.BackColor = System.Drawing.Color.Transparent;
-            this.next_category_btn.Background = new KimTools.WinForms.KtBrushSolid(System.Drawing.Color.Transparent);
-            this.next_category_btn.BorderStyle = System.Drawing.Drawing2D.DashStyle.Solid;
-            this.next_category_btn.BorderWidth = 0F;
-            this.next_category_btn.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.next_category_btn.Font = new System.Drawing.Font("Moul", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel, ((byte)(0)));
-            this.next_category_btn.ForeColor = System.Drawing.Color.Black;
-            this.next_category_btn.Foreground = new KimTools.WinForms.KtColor(System.Drawing.Color.Black, null, 100);
-            this.next_category_btn.Icon = "";
-            this.next_category_btn.IconColor = KimTools.WinForms.KtColor.Empty;
-            this.next_category_btn.IconSize = 16;
-            this.next_category_btn.IconStroke = 2.5D;
-            this.next_category_btn.Location = new System.Drawing.Point(0, 0);
-            this.next_category_btn.Name = "next_category_btn";
-            this.next_category_btn.Padding = new System.Windows.Forms.Padding(0);
-            this.next_category_btn.Size = new System.Drawing.Size(57, 47);
-            this.next_category_btn.TabIndex = 0;
-            this.next_category_btn.Text = ">";
-            this.next_category_btn.UseVisualStyleBackColor = false;
+            this.category_title_lbl.Align = System.Drawing.ContentAlignment.TopLeft;
+            this.category_title_lbl.Auto = false;
+            this.category_title_lbl.Background = KimTools.WinForms.KtColor.Empty;
+            this.category_title_lbl.Color = new KimTools.WinForms.KtColor(System.Drawing.Color.Black, null, 100);
+            this.category_title_lbl.Dock = System.Windows.Forms.DockStyle.Top;
+            this.category_title_lbl.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.category_title_lbl.Location = new System.Drawing.Point(0, 0);
+            this.category_title_lbl.Name = "category_title_lbl";
+            this.category_title_lbl.Size = new System.Drawing.Size(850, 30);
+            this.category_title_lbl.TabIndex = 3;
+            this.category_title_lbl.Text = "Categories";
             // 
             // order_summary_panel
             // 
             this.order_summary_panel.Background = new KimTools.WinForms.KtBrushSolid(KimTools.WinForms.KtColor.BASE_2);
             this.order_summary_panel.Border = new KimTools.WinForms.KtBrushSolid(System.Drawing.Color.Transparent);
-            this.order_summary_panel.BorderRadius = 24F;
+            this.order_summary_panel.BorderRadius = 12F;
             this.order_summary_panel.BorderStyle = System.Drawing.Drawing2D.DashStyle.Solid;
             this.order_summary_panel.BorderWidth = 0F;
+            this.order_summary_panel.Controls.Add(this.cart_itemlbl);
             this.order_summary_panel.Dock = System.Windows.Forms.DockStyle.Right;
             this.order_summary_panel.Foreground = KimTools.WinForms.KtColor.Empty;
-            this.order_summary_panel.Location = new System.Drawing.Point(771, 3);
+            this.order_summary_panel.Location = new System.Drawing.Point(862, 3);
             this.order_summary_panel.Name = "order_summary_panel";
             this.order_summary_panel.PatternColor = KimTools.WinForms.KtColor.Empty;
-            this.order_summary_panel.Size = new System.Drawing.Size(477, 598);
+            this.order_summary_panel.Size = new System.Drawing.Size(386, 598);
             this.order_summary_panel.TabIndex = 0;
             // 
             // header_panel
             // 
+            this.header_panel.BackColor = System.Drawing.Color.White;
             this.header_panel.Controls.Add(this.datetime_panel);
             this.header_panel.Controls.Add(this.profile_panel);
             this.header_panel.Controls.Add(this.exit_panel);
@@ -322,7 +276,6 @@
             // 
             // profile_panel
             // 
-            this.profile_panel.Controls.Add(this.profile_picture);
             this.profile_panel.Controls.Add(this.username_lbl);
             this.profile_panel.Dock = System.Windows.Forms.DockStyle.Right;
             this.profile_panel.Location = new System.Drawing.Point(1018, 0);
@@ -332,31 +285,16 @@
             this.profile_panel.Size = new System.Drawing.Size(151, 63);
             this.profile_panel.TabIndex = 3;
             // 
-            // profile_picture
-            // 
-            this.profile_picture.BackColor = System.Drawing.Color.Transparent;
-            this.profile_picture.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.profile_picture.Image = global::POS.Properties.Resources.people;
-            this.profile_picture.ImageBrush = ((KimTools.WinForms.KtBrushNone)(KimTools.WinForms.KtBrush.None));
-            this.profile_picture.Location = new System.Drawing.Point(3, 8);
-            this.profile_picture.Margin = new System.Windows.Forms.Padding(6);
-            this.profile_picture.Name = "profile_picture";
-            this.profile_picture.Padding = new System.Windows.Forms.Padding(3);
-            this.profile_picture.Size = new System.Drawing.Size(37, 47);
-            this.profile_picture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.profile_picture.TabIndex = 1;
-            this.profile_picture.TabStop = false;
-            // 
             // username_lbl
             // 
             this.username_lbl.Align = System.Drawing.ContentAlignment.MiddleCenter;
             this.username_lbl.Auto = false;
             this.username_lbl.Background = KimTools.WinForms.KtColor.Empty;
             this.username_lbl.Color = new KimTools.WinForms.KtColor(System.Drawing.Color.Black, null, 100);
-            this.username_lbl.Dock = System.Windows.Forms.DockStyle.Right;
-            this.username_lbl.Location = new System.Drawing.Point(40, 8);
+            this.username_lbl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.username_lbl.Location = new System.Drawing.Point(3, 8);
             this.username_lbl.Name = "username_lbl";
-            this.username_lbl.Size = new System.Drawing.Size(108, 47);
+            this.username_lbl.Size = new System.Drawing.Size(145, 47);
             this.username_lbl.TabIndex = 0;
             this.username_lbl.Text = "Moni";
             // 
@@ -412,10 +350,10 @@
             this.txt_search.AutoSizeHeight = true;
             this.txt_search.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
             this.txt_search.Bg = KimTools.WinForms.KtColor.BASE_2;
-            this.txt_search.Border = new KimTools.WinForms.KtColor("$Content", null, 25);
-            this.txt_search.BorderActive = KimTools.WinForms.KtColor.PRIMARY;
+            this.txt_search.Border = new KimTools.WinForms.KtColor(System.Drawing.Color.Silver, null, 25);
+            this.txt_search.BorderActive = new KimTools.WinForms.KtColor(System.Drawing.Color.DarkGray, null, 100);
             this.txt_search.BorderRadius = -2;
-            this.txt_search.Content = new KimTools.WinForms.KtColor("$SecondaryContent", null, 100);
+            this.txt_search.Content = new KimTools.WinForms.KtColor(System.Drawing.Color.Black, null, 100);
             this.txt_search.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txt_search.CustomIconLeft = null;
             this.txt_search.CustomIconRight = null;
@@ -468,26 +406,28 @@
             this.logo_header.TabIndex = 0;
             this.logo_header.TabStop = false;
             // 
-            // productCard1
+            // cart_itemlbl
             // 
-            this.productCard1.BackColor = System.Drawing.Color.Transparent;
-            this.productCard1.Location = new System.Drawing.Point(3, 4);
-            this.productCard1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.productCard1.Name = "productCard1";
-            this.productCard1.Padding = new System.Windows.Forms.Padding(6);
-            this.productCard1.Size = new System.Drawing.Size(208, 281);
-            this.productCard1.TabIndex = 0;
+            this.cart_itemlbl.Align = System.Drawing.ContentAlignment.MiddleLeft;
+            this.cart_itemlbl.Auto = false;
+            this.cart_itemlbl.Background = KimTools.WinForms.KtColor.Empty;
+            this.cart_itemlbl.Color = new KimTools.WinForms.KtColor(System.Drawing.Color.Black, null, 100);
+            this.cart_itemlbl.Dock = System.Windows.Forms.DockStyle.Top;
+            this.cart_itemlbl.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cart_itemlbl.Location = new System.Drawing.Point(0, 0);
+            this.cart_itemlbl.Name = "cart_itemlbl";
+            this.cart_itemlbl.Size = new System.Drawing.Size(386, 41);
+            this.cart_itemlbl.TabIndex = 0;
+            this.cart_itemlbl.Text = "Detail Items";
             // 
             // FrmMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1262, 673);
             this.Controls.Add(this.bg_panel);
             this.Foreground = new KimTools.WinForms.KtColor(System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224))))), null, 100);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
             this.Name = "FrmMain";
             this.Padding = new System.Windows.Forms.Padding(2, 2, 4, 2);
             this.ShowInTaskbar = false;
@@ -499,15 +439,14 @@
             this.body_panel.ResumeLayout(false);
             this.body_left_panel.ResumeLayout(false);
             this.product_panel.ResumeLayout(false);
+            this.list_product_panel.ResumeLayout(false);
             this.product_list_flowLayoutPanel.ResumeLayout(false);
             this.categories_panel.ResumeLayout(false);
-            this.categories_flowLayout_panel.ResumeLayout(false);
-            this.prev_category_panel.ResumeLayout(false);
-            this.next_category_panel.ResumeLayout(false);
+            this.categories_flowLayoutPanel.ResumeLayout(false);
+            this.order_summary_panel.ResumeLayout(false);
             this.header_panel.ResumeLayout(false);
             this.datetime_panel.ResumeLayout(false);
             this.profile_panel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.profile_picture)).EndInit();
             this.exit_panel.ResumeLayout(false);
             this.search_panel.ResumeLayout(false);
             this.logo_panel.ResumeLayout(false);
@@ -531,19 +470,19 @@
         private System.Windows.Forms.Panel datetime_panel;
         private KimTools.WinForms.KtLabel datetime_lbl;
         private System.Windows.Forms.Panel profile_panel;
-        private KimTools.WinForms.KtPictureBox profile_picture;
         private KimTools.WinForms.KtLabel username_lbl;
         private System.Windows.Forms.Panel body_left_panel;
         private System.Windows.Forms.Panel categories_panel;
-        private System.Windows.Forms.FlowLayoutPanel categories_flowLayout_panel;
-        private System.Windows.Forms.Panel prev_category_panel;
-        private System.Windows.Forms.Panel next_category_panel;
-        private KimTools.WinForms.KtButton next_category_btn;
-        private KimTools.WinForms.KtButton Prev_category_btn;
-        private KimTools.WinForms.KtButton Category_btn_template;
         private System.Windows.Forms.Panel product_panel;
-        private KimTools.WinForms.KtPanel product_footer_panel;
+        private Components.ProductCard productCard;
+        private KimTools.WinForms.KtLabel category_title_lbl;
+        private System.Windows.Forms.FlowLayoutPanel categories_flowLayoutPanel;
+        private Components.CategoryCard categoryCard;
         private System.Windows.Forms.FlowLayoutPanel product_list_flowLayoutPanel;
+        private Components.CategoryCard categoryCard1;
         private Components.ProductCard productCard1;
+        private System.Windows.Forms.Panel list_product_panel;
+        private KimTools.WinForms.KtLabel product_lbl;
+        private KimTools.WinForms.KtLabel cart_itemlbl;
     }
 }
