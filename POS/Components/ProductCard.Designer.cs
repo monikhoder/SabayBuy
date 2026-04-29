@@ -28,14 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.bg_panel = new KimTools.WinForms.KtPanel();
             this.body_panel = new System.Windows.Forms.Panel();
             this.varient_lbl = new System.Windows.Forms.Label();
             this.Add_to_cart_panel = new System.Windows.Forms.Panel();
             this.price_lbl = new System.Windows.Forms.Label();
-            this.ktButton1 = new KimTools.WinForms.KtButton();
+            this.Add_to_cart_btn = new KimTools.WinForms.KtButton();
             this.title_lbl = new System.Windows.Forms.Label();
             this.ProductImageUrl = new System.Windows.Forms.PictureBox();
+            this.ktTheme1 = new KimTools.WinForms.KtTheme(this.components);
             this.bg_panel.SuspendLayout();
             this.body_panel.SuspendLayout();
             this.Add_to_cart_panel.SuspendLayout();
@@ -76,7 +78,7 @@
             // 
             this.varient_lbl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.varient_lbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.varient_lbl.ForeColor = System.Drawing.SystemColors.ActiveBorder;
+            this.varient_lbl.ForeColor = System.Drawing.Color.DarkGray;
             this.varient_lbl.Location = new System.Drawing.Point(6, 44);
             this.varient_lbl.Name = "varient_lbl";
             this.varient_lbl.Size = new System.Drawing.Size(170, 69);
@@ -86,7 +88,7 @@
             // Add_to_cart_panel
             // 
             this.Add_to_cart_panel.Controls.Add(this.price_lbl);
-            this.Add_to_cart_panel.Controls.Add(this.ktButton1);
+            this.Add_to_cart_panel.Controls.Add(this.Add_to_cart_btn);
             this.Add_to_cart_panel.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.Add_to_cart_panel.Location = new System.Drawing.Point(6, 113);
             this.Add_to_cart_panel.Name = "Add_to_cart_panel";
@@ -101,32 +103,33 @@
             this.price_lbl.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.price_lbl.Location = new System.Drawing.Point(0, 0);
             this.price_lbl.Name = "price_lbl";
-            this.price_lbl.Size = new System.Drawing.Size(107, 41);
+            this.price_lbl.Size = new System.Drawing.Size(103, 41);
             this.price_lbl.TabIndex = 5;
             this.price_lbl.Text = "{Price}";
             this.price_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // ktButton1
+            // Add_to_cart_btn
             // 
-            this.ktButton1.BackColor = System.Drawing.Color.Transparent;
-            this.ktButton1.Background = new KimTools.WinForms.KtBrushSolid(System.Drawing.Color.Transparent);
-            this.ktButton1.BorderStyle = System.Drawing.Drawing2D.DashStyle.Solid;
-            this.ktButton1.BorderWidth = 0F;
-            this.ktButton1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.ktButton1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ktButton1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            this.ktButton1.Foreground = new KimTools.WinForms.KtColor(System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192))))), null, 100);
-            this.ktButton1.Icon = "tabler.outline.shopping_cart_plus";
-            this.ktButton1.IconColor = new KimTools.WinForms.KtColor(System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192))))), null, 100);
-            this.ktButton1.IconSize = 22;
-            this.ktButton1.IconStroke = 2.5D;
-            this.ktButton1.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.ktButton1.Location = new System.Drawing.Point(107, 0);
-            this.ktButton1.Name = "ktButton1";
-            this.ktButton1.Padding = new System.Windows.Forms.Padding(3);
-            this.ktButton1.Size = new System.Drawing.Size(63, 41);
-            this.ktButton1.TabIndex = 1;
-            this.ktButton1.UseVisualStyleBackColor = false;
+            this.Add_to_cart_btn.BackColor = System.Drawing.Color.Transparent;
+            this.Add_to_cart_btn.Background = new KimTools.WinForms.KtBrushGradient(KimTools.WinForms.KtColor.PRIMARY, System.Drawing.Color.Purple);
+            this.Add_to_cart_btn.BorderStyle = System.Drawing.Drawing2D.DashStyle.Solid;
+            this.Add_to_cart_btn.BorderWidth = 0F;
+            this.Add_to_cart_btn.Dock = System.Windows.Forms.DockStyle.Right;
+            this.Add_to_cart_btn.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Add_to_cart_btn.ForeColor = System.Drawing.Color.White;
+            this.Add_to_cart_btn.Foreground = new KimTools.WinForms.KtColor(System.Drawing.Color.White, null, 100);
+            this.Add_to_cart_btn.Icon = "";
+            this.Add_to_cart_btn.IconColor = new KimTools.WinForms.KtColor(System.Drawing.Color.Transparent, null, 100);
+            this.Add_to_cart_btn.IconSize = 1;
+            this.Add_to_cart_btn.IconStroke = 2.5D;
+            this.Add_to_cart_btn.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Add_to_cart_btn.Location = new System.Drawing.Point(103, 0);
+            this.Add_to_cart_btn.Name = "Add_to_cart_btn";
+            this.Add_to_cart_btn.Padding = new System.Windows.Forms.Padding(3);
+            this.Add_to_cart_btn.Size = new System.Drawing.Size(67, 41);
+            this.Add_to_cart_btn.TabIndex = 1;
+            this.Add_to_cart_btn.Text = "+";
+            this.Add_to_cart_btn.UseVisualStyleBackColor = false;
             // 
             // title_lbl
             // 
@@ -150,6 +153,25 @@
             this.ProductImageUrl.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.ProductImageUrl.TabIndex = 0;
             this.ProductImageUrl.TabStop = false;
+            // 
+            // ktTheme1
+            // 
+            this.ktTheme1.Accent = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(251)))), ((int)(((byte)(252)))));
+            this.ktTheme1.AccentContent = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.ktTheme1.Base = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.ktTheme1.BaseContent = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.ktTheme1.Error = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.ktTheme1.ErrorContent = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(228)))), ((int)(((byte)(225)))));
+            this.ktTheme1.Info = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.ktTheme1.InfoContent = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
+            this.ktTheme1.Primary = System.Drawing.Color.FromArgb(((int)(((byte)(148)))), ((int)(((byte)(0)))), ((int)(((byte)(211)))));
+            this.ktTheme1.PrimaryContent = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.ktTheme1.Secondary = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.ktTheme1.SecondaryContent = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.ktTheme1.Success = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(179)))), ((int)(((byte)(113)))));
+            this.ktTheme1.SuccessContent = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(255)))), ((int)(((byte)(240)))));
+            this.ktTheme1.Warning = System.Drawing.Color.FromArgb(((int)(((byte)(218)))), ((int)(((byte)(165)))), ((int)(((byte)(32)))));
+            this.ktTheme1.WarningContent = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(240)))));
             // 
             // ProductCard
             // 
@@ -176,7 +198,8 @@
         private System.Windows.Forms.Label title_lbl;
         private System.Windows.Forms.Panel Add_to_cart_panel;
         private System.Windows.Forms.Label varient_lbl;
-        private KimTools.WinForms.KtButton ktButton1;
+        private KimTools.WinForms.KtButton Add_to_cart_btn;
         private System.Windows.Forms.Label price_lbl;
+        private KimTools.WinForms.KtTheme ktTheme1;
     }
 }

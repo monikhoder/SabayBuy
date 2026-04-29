@@ -92,23 +92,23 @@ namespace POS
             username_lbl.Text = string.IsNullOrWhiteSpace(fullName) ? currentUser.Email : fullName;
         }
 
-        private async void exit_btn_Click(object sender, EventArgs e)
-        {
-            exit_btn.Enabled = false;
-            dateTimeTimer.Stop();
+        //private async void exit_btn_Click(object sender, EventArgs e)
+        //{
+        //    exit_btn.Enabled = false;
+        //    dateTimeTimer.Stop();
 
-            var result = await accountService.LogoutAsync();
+        //    var result = await accountService.LogoutAsync();
 
-            if (!result.Success)
-            {
-                exit_btn.Enabled = true;
-                dateTimeTimer.Start();
-                MessageBox.Show(result.ErrorMessage, "POS Logout", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+        //    if (!result.Success)
+        //    {
+        //        exit_btn.Enabled = true;
+        //        dateTimeTimer.Start();
+        //        MessageBox.Show(result.ErrorMessage, "POS Logout", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        //        return;
+        //    }
 
-            Application.Exit();
-        }
+        //    Application.Exit();
+        //}
 
         private async Task LoadProductCardsAsync(string categoryName = null)
         {
