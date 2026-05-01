@@ -29,6 +29,12 @@ namespace POS
         public FrmMain()
         {
             InitializeComponent();
+
+            if (IsInDesignMode())
+            {
+                return;
+            }
+
             ConfigureProductListLayout();
 
             UpdateCurrentUserLabel();
@@ -42,6 +48,12 @@ namespace POS
             searchTimer.Interval = 350;
             searchTimer.Tick += SearchTimer_Tick;
             txt_search.TextChanged += txt_search_TextChanged;
+            orders1.OrderPlaced += orders1_OrderPlaced;
+        }
+
+        private bool IsInDesignMode()
+        {
+            return LicenseManager.UsageMode == LicenseUsageMode.Designtime || DesignMode;
         }
 
         private void ConfigureProductListLayout()
@@ -91,25 +103,6 @@ namespace POS
             var fullName = $"{currentUser.FirstName} {currentUser.LastName}".Trim();
             username_lbl.Text = string.IsNullOrWhiteSpace(fullName) ? currentUser.Email : fullName;
         }
-
-        //private async void exit_btn_Click(object sender, EventArgs e)
-        //{
-        //    exit_btn.Enabled = false;
-        //    dateTimeTimer.Stop();
-
-        //    var result = await accountService.LogoutAsync();
-
-        //    if (!result.Success)
-        //    {
-        //        exit_btn.Enabled = true;
-        //        dateTimeTimer.Start();
-        //        MessageBox.Show(result.ErrorMessage, "POS Logout", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-        //        return;
-        //    }
-
-        //    Application.Exit();
-        //}
-
         private async Task LoadProductCardsAsync(string categoryName = null)
         {
             var queryParams = new POSProductQueryParams
@@ -156,6 +149,7 @@ namespace POS
                 };
 
                 card.SetProduct(product);
+                card.ProductSelected += ProductCard_ProductSelected;
 
                 product_list_flowLayoutPanel.Controls.Add(card);
             }
@@ -175,7 +169,7 @@ namespace POS
 
             var templateCard = categoryCard1;
             var categories = result.Data ?? new List<CategoryDto>();
-
+            var parentCategories = categories.Where(c => c.ParentCategoryId == null).ToList();
             PrepareCategoryHorizontalScroll(templateCard.Size, templateCard.Margin);
             categories_flowLayoutPanel.SuspendLayout();
             categories_flowLayoutPanel.Controls.Clear();
@@ -187,8 +181,9 @@ namespace POS
 
             var allCategoryCard = CreateCategoryCard(templateCard, new CategoryDto
             {
+                
                 CategoryName = "All Categories",
-                ProductCount = categories.Sum(category => category.ProductCount)
+                ProductCount = parentCategories.Sum(category => category.ProductCount)
             });
             allCategoryCard.SetSelected(true);
             AttachCategoryCardClickHandlers(allCategoryCard);
@@ -318,6 +313,16 @@ namespace POS
             }
 
             MessageBox.Show($"{category.CategoryName} ({category.ProductCount} products)", "Selected Category", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void ProductCard_ProductSelected(POSProductVariantDto product)
+        {
+            orders1.AddProduct(product);
+        }
+
+        private async void orders1_OrderPlaced(object sender, EventArgs e)
+        {
+            await LoadProductCardsAsync(selectedCategoryName);
         }
     }
 }

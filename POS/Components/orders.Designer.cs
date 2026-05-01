@@ -32,6 +32,7 @@
             this.items_lbl = new KimTools.WinForms.KtLabel();
             this.cart_panel = new System.Windows.Forms.Panel();
             this.cart_flowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.cartItem1 = new POS.Components.CartItem();
             this.amount_panel = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.total_pric_lbl = new KimTools.WinForms.KtLabel();
@@ -43,22 +44,14 @@
             this.total_item_panel = new System.Windows.Forms.Panel();
             this.items_total_lbl = new KimTools.WinForms.KtLabel();
             this.ktLabel1 = new KimTools.WinForms.KtLabel();
-            this.paymentlbl = new KimTools.WinForms.KtLabel();
-            this.payment_flowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
-            this.cash_btn = new KimTools.WinForms.KtButton();
-            this.ktButton2 = new KimTools.WinForms.KtButton();
             this.checkout_btn = new KimTools.WinForms.KtButton();
-            this.payment_panel = new System.Windows.Forms.Panel();
             this.ktTheme1 = new KimTools.WinForms.KtTheme(this.components);
-            this.cartItem1 = new POS.Components.CartItem();
             this.cart_panel.SuspendLayout();
             this.cart_flowLayoutPanel.SuspendLayout();
             this.amount_panel.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
             this.total_item_panel.SuspendLayout();
-            this.payment_flowLayoutPanel.SuspendLayout();
-            this.payment_panel.SuspendLayout();
             this.SuspendLayout();
             // 
             // items_lbl
@@ -98,6 +91,15 @@
             this.cart_flowLayoutPanel.TabIndex = 0;
             this.cart_flowLayoutPanel.WrapContents = false;
             // 
+            // cartItem1
+            // 
+            this.cartItem1.BackColor = System.Drawing.Color.Transparent;
+            this.cartItem1.Location = new System.Drawing.Point(5, 5);
+            this.cartItem1.Name = "cartItem1";
+            this.cartItem1.Padding = new System.Windows.Forms.Padding(5);
+            this.cartItem1.Size = new System.Drawing.Size(459, 128);
+            this.cartItem1.TabIndex = 0;
+            // 
             // amount_panel
             // 
             this.amount_panel.Controls.Add(this.panel2);
@@ -105,7 +107,7 @@
             this.amount_panel.Controls.Add(this.panel1);
             this.amount_panel.Controls.Add(this.total_item_panel);
             this.amount_panel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.amount_panel.Location = new System.Drawing.Point(0, 412);
+            this.amount_panel.Location = new System.Drawing.Point(0, 517);
             this.amount_panel.Name = "amount_panel";
             this.amount_panel.Size = new System.Drawing.Size(469, 150);
             this.amount_panel.TabIndex = 2;
@@ -239,73 +241,6 @@
             this.ktLabel1.TabIndex = 0;
             this.ktLabel1.Text = "Items";
             // 
-            // paymentlbl
-            // 
-            this.paymentlbl.Align = System.Drawing.ContentAlignment.MiddleLeft;
-            this.paymentlbl.Auto = false;
-            this.paymentlbl.Background = KimTools.WinForms.KtColor.Empty;
-            this.paymentlbl.Color = new KimTools.WinForms.KtColor(System.Drawing.Color.Black, null, 100);
-            this.paymentlbl.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.paymentlbl.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.paymentlbl.Location = new System.Drawing.Point(0, 562);
-            this.paymentlbl.Name = "paymentlbl";
-            this.paymentlbl.Size = new System.Drawing.Size(469, 37);
-            this.paymentlbl.TabIndex = 3;
-            this.paymentlbl.Text = "Payment Method";
-            // 
-            // payment_flowLayoutPanel
-            // 
-            this.payment_flowLayoutPanel.Controls.Add(this.cash_btn);
-            this.payment_flowLayoutPanel.Controls.Add(this.ktButton2);
-            this.payment_flowLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.payment_flowLayoutPanel.Location = new System.Drawing.Point(0, 0);
-            this.payment_flowLayoutPanel.Name = "payment_flowLayoutPanel";
-            this.payment_flowLayoutPanel.Padding = new System.Windows.Forms.Padding(2);
-            this.payment_flowLayoutPanel.Size = new System.Drawing.Size(469, 68);
-            this.payment_flowLayoutPanel.TabIndex = 4;
-            // 
-            // cash_btn
-            // 
-            this.cash_btn.BackColor = System.Drawing.Color.Transparent;
-            this.cash_btn.Background = new KimTools.WinForms.KtBrushSolid(System.Drawing.Color.White);
-            this.cash_btn.Border = new KimTools.WinForms.KtBrushSolid(KimTools.WinForms.KtColor.PRIMARY);
-            this.cash_btn.BorderStyle = System.Drawing.Drawing2D.DashStyle.Solid;
-            this.cash_btn.BorderWidth = 2F;
-            this.cash_btn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cash_btn.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            this.cash_btn.Foreground = KimTools.WinForms.KtColor.PRIMARY;
-            this.cash_btn.Icon = "";
-            this.cash_btn.IconColor = KimTools.WinForms.KtColor.PRIMARY;
-            this.cash_btn.IconSize = 15;
-            this.cash_btn.IconStroke = 2.5D;
-            this.cash_btn.Location = new System.Drawing.Point(5, 5);
-            this.cash_btn.Name = "cash_btn";
-            this.cash_btn.Size = new System.Drawing.Size(120, 50);
-            this.cash_btn.TabIndex = 0;
-            this.cash_btn.Text = "Cash";
-            this.cash_btn.UseVisualStyleBackColor = false;
-            // 
-            // ktButton2
-            // 
-            this.ktButton2.BackColor = System.Drawing.Color.Transparent;
-            this.ktButton2.Background = new KimTools.WinForms.KtBrushSolid(System.Drawing.Color.White);
-            this.ktButton2.Border = new KimTools.WinForms.KtBrushSolid(KimTools.WinForms.KtColor.SECONDARY);
-            this.ktButton2.BorderStyle = System.Drawing.Drawing2D.DashStyle.Solid;
-            this.ktButton2.BorderWidth = 2F;
-            this.ktButton2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ktButton2.ForeColor = System.Drawing.Color.DimGray;
-            this.ktButton2.Foreground = new KimTools.WinForms.KtColor(System.Drawing.Color.DimGray, null, 100);
-            this.ktButton2.Icon = "";
-            this.ktButton2.IconColor = new KimTools.WinForms.KtColor(System.Drawing.Color.Black, null, 100);
-            this.ktButton2.IconSize = 15;
-            this.ktButton2.IconStroke = 2.5D;
-            this.ktButton2.Location = new System.Drawing.Point(131, 5);
-            this.ktButton2.Name = "ktButton2";
-            this.ktButton2.Size = new System.Drawing.Size(120, 50);
-            this.ktButton2.TabIndex = 1;
-            this.ktButton2.Text = "QR";
-            this.ktButton2.UseVisualStyleBackColor = false;
-            // 
             // checkout_btn
             // 
             this.checkout_btn.BackColor = System.Drawing.Color.Transparent;
@@ -327,15 +262,6 @@
             this.checkout_btn.Text = "Checkout";
             this.checkout_btn.UseVisualStyleBackColor = false;
             // 
-            // payment_panel
-            // 
-            this.payment_panel.Controls.Add(this.payment_flowLayoutPanel);
-            this.payment_panel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.payment_panel.Location = new System.Drawing.Point(0, 599);
-            this.payment_panel.Name = "payment_panel";
-            this.payment_panel.Size = new System.Drawing.Size(469, 68);
-            this.payment_panel.TabIndex = 6;
-            // 
             // ktTheme1
             // 
             this.ktTheme1.Accent = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(251)))), ((int)(((byte)(252)))));
@@ -355,22 +281,11 @@
             this.ktTheme1.Warning = System.Drawing.Color.FromArgb(((int)(((byte)(218)))), ((int)(((byte)(165)))), ((int)(((byte)(32)))));
             this.ktTheme1.WarningContent = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(240)))));
             // 
-            // cartItem1
-            // 
-            this.cartItem1.BackColor = System.Drawing.Color.Transparent;
-            this.cartItem1.Location = new System.Drawing.Point(5, 5);
-            this.cartItem1.Name = "cartItem1";
-            this.cartItem1.Padding = new System.Windows.Forms.Padding(5);
-            this.cartItem1.Size = new System.Drawing.Size(459, 128);
-            this.cartItem1.TabIndex = 0;
-            // 
             // orders
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.amount_panel);
-            this.Controls.Add(this.paymentlbl);
-            this.Controls.Add(this.payment_panel);
             this.Controls.Add(this.checkout_btn);
             this.Controls.Add(this.cart_panel);
             this.Controls.Add(this.items_lbl);
@@ -382,8 +297,6 @@
             this.panel2.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.total_item_panel.ResumeLayout(false);
-            this.payment_flowLayoutPanel.ResumeLayout(false);
-            this.payment_panel.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -403,12 +316,7 @@
         private KimTools.WinForms.KtLabel total_pric_lbl;
         private KimTools.WinForms.KtLabel ktLabel3;
         private KimTools.WinForms.KtDivider ktDivider1;
-        private KimTools.WinForms.KtLabel paymentlbl;
-        private System.Windows.Forms.FlowLayoutPanel payment_flowLayoutPanel;
-        private KimTools.WinForms.KtButton cash_btn;
         private KimTools.WinForms.KtButton checkout_btn;
-        private System.Windows.Forms.Panel payment_panel;
-        private KimTools.WinForms.KtButton ktButton2;
         private KimTools.WinForms.KtTheme ktTheme1;
         private System.Windows.Forms.FlowLayoutPanel cart_flowLayoutPanel;
         private CartItem cartItem1;

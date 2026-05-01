@@ -13,6 +13,7 @@ public class OrderSpecParams
         set => _pageSize = (value > MaxPageSize) ? MaxPageSize : value;
     }
     public string? Status { get; set; }
+    public string? Source { get; set; }
     public string? Sort { get; set; }
     public string? Search {get; set;}
 }

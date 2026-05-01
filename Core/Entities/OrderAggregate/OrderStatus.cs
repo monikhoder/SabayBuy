@@ -17,6 +17,6 @@ namespace Core.Entities.OrderAggregate
         ReceivedOrder,
         Cancelled,
         Refunded,
-        Complete
+        Completed
     }
 }

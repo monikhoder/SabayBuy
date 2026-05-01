@@ -4,4 +4,5 @@ export class OrderParams {
   pageSize: number = this.defaultPageSize;
   status: string = '';
   search: string = '';
+  source: string = '';
 }

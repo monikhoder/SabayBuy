@@ -1,5 +1,13 @@
 [
   {
+    "ShortName": "Store-Pickup",
+    "DeliveryTime": "Immediate pickup",
+    "Description": "Pickup your order directly from the store",
+    "Icon": "https://cdn-icons-png.flaticon.com/512/6947/6947616.png",
+    "Price": 0,
+    "AvailableZipcodes": [ ]
+  },
+  {
     "ShortName": "Standart-PP",
     "DeliveryTime": "1-2 Days",
     "Description": "Delivery the next day after order",

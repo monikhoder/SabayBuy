@@ -29,13 +29,14 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmLogin));
             this.top_panel = new System.Windows.Forms.Panel();
             this.icon = new KimTools.WinForms.KtPictureBox();
             this.body_panel = new System.Windows.Forms.Panel();
+            this.btn_login = new KimTools.WinForms.KtButton();
+            this.Exit_btn = new KimTools.WinForms.KtButton();
             this.lbl_password = new KimTools.WinForms.KtLabel();
             this.lbl_email = new KimTools.WinForms.KtLabel();
-            this.btn_login = new KimTools.WinForms.KtButton();
-            this.btn_exit = new KimTools.WinForms.KtButton();
             this.txtPassword = new KimTools.WinForms.KtTextBox();
             this.txtEmail = new KimTools.WinForms.KtTextBox();
             this.ktTheme = new KimTools.WinForms.KtTheme(this.components);
@@ -70,10 +71,10 @@
             // 
             // body_panel
             // 
+            this.body_panel.Controls.Add(this.btn_login);
+            this.body_panel.Controls.Add(this.Exit_btn);
             this.body_panel.Controls.Add(this.lbl_password);
             this.body_panel.Controls.Add(this.lbl_email);
-            this.body_panel.Controls.Add(this.btn_login);
-            this.body_panel.Controls.Add(this.btn_exit);
             this.body_panel.Controls.Add(this.txtPassword);
             this.body_panel.Controls.Add(this.txtEmail);
             this.body_panel.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -81,6 +82,48 @@
             this.body_panel.Name = "body_panel";
             this.body_panel.Size = new System.Drawing.Size(430, 426);
             this.body_panel.TabIndex = 1;
+            // 
+            // btn_login
+            // 
+            this.btn_login.BackColor = System.Drawing.Color.Transparent;
+            this.btn_login.Background = new KimTools.WinForms.KtBrushSolid(System.Drawing.Color.BlueViolet);
+            this.btn_login.BorderStyle = System.Drawing.Drawing2D.DashStyle.Solid;
+            this.btn_login.BorderWidth = 2F;
+            this.btn_login.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_login.ForeColor = System.Drawing.Color.White;
+            this.btn_login.Foreground = new KimTools.WinForms.KtColor(System.Drawing.Color.White, null, 100);
+            this.btn_login.Icon = "";
+            this.btn_login.IconColor = KimTools.WinForms.KtColor.Empty;
+            this.btn_login.IconSize = 16;
+            this.btn_login.IconStroke = 2.5D;
+            this.btn_login.Location = new System.Drawing.Point(259, 243);
+            this.btn_login.Name = "btn_login";
+            this.btn_login.Size = new System.Drawing.Size(120, 48);
+            this.btn_login.TabIndex = 7;
+            this.btn_login.Text = "Login";
+            this.btn_login.UseVisualStyleBackColor = false;
+            this.btn_login.Click += new System.EventHandler(this.btn_login_Click);
+            // 
+            // Exit_btn
+            // 
+            this.Exit_btn.BackColor = System.Drawing.Color.Transparent;
+            this.Exit_btn.Background = new KimTools.WinForms.KtBrushSolid(System.Drawing.Color.BlueViolet);
+            this.Exit_btn.BorderStyle = System.Drawing.Drawing2D.DashStyle.Solid;
+            this.Exit_btn.BorderWidth = 2F;
+            this.Exit_btn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Exit_btn.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.Exit_btn.Foreground = KimTools.WinForms.KtColor.Empty;
+            this.Exit_btn.Icon = "";
+            this.Exit_btn.IconColor = KimTools.WinForms.KtColor.Empty;
+            this.Exit_btn.IconSize = 16;
+            this.Exit_btn.IconStroke = 2.5D;
+            this.Exit_btn.Location = new System.Drawing.Point(48, 243);
+            this.Exit_btn.Name = "Exit_btn";
+            this.Exit_btn.Size = new System.Drawing.Size(120, 48);
+            this.Exit_btn.TabIndex = 6;
+            this.Exit_btn.Text = "Exit";
+            this.Exit_btn.UseVisualStyleBackColor = false;
+            this.Exit_btn.Click += new System.EventHandler(this.btn_exit_Click);
             // 
             // lbl_password
             // 
@@ -109,48 +152,6 @@
             this.lbl_email.TabIndex = 4;
             this.lbl_email.Text = "Email can not empty";
             this.lbl_email.Visible = false;
-            // 
-            // btn_login
-            // 
-            this.btn_login.BackColor = System.Drawing.Color.Transparent;
-            this.btn_login.Background = new KimTools.WinForms.KtBrushGradient(KimTools.WinForms.KtColor.PRIMARY, KimTools.WinForms.KtColor.PRIMARY);
-            this.btn_login.BorderStyle = System.Drawing.Drawing2D.DashStyle.Solid;
-            this.btn_login.BorderWidth = 2F;
-            this.btn_login.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_login.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.btn_login.Foreground = KimTools.WinForms.KtColor.Empty;
-            this.btn_login.Icon = "";
-            this.btn_login.IconColor = KimTools.WinForms.KtColor.Empty;
-            this.btn_login.IconSize = 16;
-            this.btn_login.IconStroke = 2.5D;
-            this.btn_login.Location = new System.Drawing.Point(259, 243);
-            this.btn_login.Name = "btn_login";
-            this.btn_login.Size = new System.Drawing.Size(120, 48);
-            this.btn_login.TabIndex = 3;
-            this.btn_login.Text = "Login";
-            this.btn_login.UseVisualStyleBackColor = false;
-            this.btn_login.Click += new System.EventHandler(this.btn_login_Click);
-            // 
-            // btn_exit
-            // 
-            this.btn_exit.BackColor = System.Drawing.Color.Transparent;
-            this.btn_exit.Background = new KimTools.WinForms.KtBrushGradient(KimTools.WinForms.KtColor.PRIMARY, KimTools.WinForms.KtColor.PRIMARY);
-            this.btn_exit.BorderStyle = System.Drawing.Drawing2D.DashStyle.Solid;
-            this.btn_exit.BorderWidth = 2F;
-            this.btn_exit.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_exit.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.btn_exit.Foreground = KimTools.WinForms.KtColor.Empty;
-            this.btn_exit.Icon = "";
-            this.btn_exit.IconColor = KimTools.WinForms.KtColor.Empty;
-            this.btn_exit.IconSize = 16;
-            this.btn_exit.IconStroke = 2.5D;
-            this.btn_exit.Location = new System.Drawing.Point(48, 243);
-            this.btn_exit.Name = "btn_exit";
-            this.btn_exit.Size = new System.Drawing.Size(120, 48);
-            this.btn_exit.TabIndex = 2;
-            this.btn_exit.Text = "Exit";
-            this.btn_exit.UseVisualStyleBackColor = false;
-            this.btn_exit.Click += new System.EventHandler(this.btn_exit_Click);
             // 
             // txtPassword
             // 
@@ -268,6 +269,7 @@
             this.Controls.Add(this.body_panel);
             this.Controls.Add(this.top_panel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FrmLogin";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "Form1";
@@ -284,12 +286,12 @@
         private KimTools.WinForms.KtPictureBox icon;
         private System.Windows.Forms.Panel body_panel;
         private KimTools.WinForms.KtTextBox txtEmail;
-        public KimTools.WinForms.KtTheme ktTheme;
         private KimTools.WinForms.KtTextBox txtPassword;
-        private KimTools.WinForms.KtButton btn_login;
-        private KimTools.WinForms.KtButton btn_exit;
         private KimTools.WinForms.KtLabel lbl_email;
         private KimTools.WinForms.KtLabel lbl_password;
+        private KimTools.WinForms.KtTheme ktTheme;
+        private KimTools.WinForms.KtButton Exit_btn;
+        private KimTools.WinForms.KtButton btn_login;
     }
 }
 

@@ -39,6 +39,7 @@ export class OrdersComponent implements OnInit {
 
   getOrders() {
     //this.orderParams.search = '8958'; order ID
+    this.orderParams.source = 'Web';
     this.adminService.getOrders(this.orderParams).subscribe({
       next: (response: Pagination<Order>) => {
         this.orders = response.data;

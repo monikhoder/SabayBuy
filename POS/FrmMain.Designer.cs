@@ -29,9 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            KimTools.WinForms.KtBrushNone ktBrushNone1 = new KimTools.WinForms.KtBrushNone();
-            KimTools.WinForms.KtBrushSolid ktBrushSolid1 = new KimTools.WinForms.KtBrushSolid();
-            KimTools.WinForms.KtBrushSolid ktBrushSolid2 = new KimTools.WinForms.KtBrushSolid();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
             this.MainTheme = new KimTools.WinForms.KtTheme(this.components);
             this.bg_panel = new System.Windows.Forms.Panel();
             this.body_panel = new System.Windows.Forms.Panel();
@@ -39,6 +37,7 @@
             this.product_panel = new System.Windows.Forms.Panel();
             this.list_product_panel = new System.Windows.Forms.Panel();
             this.product_list_flowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.productCard1 = new POS.Components.ProductCard();
             this.product_lbl = new KimTools.WinForms.KtLabel();
             this.categories_panel = new System.Windows.Forms.Panel();
             this.categories_flowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
@@ -54,7 +53,6 @@
             this.logo_header = new KimTools.WinForms.KtPictureBox();
             this.order_summary_panel = new KimTools.WinForms.KtPanel();
             this.orders1 = new POS.Components.orders();
-            this.productCard1 = new POS.Components.ProductCard();
             this.bg_panel.SuspendLayout();
             this.body_panel.SuspendLayout();
             this.body_left_panel.SuspendLayout();
@@ -152,12 +150,22 @@
             this.product_list_flowLayoutPanel.Size = new System.Drawing.Size(842, 438);
             this.product_list_flowLayoutPanel.TabIndex = 6;
             // 
+            // productCard1
+            // 
+            this.productCard1.BackColor = System.Drawing.Color.Transparent;
+            this.productCard1.Location = new System.Drawing.Point(3, 4);
+            this.productCard1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.productCard1.Name = "productCard1";
+            this.productCard1.Padding = new System.Windows.Forms.Padding(6);
+            this.productCard1.Size = new System.Drawing.Size(208, 281);
+            this.productCard1.TabIndex = 0;
+            // 
             // product_lbl
             // 
             this.product_lbl.Align = System.Drawing.ContentAlignment.MiddleLeft;
             this.product_lbl.Auto = false;
-            this.product_lbl.Background = ((KimTools.WinForms.KtColor)(KimTools.WinForms.KtColor.Empty));
-            this.product_lbl.Color = ((KimTools.WinForms.KtColor)(new KimTools.WinForms.KtColor(System.Drawing.Color.Black, null, 100)));
+            this.product_lbl.Background = KimTools.WinForms.KtColor.Empty;
+            this.product_lbl.Color = new KimTools.WinForms.KtColor(System.Drawing.Color.Black, null, 100);
             this.product_lbl.Dock = System.Windows.Forms.DockStyle.Top;
             this.product_lbl.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.product_lbl.Location = new System.Drawing.Point(0, 136);
@@ -201,8 +209,8 @@
             // 
             this.category_title_lbl.Align = System.Drawing.ContentAlignment.TopLeft;
             this.category_title_lbl.Auto = false;
-            this.category_title_lbl.Background = ((KimTools.WinForms.KtColor)(KimTools.WinForms.KtColor.Empty));
-            this.category_title_lbl.Color = ((KimTools.WinForms.KtColor)(new KimTools.WinForms.KtColor(System.Drawing.Color.Black, null, 100)));
+            this.category_title_lbl.Background = KimTools.WinForms.KtColor.Empty;
+            this.category_title_lbl.Color = new KimTools.WinForms.KtColor(System.Drawing.Color.Black, null, 100);
             this.category_title_lbl.Dock = System.Windows.Forms.DockStyle.Top;
             this.category_title_lbl.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.category_title_lbl.Location = new System.Drawing.Point(0, 0);
@@ -240,8 +248,8 @@
             // 
             this.datetime_lbl.Align = System.Drawing.ContentAlignment.TopCenter;
             this.datetime_lbl.Auto = false;
-            this.datetime_lbl.Background = ((KimTools.WinForms.KtColor)(KimTools.WinForms.KtColor.Empty));
-            this.datetime_lbl.Color = ((KimTools.WinForms.KtColor)(KimTools.WinForms.KtColor.SECONDARY));
+            this.datetime_lbl.Background = KimTools.WinForms.KtColor.Empty;
+            this.datetime_lbl.Color = KimTools.WinForms.KtColor.SECONDARY;
             this.datetime_lbl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.datetime_lbl.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.datetime_lbl.Location = new System.Drawing.Point(1, 32);
@@ -254,8 +262,8 @@
             // 
             this.username_lbl.Align = System.Drawing.ContentAlignment.BottomCenter;
             this.username_lbl.Auto = false;
-            this.username_lbl.Background = ((KimTools.WinForms.KtColor)(KimTools.WinForms.KtColor.Empty));
-            this.username_lbl.Color = ((KimTools.WinForms.KtColor)(new KimTools.WinForms.KtColor(System.Drawing.Color.Black, null, 100)));
+            this.username_lbl.Background = KimTools.WinForms.KtColor.Empty;
+            this.username_lbl.Color = new KimTools.WinForms.KtColor(System.Drawing.Color.Black, null, 100);
             this.username_lbl.Dock = System.Windows.Forms.DockStyle.Top;
             this.username_lbl.Location = new System.Drawing.Point(1, 1);
             this.username_lbl.Name = "username_lbl";
@@ -282,11 +290,11 @@
             this.txt_search.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
             this.txt_search.AutoSizeHeight = true;
             this.txt_search.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
-            this.txt_search.Bg = ((KimTools.WinForms.KtColor)(KimTools.WinForms.KtColor.BASE_2));
-            this.txt_search.Border = ((KimTools.WinForms.KtColor)(new KimTools.WinForms.KtColor(System.Drawing.Color.Silver, null, 25)));
-            this.txt_search.BorderActive = ((KimTools.WinForms.KtColor)(new KimTools.WinForms.KtColor(System.Drawing.Color.DarkGray, null, 100)));
+            this.txt_search.Bg = KimTools.WinForms.KtColor.BASE_2;
+            this.txt_search.Border = new KimTools.WinForms.KtColor(System.Drawing.Color.Silver, null, 25);
+            this.txt_search.BorderActive = new KimTools.WinForms.KtColor(System.Drawing.Color.DarkGray, null, 100);
             this.txt_search.BorderRadius = -2;
-            this.txt_search.Content = ((KimTools.WinForms.KtColor)(new KimTools.WinForms.KtColor(System.Drawing.Color.Black, null, 100)));
+            this.txt_search.Content = new KimTools.WinForms.KtColor(System.Drawing.Color.Black, null, 100);
             this.txt_search.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txt_search.CustomIconLeft = null;
             this.txt_search.CustomIconRight = null;
@@ -331,7 +339,7 @@
             | System.Windows.Forms.AnchorStyles.Left)));
             this.logo_header.BackColor = System.Drawing.Color.Transparent;
             this.logo_header.Image = global::POS.Properties.Resources.sabay_buy_logo_header1;
-            this.logo_header.ImageBrush = ktBrushNone1;
+            this.logo_header.ImageBrush = ((KimTools.WinForms.KtBrushNone)(KimTools.WinForms.KtBrush.None));
             this.logo_header.Location = new System.Drawing.Point(0, 0);
             this.logo_header.Name = "logo_header";
             this.logo_header.Size = new System.Drawing.Size(124, 63);
@@ -341,10 +349,8 @@
             // 
             // order_summary_panel
             // 
-            ktBrushSolid1.Color = ((KimTools.WinForms.KtColor)(KimTools.WinForms.KtColor.BASE_2));
-            this.order_summary_panel.Background = ktBrushSolid1;
-            ktBrushSolid2.Color = ((KimTools.WinForms.KtColor)(new KimTools.WinForms.KtColor(System.Drawing.Color.Silver, null, 100)));
-            this.order_summary_panel.Border = ktBrushSolid2;
+            this.order_summary_panel.Background = new KimTools.WinForms.KtBrushSolid(KimTools.WinForms.KtColor.BASE_2);
+            this.order_summary_panel.Border = new KimTools.WinForms.KtBrushSolid(System.Drawing.Color.Silver);
             this.order_summary_panel.BorderEdges.BottomLeft = false;
             this.order_summary_panel.BorderEdges.BottomRight = false;
             this.order_summary_panel.BorderEdges.TopLeft = false;
@@ -354,12 +360,12 @@
             this.order_summary_panel.BorderWidth = 2F;
             this.order_summary_panel.Controls.Add(this.orders1);
             this.order_summary_panel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.order_summary_panel.Foreground = ((KimTools.WinForms.KtColor)(KimTools.WinForms.KtColor.Empty));
+            this.order_summary_panel.Foreground = KimTools.WinForms.KtColor.Empty;
             this.order_summary_panel.Location = new System.Drawing.Point(842, 0);
             this.order_summary_panel.Margin = new System.Windows.Forms.Padding(0);
             this.order_summary_panel.Name = "order_summary_panel";
             this.order_summary_panel.Padding = new System.Windows.Forms.Padding(12);
-            this.order_summary_panel.PatternColor = ((KimTools.WinForms.KtColor)(KimTools.WinForms.KtColor.Empty));
+            this.order_summary_panel.PatternColor = KimTools.WinForms.KtColor.Empty;
             this.order_summary_panel.Size = new System.Drawing.Size(420, 673);
             this.order_summary_panel.TabIndex = 0;
             // 
@@ -372,23 +378,15 @@
             this.orders1.Size = new System.Drawing.Size(396, 649);
             this.orders1.TabIndex = 0;
             // 
-            // productCard1
-            // 
-            this.productCard1.BackColor = System.Drawing.Color.Transparent;
-            this.productCard1.Location = new System.Drawing.Point(3, 4);
-            this.productCard1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.productCard1.Name = "productCard1";
-            this.productCard1.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            this.productCard1.Size = new System.Drawing.Size(208, 281);
-            this.productCard1.TabIndex = 0;
-            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1262, 673);
             this.Controls.Add(this.bg_panel);
-            this.Foreground = ((KimTools.WinForms.KtColor)(new KimTools.WinForms.KtColor(System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224))))), null, 100)));
+            this.Foreground = new KimTools.WinForms.KtColor(System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224))))), null, 100);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FrmMain";
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
@@ -414,7 +412,6 @@
         }
 
         #endregion
-        protected KimTools.WinForms.KtTheme MainTheme;
         private System.Windows.Forms.Panel bg_panel;
         private System.Windows.Forms.Panel body_panel;
         private KimTools.WinForms.KtPanel order_summary_panel;
@@ -439,5 +436,6 @@
         private KimTools.WinForms.KtLabel product_lbl;
         private Components.orders orders1;
         private Components.ProductCard productCard1;
+        private KimTools.WinForms.KtTheme MainTheme;
     }
 }

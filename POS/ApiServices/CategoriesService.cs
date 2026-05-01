@@ -48,7 +48,7 @@ namespace POS.ApiServices
         private static HttpClient CreateClient()
         {
             var client = new HttpClient();
-            client.BaseAddress = new Uri(ConfigurationManager.AppSettings["ApiBaseUrl"]);
+            client.BaseAddress = POSAccountService.GetApiBaseAddress();
             client.Timeout = TimeSpan.FromSeconds(30);
             return client;
         }

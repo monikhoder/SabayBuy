@@ -13,13 +13,17 @@ public class POSProductSpecification : BaseSpecification<ProductVariant>
                 x.Product.ProductName.ToLower().Contains(specParams.Search.ToLower()) ||
                 x.Sku.ToLower().Contains(specParams.Search.ToLower())) &&
             (specParams.Categories.Count == 0 ||
-                (x.Product.Category != null && specParams.Categories.Contains(x.Product.Category.CategoryName))) &&
+                (x.Product.Category != null &&
+                    (specParams.Categories.Contains(x.Product.Category.CategoryName) ||
+                     (x.Product.Category.ParentCategory != null &&
+                      specParams.Categories.Contains(x.Product.Category.ParentCategory.CategoryName))))) &&
             (specParams.Brands.Count == 0 || specParams.Brands.Contains(x.Product.Brand)) &&
             (!specParams.InStockOnly || x.StockQuantity > 0)
         )
     {
         AddInclude(x => x.Product!);
         AddInclude("Product.Category");
+        AddInclude("Product.Category.ParentCategory");
         AddInclude(x => x.Attributes);
         ApplyPaging(specParams.PageSize * (specParams.PageIndex - 1), specParams.PageSize);
 

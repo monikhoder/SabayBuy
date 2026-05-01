@@ -40,6 +40,7 @@
             this.product_namelbl = new KimTools.WinForms.KtLabel();
             this.product_Url = new System.Windows.Forms.PictureBox();
             this.ktDivider1 = new KimTools.WinForms.KtDivider();
+            this.Delete_btn = new KimTools.WinForms.KtButton();
             this.bg_panel.SuspendLayout();
             this.panel1.SuspendLayout();
             this.Qty_txt_panel.SuspendLayout();
@@ -91,13 +92,14 @@
             // 
             // Qty_txt_panel
             // 
+            this.Qty_txt_panel.Controls.Add(this.Delete_btn);
             this.Qty_txt_panel.Controls.Add(this.qty_txt);
             this.Qty_txt_panel.Controls.Add(this.qtylbl);
             this.Qty_txt_panel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Qty_txt_panel.Location = new System.Drawing.Point(1, 1);
             this.Qty_txt_panel.Name = "Qty_txt_panel";
             this.Qty_txt_panel.Padding = new System.Windows.Forms.Padding(5, 5, 6, 5);
-            this.Qty_txt_panel.Size = new System.Drawing.Size(159, 47);
+            this.Qty_txt_panel.Size = new System.Drawing.Size(230, 47);
             this.Qty_txt_panel.TabIndex = 5;
             // 
             // qty_txt
@@ -109,15 +111,15 @@
             this.qty_txt.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
             this.qty_txt.AutoSizeHeight = true;
             this.qty_txt.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
-            this.qty_txt.Bg = ((KimTools.WinForms.KtColor)(new KimTools.WinForms.KtColor(System.Drawing.Color.White, null, 100)));
-            this.qty_txt.Border = ((KimTools.WinForms.KtColor)(new KimTools.WinForms.KtColor(System.Drawing.Color.Transparent, null, 100)));
-            this.qty_txt.BorderActive = ((KimTools.WinForms.KtColor)(new KimTools.WinForms.KtColor(System.Drawing.Color.Transparent, null, 100)));
-            this.qty_txt.Content = ((KimTools.WinForms.KtColor)(new KimTools.WinForms.KtColor(System.Drawing.Color.Black, null, 100)));
+            this.qty_txt.Bg = new KimTools.WinForms.KtColor(System.Drawing.Color.White, null, 100);
+            this.qty_txt.Border = new KimTools.WinForms.KtColor(System.Drawing.Color.Transparent, null, 100);
+            this.qty_txt.BorderActive = new KimTools.WinForms.KtColor(System.Drawing.Color.Transparent, null, 100);
+            this.qty_txt.Content = new KimTools.WinForms.KtColor(System.Drawing.Color.Black, null, 100);
             this.qty_txt.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.qty_txt.CustomIconLeft = null;
             this.qty_txt.CustomIconRight = null;
             this.qty_txt.DefaultFont = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.qty_txt.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.qty_txt.Dock = System.Windows.Forms.DockStyle.Left;
             this.qty_txt.ForeColor = System.Drawing.Color.Empty;
             this.qty_txt.HideSelection = true;
             this.qty_txt.Lines = new string[] {
@@ -135,7 +137,7 @@
             this.qty_txt.SelectionLength = 0;
             this.qty_txt.SelectionStart = 0;
             this.qty_txt.ShortcutsEnabled = true;
-            this.qty_txt.Size = new System.Drawing.Size(96, 37);
+            this.qty_txt.Size = new System.Drawing.Size(60, 37);
             this.qty_txt.Style = KimTools.WinForms.KtTextBox.KtTextBoxStyle.Tailwind;
             this.qty_txt.TabIndex = 1;
             this.qty_txt.TextMarginBottom = 0;
@@ -145,8 +147,8 @@
             // 
             this.qtylbl.Align = System.Drawing.ContentAlignment.MiddleLeft;
             this.qtylbl.Auto = false;
-            this.qtylbl.Background = ((KimTools.WinForms.KtColor)(KimTools.WinForms.KtColor.Empty));
-            this.qtylbl.Color = ((KimTools.WinForms.KtColor)(KimTools.WinForms.KtColor.SECONDARY));
+            this.qtylbl.Background = KimTools.WinForms.KtColor.Empty;
+            this.qtylbl.Color = KimTools.WinForms.KtColor.SECONDARY;
             this.qtylbl.Dock = System.Windows.Forms.DockStyle.Left;
             this.qtylbl.Location = new System.Drawing.Point(5, 5);
             this.qtylbl.Name = "qtylbl";
@@ -158,13 +160,13 @@
             // 
             this.price_lbl.Align = System.Drawing.ContentAlignment.MiddleCenter;
             this.price_lbl.Auto = false;
-            this.price_lbl.Background = ((KimTools.WinForms.KtColor)(KimTools.WinForms.KtColor.Empty));
-            this.price_lbl.Color = ((KimTools.WinForms.KtColor)(KimTools.WinForms.KtColor.PRIMARY));
+            this.price_lbl.Background = KimTools.WinForms.KtColor.Empty;
+            this.price_lbl.Color = KimTools.WinForms.KtColor.PRIMARY;
             this.price_lbl.Dock = System.Windows.Forms.DockStyle.Right;
             this.price_lbl.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.price_lbl.Location = new System.Drawing.Point(160, 1);
+            this.price_lbl.Location = new System.Drawing.Point(231, 1);
             this.price_lbl.Name = "price_lbl";
-            this.price_lbl.Size = new System.Drawing.Size(162, 47);
+            this.price_lbl.Size = new System.Drawing.Size(91, 47);
             this.price_lbl.TabIndex = 3;
             this.price_lbl.Text = "$ 120.50";
             // 
@@ -172,8 +174,8 @@
             // 
             this.varient_lbl.Align = System.Drawing.ContentAlignment.TopLeft;
             this.varient_lbl.Auto = false;
-            this.varient_lbl.Background = ((KimTools.WinForms.KtColor)(KimTools.WinForms.KtColor.Empty));
-            this.varient_lbl.Color = ((KimTools.WinForms.KtColor)(KimTools.WinForms.KtColor.SECONDARY));
+            this.varient_lbl.Background = KimTools.WinForms.KtColor.Empty;
+            this.varient_lbl.Color = KimTools.WinForms.KtColor.SECONDARY;
             this.varient_lbl.Dock = System.Windows.Forms.DockStyle.Top;
             this.varient_lbl.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.varient_lbl.Location = new System.Drawing.Point(108, 32);
@@ -186,8 +188,8 @@
             // 
             this.product_namelbl.Align = System.Drawing.ContentAlignment.MiddleLeft;
             this.product_namelbl.Auto = false;
-            this.product_namelbl.Background = ((KimTools.WinForms.KtColor)(KimTools.WinForms.KtColor.Empty));
-            this.product_namelbl.Color = ((KimTools.WinForms.KtColor)(new KimTools.WinForms.KtColor(System.Drawing.Color.Black, null, 100)));
+            this.product_namelbl.Background = KimTools.WinForms.KtColor.Empty;
+            this.product_namelbl.Color = new KimTools.WinForms.KtColor(System.Drawing.Color.Black, null, 100);
             this.product_namelbl.Dock = System.Windows.Forms.DockStyle.Top;
             this.product_namelbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.product_namelbl.Location = new System.Drawing.Point(108, 0);
@@ -216,7 +218,7 @@
             this.ktDivider1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ktDivider1.DashCap = KimTools.WinForms.KtDivider.CapStyles.Round;
             this.ktDivider1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.ktDivider1.LineColor = ((KimTools.WinForms.KtColor)(KimTools.WinForms.KtColor.SECONDARY));
+            this.ktDivider1.LineColor = KimTools.WinForms.KtColor.SECONDARY;
             this.ktDivider1.LineStyle = KimTools.WinForms.KtDivider.LineStyles.Solid;
             this.ktDivider1.LineThickness = 2F;
             this.ktDivider1.Location = new System.Drawing.Point(5, 106);
@@ -225,6 +227,28 @@
             this.ktDivider1.Orientation = KimTools.WinForms.KtDivider.LineOrientation.Horizontal;
             this.ktDivider1.Size = new System.Drawing.Size(431, 17);
             this.ktDivider1.TabIndex = 1;
+            // 
+            // Delete_btn
+            // 
+            this.Delete_btn.BackColor = System.Drawing.Color.Transparent;
+            this.Delete_btn.Background = new KimTools.WinForms.KtBrushSolid(System.Drawing.Color.Transparent);
+            this.Delete_btn.BorderStyle = System.Drawing.Drawing2D.DashStyle.Solid;
+            this.Delete_btn.BorderWidth = 2F;
+            this.Delete_btn.Dock = System.Windows.Forms.DockStyle.Right;
+            this.Delete_btn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Delete_btn.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.Delete_btn.Foreground = new KimTools.WinForms.KtColor(System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0))))), null, 100);
+            this.Delete_btn.Icon = "";
+            this.Delete_btn.IconColor = new KimTools.WinForms.KtColor(System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0))))), null, 100);
+            this.Delete_btn.IconSize = 16;
+            this.Delete_btn.IconStroke = 2.5D;
+            this.Delete_btn.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Delete_btn.Location = new System.Drawing.Point(123, 5);
+            this.Delete_btn.Name = "Delete_btn";
+            this.Delete_btn.Size = new System.Drawing.Size(101, 37);
+            this.Delete_btn.TabIndex = 2;
+            this.Delete_btn.Text = "Remove";
+            this.Delete_btn.UseVisualStyleBackColor = false;
             // 
             // CartItem
             // 
@@ -257,5 +281,6 @@
         private System.Windows.Forms.Panel Qty_txt_panel;
         private KimTools.WinForms.KtTextBox qty_txt;
         private KimTools.WinForms.KtLabel qtylbl;
+        private KimTools.WinForms.KtButton Delete_btn;
     }
 }

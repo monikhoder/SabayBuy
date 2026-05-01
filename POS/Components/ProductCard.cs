@@ -16,10 +16,12 @@ namespace POS.Components
     public partial class ProductCard : UserControl
     {
         private static readonly HttpClient ImageClient = new HttpClient();
+        public event Action<POSProductVariantDto> ProductSelected;
 
         public ProductCard()
         {
             InitializeComponent();
+            AttachAddToCartHandlers(this);
         }
 
         public async void SetProduct(POSProductVariantDto product)
@@ -34,6 +36,27 @@ namespace POS.Components
                 : product.VariantImageUrl;
 
             await LoadProductImageAsync(imageUrl);
+        }
+
+        private void AttachAddToCartHandlers(Control parent)
+        {
+            parent.Click += ProductCard_Click;
+
+            foreach (Control child in parent.Controls)
+            {
+                AttachAddToCartHandlers(child);
+            }
+        }
+
+        private void ProductCard_Click(object sender, EventArgs e)
+        {
+            var product = Tag as POSProductVariantDto;
+            if (product == null)
+            {
+                return;
+            }
+
+            ProductSelected?.Invoke(product);
         }
 
         private async Task LoadProductImageAsync(string imageUrl)

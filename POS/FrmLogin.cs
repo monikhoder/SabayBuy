@@ -48,7 +48,8 @@ namespace POS
                 return;
             }
 
-            btn_login.Enabled = false;
+           // btn_login.Enabled = false;
+           // btn_login.ForeColor = Color.White;
             btn_login.Text = "Logging in...";
 
             var result = await accountService.LoginAsync(email, password);

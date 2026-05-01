@@ -22,7 +22,7 @@ namespace POS.Components
         public void SetCategory(CategoryDto category)
         {
             category_name_label.Text = category.CategoryName;
-            total_product_lbl.Text = $"{category.ProductCount} Items";
+            total_product_lbl.Text = $"{category.ProductCount} Products";
             Tag = category;
         }
 

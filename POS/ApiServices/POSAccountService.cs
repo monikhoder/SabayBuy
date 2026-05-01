@@ -94,9 +94,21 @@ namespace POS.ApiServices
             };
 
             var client = new HttpClient(handler);
-            client.BaseAddress = new Uri(ConfigurationManager.AppSettings["ApiBaseUrl"]);
+            client.BaseAddress = GetApiBaseAddress();
             client.Timeout = TimeSpan.FromSeconds(30);
             return client;
+        }
+
+        internal static Uri GetApiBaseAddress()
+        {
+            var apiBaseUrl = ConfigurationManager.AppSettings["ApiBaseUrl"];
+
+            if (Uri.TryCreate(apiBaseUrl, UriKind.Absolute, out var apiBaseAddress))
+            {
+                return apiBaseAddress;
+            }
+
+            return new Uri("https://localhost:7244/api/");
         }
 
         private static HttpClient CreateClient()

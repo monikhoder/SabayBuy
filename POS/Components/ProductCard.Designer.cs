@@ -34,7 +34,6 @@
             this.varient_lbl = new System.Windows.Forms.Label();
             this.Add_to_cart_panel = new System.Windows.Forms.Panel();
             this.price_lbl = new System.Windows.Forms.Label();
-            this.Add_to_cart_btn = new KimTools.WinForms.KtButton();
             this.title_lbl = new System.Windows.Forms.Label();
             this.ProductImageUrl = new System.Windows.Forms.PictureBox();
             this.ktTheme1 = new KimTools.WinForms.KtTheme(this.components);
@@ -88,7 +87,6 @@
             // Add_to_cart_panel
             // 
             this.Add_to_cart_panel.Controls.Add(this.price_lbl);
-            this.Add_to_cart_panel.Controls.Add(this.Add_to_cart_btn);
             this.Add_to_cart_panel.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.Add_to_cart_panel.Location = new System.Drawing.Point(6, 113);
             this.Add_to_cart_panel.Name = "Add_to_cart_panel";
@@ -103,33 +101,10 @@
             this.price_lbl.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.price_lbl.Location = new System.Drawing.Point(0, 0);
             this.price_lbl.Name = "price_lbl";
-            this.price_lbl.Size = new System.Drawing.Size(103, 41);
+            this.price_lbl.Size = new System.Drawing.Size(170, 41);
             this.price_lbl.TabIndex = 5;
             this.price_lbl.Text = "{Price}";
             this.price_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // Add_to_cart_btn
-            // 
-            this.Add_to_cart_btn.BackColor = System.Drawing.Color.Transparent;
-            this.Add_to_cart_btn.Background = new KimTools.WinForms.KtBrushGradient(KimTools.WinForms.KtColor.PRIMARY, System.Drawing.Color.Purple);
-            this.Add_to_cart_btn.BorderStyle = System.Drawing.Drawing2D.DashStyle.Solid;
-            this.Add_to_cart_btn.BorderWidth = 0F;
-            this.Add_to_cart_btn.Dock = System.Windows.Forms.DockStyle.Right;
-            this.Add_to_cart_btn.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Add_to_cart_btn.ForeColor = System.Drawing.Color.White;
-            this.Add_to_cart_btn.Foreground = new KimTools.WinForms.KtColor(System.Drawing.Color.White, null, 100);
-            this.Add_to_cart_btn.Icon = "";
-            this.Add_to_cart_btn.IconColor = new KimTools.WinForms.KtColor(System.Drawing.Color.Transparent, null, 100);
-            this.Add_to_cart_btn.IconSize = 1;
-            this.Add_to_cart_btn.IconStroke = 2.5D;
-            this.Add_to_cart_btn.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.Add_to_cart_btn.Location = new System.Drawing.Point(103, 0);
-            this.Add_to_cart_btn.Name = "Add_to_cart_btn";
-            this.Add_to_cart_btn.Padding = new System.Windows.Forms.Padding(3);
-            this.Add_to_cart_btn.Size = new System.Drawing.Size(67, 41);
-            this.Add_to_cart_btn.TabIndex = 1;
-            this.Add_to_cart_btn.Text = "+";
-            this.Add_to_cart_btn.UseVisualStyleBackColor = false;
             // 
             // title_lbl
             // 
@@ -198,7 +173,6 @@
         private System.Windows.Forms.Label title_lbl;
         private System.Windows.Forms.Panel Add_to_cart_panel;
         private System.Windows.Forms.Label varient_lbl;
-        private KimTools.WinForms.KtButton Add_to_cart_btn;
         private System.Windows.Forms.Label price_lbl;
         private KimTools.WinForms.KtTheme ktTheme1;
     }

@@ -21,11 +21,19 @@
         </a>
       </li>
 
+       <li *appHasRole="['Admin', 'Seller']">
+        <a routerLink="/admin/orders" routerLinkActive="bg-violet-50 text-violet-700 dark:bg-gray-700 dark:text-violet-400"
+           class="flex items-center p-3 text-gray-700 rounded-xl dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 group transition-all duration-200">
+          <mat-icon class="text-gray-400 group-hover:text-violet-600 transition-colors">shopping_bag</mat-icon>
+          <span class="ms-3">All Orders</span>
+        </a>
+      </li>
+
       <li *appHasRole="['Admin', 'Seller']">
         <a routerLink="/admin/orders" routerLinkActive="bg-violet-50 text-violet-700 dark:bg-gray-700 dark:text-violet-400"
            class="flex items-center p-3 text-gray-700 rounded-xl dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 group transition-all duration-200">
           <mat-icon class="text-gray-400 group-hover:text-violet-600 transition-colors">shopping_bag</mat-icon>
-          <span class="ms-3">Orders</span>
+          <span class="ms-3">Online Orders</span>
         </a>
       </li>
 

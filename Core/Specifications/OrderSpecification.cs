@@ -12,7 +12,10 @@ namespace Core.Specifications
     {
         //Get My Order
         public OrderSpecification(string email, OrderSpecParams specParams)
-            : base(x => x.BuyerEmail == email && (string.IsNullOrEmpty(specParams.Status) || x.Status == ParseStatus(specParams.Status)))
+            : base(x =>
+                x.BuyerEmail == email &&
+                x.Source == OrderSource.Web &&
+                (string.IsNullOrEmpty(specParams.Status) || x.Status == ParseStatus(specParams.Status)))
         {
             AddInclude(x => x.DeliveryMethod);
             AddInclude(x => x.OrderItems);
@@ -47,6 +50,7 @@ namespace Core.Specifications
         //Get all orders (Admin / sale)
         public OrderSpecification(OrderSpecParams specParams)
             : base(x =>  (string.IsNullOrEmpty(specParams.Status) || x.Status == ParseStatus(specParams.Status)) &&
+                (string.IsNullOrEmpty(specParams.Source) || x.Source == ParseSource(specParams.Source)) &&
                 (string.IsNullOrEmpty(specParams.Search) || x.Id.ToString().ToLower().Contains(specParams.Search.ToLower()))
             )
         {
@@ -99,6 +103,16 @@ namespace Core.Specifications
             {
                 return result;
             }
+            return null;
+        }
+
+        private static OrderSource? ParseSource(string source)
+        {
+            if (Enum.TryParse<OrderSource>(source, true, out var result))
+            {
+                return result;
+            }
+
             return null;
         }
     }
