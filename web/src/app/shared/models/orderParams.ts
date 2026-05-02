@@ -5,4 +5,5 @@ export class OrderParams {
   status: string = '';
   search: string = '';
   source: string = '';
+  sort: string = 'dateDesc';
 }

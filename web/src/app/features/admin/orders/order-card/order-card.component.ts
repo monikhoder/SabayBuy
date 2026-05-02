@@ -1,9 +1,11 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, inject } from '@angular/core';
 import { Order } from '../../../../shared/models/order';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { AdminBadgeComponent } from './../../shared/admin-badge/admin-badge.component';
+import { AdminService } from '../../../../core/services/admin.service';
+import { SnackbarService } from '../../../../core/services/snackbar.service';
 
 @Component({
   selector: 'app-order-card',
@@ -13,6 +15,9 @@ import { AdminBadgeComponent } from './../../shared/admin-badge/admin-badge.comp
   styleUrl: './order-card.component.scss',
 })
 export class OrderCardComponent {
+  private adminService = inject(AdminService);
+  private snack = inject(SnackbarService);
+
   @Input() order!: Order;
   @Output() statusUpdate = new EventEmitter<{ orderId: string, targetStatus: string }>();
 
@@ -76,6 +81,22 @@ export class OrderCardComponent {
     this.statusUpdate.emit({
       orderId: this.order.id,
       targetStatus: targetStatus
+    });
+  }
+
+  downloadInvoice() {
+    this.adminService.downloadOrderInvoice(this.order.id).subscribe({
+      next: (pdfBlob) => {
+        const url = window.URL.createObjectURL(pdfBlob);
+        const link = document.createElement('a');
+
+        link.href = url;
+        link.download = `invoice-${this.order.id.substring(0, 8).toUpperCase()}.pdf`;
+        link.click();
+
+        window.URL.revokeObjectURL(url);
+      },
+      error: (error) => this.snack.error(error.error || 'Failed to download invoice')
     });
   }
 }

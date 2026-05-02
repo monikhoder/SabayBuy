@@ -9,6 +9,7 @@ export interface Order {
   subtotal: number;
   total: number;
   status: string;
+  source: string;
   paymentMethod: string;
   paymentIntentId: string;
 }

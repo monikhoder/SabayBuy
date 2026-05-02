@@ -1,0 +1,98 @@
+<section class="bg-white dark:bg-gray-900">
+    <div class="">
+
+        <div class="flex flex-col justify-between p-2 dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
+            <div class="flex flex-col xl:flex-row items-center justify-between space-y-3 xl:space-y-0 xl:space-x-4 p-4">
+                <div class="w-full md:max-w-md">
+                    <app-admin-search placeholder="Search by Order ID" (search)="onSearch($event)"></app-admin-search>
+                </div>
+                <div class="w-full xl:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3">
+                    <select [(ngModel)]="orderParams.source" (change)="onFilterChange()" class="block w-full md:w-auto min-w-[8rem] rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white">
+                        @for (source of sourceOptions; track source.value) {
+                            <option [value]="source.value">{{ source.label }}</option>
+                        }
+                    </select>
+
+                    <select [(ngModel)]="orderParams.status" (change)="onFilterChange()" class="block w-full md:w-auto min-w-[10rem] rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white">
+                        @for (status of statusOptions; track status.value) {
+                            <option [value]="status.value">{{ status.label }}</option>
+                        }
+                    </select>
+
+                    <select [(ngModel)]="orderParams.sort" (change)="onFilterChange()" class="block w-full md:w-auto min-w-[9rem] rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white">
+                        @for (sort of sortOptions; track sort.value) {
+                            <option [value]="sort.value">{{ sort.label }}</option>
+                        }
+                    </select>
+
+                    <mat-paginator [length]="totalItems"
+                                [pageSize]="orderParams.pageSize"
+                                [pageIndex]="orderParams.pageIndex - 1"
+                                [pageSizeOptions]="[5, 10, 15, 25, 50]"
+                                (page)="handlePageEvent($event)"
+                                aria-label="Select page"
+                                >
+                    </mat-paginator>
+                </div>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-300">
+                        <tr>
+                            <th scope="col" class="px-4 py-4">Order ID</th>
+                            <th scope="col" class="px-4 py-4">Source</th>
+                            <th scope="col" class="px-4 py-4">Customer</th>
+                            <th scope="col" class="px-4 py-4">Items</th>
+                            <th scope="col" class="px-4 py-4">Total</th>
+                            <th scope="col" class="px-4 py-4">Payment</th>
+                            <th scope="col" class="px-4 py-4">Status</th>
+                            <th scope="col" class="px-4 py-4">Order Date</th>
+                            <th scope="col" class="px-4 py-4">Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @for (order of orders; track order.id) {
+                            <tr class="border-b border-gray-200 dark:border-gray-700">
+                                <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    #{{ order.id | slice:0:8 }}
+                                </th>
+                                <td class="px-4 py-3">
+                                    <span class="text-xs font-medium me-2 px-2.5 py-0.5 rounded" [ngClass]="getSourceBadgeClass(order.source)">
+                                        {{ order.source }}
+                                    </span>
+                                </td>
+                                <td class="px-4 py-3">
+                                    <div class="font-medium text-gray-900 dark:text-white">{{ order.shippingAddress.fullName || 'N/A' }}</div>
+                                    <div class="text-xs text-gray-500 dark:text-gray-400">{{ order.buyerEmail }}</div>
+                                </td>
+                                <td class="px-4 py-3">{{ order.orderItems.length || 0 }}</td>
+                                <td class="px-4 py-3 font-medium text-gray-900 dark:text-white">{{ order.total | currency }}</td>
+                                <td class="px-4 py-3">{{ order.paymentMethod }}</td>
+                                <td class="px-4 py-3">
+                                    <span class="text-xs font-medium me-2 px-2.5 py-0.5 rounded" [ngClass]="getStatusBadgeClass(order.status)">
+                                        {{ order.status }}
+                                    </span>
+                                </td>
+                                <td class="px-4 py-3">{{ order.orderDate | date:'short' }}</td>
+                                <td class="px-4 py-3">
+                                    <a [routerLink]="['/orders', order.id]" [queryParams]="{returnUrl: '/admin/all-orders'}" class="inline-flex justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700">
+                                        Order details
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                        @if (orders.length === 0) {
+                            <tr>
+                                <td colspan="9" class="px-4 py-8 text-center text-gray-500 dark:text-gray-400">
+                                    No orders found.
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</section>

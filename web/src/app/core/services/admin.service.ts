@@ -66,6 +66,9 @@ export class AdminService {
       if (orderParams.source && orderParams.source !== '') {
         params = params.append('source', orderParams.source);
       }
+      if (orderParams.sort && orderParams.sort !== '') {
+        params = params.append('sort', orderParams.sort);
+      }
       params = params.append('pageIndex', orderParams.pageIndex);
       params = params.append('pageSize', orderParams.pageSize);
 
@@ -75,6 +78,10 @@ export class AdminService {
   //get order by ID
   getOrderById(id: string) {
     return this.http.get<Order>(this.baseUrl + 'adminOrder/' + id);
+  }
+
+  downloadOrderInvoice(id: string) {
+    return this.http.get(this.baseUrl + 'adminOrder/' + id + '/invoice', { responseType: 'blob' });
   }
 
   //update order status

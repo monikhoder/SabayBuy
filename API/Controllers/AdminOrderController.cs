@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.Controllers
 {
     [Authorize(Roles = "Admin,Seller")]
-    public class AdminOrderController(IUnitOfWork unitOfWork, IMapper mapper) : BaseApiController
+    public class AdminOrderController(IUnitOfWork unitOfWork, IMapper mapper, IInvoicePdfService invoicePdfService, IWebHostEnvironment env) : BaseApiController
     {
         // GET: api/AdminOrder
         [HttpGet]
@@ -30,6 +30,23 @@ namespace API.Controllers
             var spec = new OrderSpecification(id);
             return await GetByIdResult<Order, OrderDto>(unitOfWork.Repository<Order>(), spec, mapper);
         }
+
+        // GET: api/AdminOrder/{Id}/invoice
+        [HttpGet("{id}/invoice")]
+        public async Task<ActionResult> DownloadInvoice(Guid id)
+        {
+            var spec = new OrderSpecification(id);
+            var order = await unitOfWork.Repository<Order>().GetEntityWithSpec(spec);
+
+            if (order == null) return NotFound("Order not found");
+
+            var logoPath = Path.Combine(env.WebRootPath ?? string.Empty, "images", "sabaybuy-logo.png");
+            var invoiceBytes = invoicePdfService.GenerateOrderInvoice(order, logoPath);
+            var fileName = $"invoice-{order.Id.ToString()[..8].ToUpperInvariant()}.pdf";
+
+            return File(invoiceBytes, "application/pdf", fileName);
+        }
+
         //PUT: api/adminorder/{Id}
         [HttpPut("{id}")]
         public async Task<ActionResult<OrderDto>> UpdateOrderStatus(Guid id, [FromQuery] OrderStatus orderstatus)

@@ -20,6 +20,7 @@ import { ProductDetailsComponent } from './features/Shopping/product-details/pro
 import { DashboardComponent } from './features/admin/dashboard/dashboard.component';
 import { ProductsComponent } from './features/admin/products/products.component';
 import { OrdersComponent } from './features/admin/orders/orders.component';
+import { AllOrdersComponent } from './features/admin/all-orders/all-orders.component';
 import { CategoriesComponent } from './features/admin/categories/categories.component';
 import { ProfileComponent } from './features/account/profile/profile.component';
 import { UserManagementComponent } from './features/admin/user-management/user-management.component';
@@ -55,6 +56,7 @@ export const routes: Routes = [
     children: [
       { path: 'dashboard', component: DashboardComponent },
       { path: 'products', component: ProductsComponent, canActivate: [roleGuard], data: { roles: ['Admin', 'Stock'] } },
+      { path: 'all-orders', component: AllOrdersComponent },
       { path: 'orders', component: OrdersComponent },
       {path: 'categories', component: CategoriesComponent, canActivate: [roleGuard], data: { roles: ['Admin', 'Stock'] }},
       { path: 'users', component: UserManagementComponent, canActivate: [roleGuard], data: { roles: ['Admin'] } },

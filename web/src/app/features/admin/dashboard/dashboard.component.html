@@ -1,1 +1,289 @@
-<p>dashboard works!</p>
+<section class="bg-white p-2 antialiased dark:bg-gray-900">
+  @if (loading) {
+    <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+      @for (item of [1, 2, 3, 4, 5, 6, 7, 8]; track item) {
+        <div class="h-28 animate-pulse rounded-lg border border-gray-200 bg-gray-100 dark:border-gray-700 dark:bg-gray-800"></div>
+      }
+    </div>
+  } @else if (summary) {
+    <div class="space-y-4">
+      <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <div class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Total Revenue</p>
+              <p class="mt-2 text-2xl font-semibold text-gray-900 dark:text-white">{{ summary.totalRevenue | currency }}</p>
+            </div>
+            <span class="flex h-11 w-11 items-center justify-center rounded-lg bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300">
+              <mat-icon>payments</mat-icon>
+            </span>
+          </div>
+        </div>
+
+        <div class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Today Revenue</p>
+              <p class="mt-2 text-2xl font-semibold text-gray-900 dark:text-white">{{ summary.todayRevenue | currency }}</p>
+            </div>
+            <span class="flex h-11 w-11 items-center justify-center rounded-lg bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300">
+              <mat-icon>today</mat-icon>
+            </span>
+          </div>
+        </div>
+
+        <div class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Total Orders</p>
+              <p class="mt-2 text-2xl font-semibold text-gray-900 dark:text-white">{{ summary.totalOrders }}</p>
+            </div>
+            <span class="flex h-11 w-11 items-center justify-center rounded-lg bg-violet-100 text-violet-700 dark:bg-violet-900 dark:text-violet-300">
+              <mat-icon>shopping_bag</mat-icon>
+            </span>
+          </div>
+        </div>
+
+        <div class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Pending Orders</p>
+              <p class="mt-2 text-2xl font-semibold text-gray-900 dark:text-white">{{ summary.pendingOrders }}</p>
+            </div>
+            <span class="flex h-11 w-11 items-center justify-center rounded-lg bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-300">
+              <mat-icon>pending_actions</mat-icon>
+            </span>
+          </div>
+        </div>
+
+        <div class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Web Orders</p>
+              <p class="mt-2 text-2xl font-semibold text-gray-900 dark:text-white">{{ summary.webOrders }}</p>
+            </div>
+            <span class="flex h-11 w-11 items-center justify-center rounded-lg bg-teal-100 text-teal-700 dark:bg-teal-900 dark:text-teal-300">
+              <mat-icon>language</mat-icon>
+            </span>
+          </div>
+        </div>
+
+        <div class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm font-medium text-gray-500 dark:text-gray-400">POS Orders</p>
+              <p class="mt-2 text-2xl font-semibold text-gray-900 dark:text-white">{{ summary.posOrders }}</p>
+            </div>
+            <span class="flex h-11 w-11 items-center justify-center rounded-lg bg-indigo-100 text-indigo-700 dark:bg-indigo-900 dark:text-indigo-300">
+              <mat-icon>point_of_sale</mat-icon>
+            </span>
+          </div>
+        </div>
+
+        <div class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Products</p>
+              <p class="mt-2 text-2xl font-semibold text-gray-900 dark:text-white">{{ summary.totalProducts }}</p>
+            </div>
+            <span class="flex h-11 w-11 items-center justify-center rounded-lg bg-cyan-100 text-cyan-700 dark:bg-cyan-900 dark:text-cyan-300">
+              <mat-icon>inventory_2</mat-icon>
+            </span>
+          </div>
+        </div>
+
+        <div class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Low Stock</p>
+              <p class="mt-2 text-2xl font-semibold text-gray-900 dark:text-white">{{ summary.lowStockItems }}</p>
+            </div>
+            <span class="flex h-11 w-11 items-center justify-center rounded-lg bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300">
+              <mat-icon>warning</mat-icon>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid gap-4 xl:grid-cols-3">
+        <div class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 xl:col-span-2">
+          <div class="mb-4 flex items-center justify-between">
+            <div>
+              <h2 class="text-base font-semibold text-gray-900 dark:text-white">Revenue by Day</h2>
+              <p class="text-sm text-gray-500 dark:text-gray-400">Last 7 days</p>
+            </div>
+            <span class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ revenueByDay.length }} days</span>
+          </div>
+
+          <div class="flex h-72 items-end gap-3 border-b border-gray-200 px-1 pb-3 dark:border-gray-700">
+            @for (item of revenueByDay; track item.date) {
+              <div class="flex min-w-0 flex-1 flex-col items-center justify-end gap-2">
+                <div class="flex h-56 w-full items-end justify-center">
+                  <div class="w-full max-w-12 rounded-t-lg bg-primary-600 transition-all dark:bg-primary-500"
+                    [style.height.%]="getRevenueHeight(item.revenue)">
+                  </div>
+                </div>
+                <div class="text-center">
+                  <p class="text-xs font-medium text-gray-900 dark:text-white">{{ item.revenue | currency:'USD':'symbol':'1.0-0' }}</p>
+                  <p class="text-xs text-gray-500 dark:text-gray-400">{{ item.date | date:'MMM d' }}</p>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+
+        <div class="space-y-4">
+          <div class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+            <h2 class="mb-4 text-base font-semibold text-gray-900 dark:text-white">Orders by Status</h2>
+            <div class="space-y-3">
+              @for (status of ordersByStatus; track status.name) {
+                <div>
+                  <div class="mb-1 flex items-center justify-between text-sm">
+                    <span class="font-medium text-gray-700 dark:text-gray-300">{{ status.name }}</span>
+                    <span class="text-gray-500 dark:text-gray-400">{{ status.value }}</span>
+                  </div>
+                  <div class="h-2 rounded-full bg-gray-100 dark:bg-gray-700">
+                    <div class="h-2 rounded-full bg-blue-600 dark:bg-blue-500" [style.width.%]="getPercent(status.value, maxStatusCount)"></div>
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+
+          <div class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+            <h2 class="mb-4 text-base font-semibold text-gray-900 dark:text-white">Orders by Source</h2>
+            <div class="space-y-3">
+              @for (source of ordersBySource; track source.name) {
+                <div>
+                  <div class="mb-1 flex items-center justify-between text-sm">
+                    <span class="font-medium text-gray-700 dark:text-gray-300">{{ source.name }}</span>
+                    <span class="text-gray-500 dark:text-gray-400">{{ getSourcePercent(source.value) }}%</span>
+                  </div>
+                  <div class="h-2 rounded-full bg-gray-100 dark:bg-gray-700">
+                    <div class="h-2 rounded-full" [ngClass]="source.name === 'POS' ? 'bg-indigo-600 dark:bg-indigo-500' : 'bg-green-600 dark:bg-green-500'" [style.width.%]="getPercent(source.value, maxSourceCount)"></div>
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid gap-4 xl:grid-cols-3">
+        <div class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 xl:col-span-2">
+          <div class="mb-4 flex items-center justify-between">
+            <h2 class="text-base font-semibold text-gray-900 dark:text-white">Recent Orders</h2>
+            <a routerLink="/admin/all-orders" class="text-sm font-medium text-primary-700 hover:underline dark:text-primary-500">View all</a>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm text-gray-500 dark:text-gray-400">
+              <thead class="bg-gray-100 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-300">
+                <tr>
+                  <th scope="col" class="px-4 py-3">Order ID</th>
+                  <th scope="col" class="px-4 py-3">Source</th>
+                  <th scope="col" class="px-4 py-3">Customer</th>
+                  <th scope="col" class="px-4 py-3">Status</th>
+                  <th scope="col" class="px-4 py-3">Total</th>
+                  <th scope="col" class="px-4 py-3">Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (order of recentOrders; track order.id) {
+                  <tr class="border-b border-gray-200 dark:border-gray-700">
+                    <th scope="row" class="whitespace-nowrap px-4 py-3 font-medium text-gray-900 dark:text-white">
+                      <a [routerLink]="['/orders', order.id]" [queryParams]="{returnUrl: '/admin/dashboard'}" class="hover:underline">
+                        #{{ order.id | slice:0:8 }}
+                      </a>
+                    </th>
+                    <td class="px-4 py-3">
+                      <span class="rounded px-2.5 py-0.5 text-xs font-medium" [ngClass]="getSourceBadgeClass(order.source)">{{ order.source }}</span>
+                    </td>
+                    <td class="px-4 py-3">
+                      <div class="font-medium text-gray-900 dark:text-white">{{ order.customerName || 'N/A' }}</div>
+                      <div class="text-xs text-gray-500 dark:text-gray-400">{{ order.buyerEmail }}</div>
+                    </td>
+                    <td class="px-4 py-3">
+                      <span class="rounded px-2.5 py-0.5 text-xs font-medium" [ngClass]="getStatusBadgeClass(order.status)">{{ order.status }}</span>
+                    </td>
+                    <td class="px-4 py-3 font-medium text-gray-900 dark:text-white">{{ order.total | currency }}</td>
+                    <td class="px-4 py-3">{{ order.orderDate | date:'short' }}</td>
+                  </tr>
+                }
+                @if (recentOrders.length === 0) {
+                  <tr>
+                    <td colspan="6" class="px-4 py-8 text-center text-gray-500 dark:text-gray-400">No recent orders found.</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+          <div class="mb-4 flex items-center justify-between">
+            <h2 class="text-base font-semibold text-gray-900 dark:text-white">Low Stock</h2>
+            <a routerLink="/admin/products" class="text-sm font-medium text-primary-700 hover:underline dark:text-primary-500">Manage</a>
+          </div>
+
+          <div class="space-y-3">
+            @for (product of lowStockProducts; track product.productVariantId) {
+              <div class="rounded-lg border border-gray-100 p-3 dark:border-gray-700">
+                <div class="flex items-start justify-between gap-3">
+                  <div class="min-w-0">
+                    <p class="truncate text-sm font-medium text-gray-900 dark:text-white">{{ product.productName }}</p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400">{{ product.sku || 'No SKU' }}</p>
+                  </div>
+                  <span class="whitespace-nowrap rounded px-2.5 py-0.5 text-xs font-medium" [ngClass]="getStockBadgeClass(product.stockQuantity)">
+                    {{ product.stockQuantity }} left
+                  </span>
+                </div>
+                <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">{{ product.price | currency }}</p>
+              </div>
+            }
+            @if (lowStockProducts.length === 0) {
+              <div class="rounded-lg border border-gray-100 px-4 py-8 text-center text-sm text-gray-500 dark:border-gray-700 dark:text-gray-400">
+                Stock levels look healthy.
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+        <h2 class="mb-4 text-base font-semibold text-gray-900 dark:text-white">Top Selling Products</h2>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-sm text-gray-500 dark:text-gray-400">
+            <thead class="bg-gray-100 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-300">
+              <tr>
+                <th scope="col" class="px-4 py-3">Product</th>
+                <th scope="col" class="px-4 py-3">Variant</th>
+                <th scope="col" class="px-4 py-3">Sold</th>
+                <th scope="col" class="px-4 py-3">Revenue</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (product of topProducts; track product.productVariantId) {
+                <tr class="border-b border-gray-200 dark:border-gray-700">
+                  <th scope="row" class="px-4 py-3 font-medium text-gray-900 dark:text-white">{{ product.productName }}</th>
+                  <td class="px-4 py-3">{{ product.variantName || 'Default' }}</td>
+                  <td class="px-4 py-3">{{ product.quantitySold }}</td>
+                  <td class="px-4 py-3 font-medium text-gray-900 dark:text-white">{{ product.revenue | currency }}</td>
+                </tr>
+              }
+              @if (topProducts.length === 0) {
+                <tr>
+                  <td colspan="4" class="px-4 py-8 text-center text-gray-500 dark:text-gray-400">No product sales found.</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  } @else {
+    <div class="rounded-lg border border-gray-200 bg-white px-4 py-10 text-center text-gray-500 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400">
+      Dashboard data is not available.
+    </div>
+  }
+</section>
